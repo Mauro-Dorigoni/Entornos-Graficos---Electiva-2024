@@ -1,3 +1,30 @@
+EJERCICIO 1:
+1.	¿Qué es HTML, cuando fue creado, cuáles fueron las distintas versiones y cuál es la última?
+HTML (HyperText Markup Language) es el lenguaje de marcado principal de la World Wide Web (WWW). Es un lenguaje de marcas de hipertextos, cuya función es el desarrollo de páginas web. Define una estructura básica y un código (denominado código HTML) para la definición de contenido de una página web, como texto, imágenes, videos, juegos, entre otros. Es actualmente el estándar que se impuso en la visualización de paginas web y es el que todos los navegadores actuales adoptaron.
+El origen de HTML se remonta a 1980, cuando el físico Tim Berners-Lee, trabajador del CERN (Organización Europea para la Investigación Nuclear) propuso un nuevo sistema de "hipertexto" para compartir documentos.
+Los sistemas de "hipertexto" habían sido desarrollados algunos años antes con la finalidad de permitir a los usuarios acceder a la información relacionada con los documentos electrónicos. Tim Berners-Lee presentó su sistema de “hipertexto”, una vez finalizado y depurado, a una convocatoria organizada para desarrollar un sistema de "hipertexto" para Internet. Después de trabajar junto al ingeniero de sistemas Robert Cailliau sobre su proyecto inicial, ambos, crearon una propuesta conocida como World Wide Web o W3. 
+El primer documento formal con la descripción de HTML se publicó en 1991 bajo el nombre "HTML Tags". Durante sus primeros cinco años, HTML pasó por una serie de revisiones y experimentó una serie de extensiones, alojadas en el CERN (Organización Europea para la Investigación Nuclear), y luego en el IETF (Internet Engineering Task Force). Con la creación del W3C, el desarrollo de HTML cambió de lugar de nuevo. Un primer intento frustrado de extender el HTML en 1995 conocido como HTML 3.0 dio paso a un enfoque más pragmático conocido como HTML 3.2, que se completó en 1997. HTML 4.01 siguió rápidamente más tarde ese mismo año.
+Al año siguiente la W3C dejo de desarrollar HTML para concentrarse en su equivalente XHTML que se baso en XML. Con la reformulación del HTML 4.01, se creo el XHTML 1.0 en el 2000. Paralelamente trabajó con un lenguaje llamado XHTML 2.0 que no era compatible con los dos mencionados anteriormente. Mientras se detuvo el desarrollo de HTML, parte de la API para HTML desarrollada por los proveedores de navegadores se especificaron y publicaron bajo el nombre DOM Level 1 (en 1998) y DOM Level 2 Core y DOM Level 2 HTML (comenzando en 2000 y culminando en 2003). En 2003 se renovó el interés por el HTML con la publicación de XForms. Luego de algunos años donde fueron rechazadas propuestas debido a que entraban en conflicto con la dirección que el desarrollo web había tomado en ese entonces (continuar con el XML) y el intereses de empresas de renombre como Apple, Mozilla y Opera, en 2006, el W3C indicó su interés en participar en el desarrollo de HTML 5.0 después de todo, y en 2007 formó un grupo de trabajo autorizado para trabajar con WHATWG en el desarrollo de la especificación HTML. Apple, Mozilla y Opera permitieron al W3C publicar la especificación bajo los derechos de autor del W3C, manteniendo una versión con la licencia menos restrictiva en el sitio WHATWG. HTML 5.0 se siguió desarrollando durante años y es la versión que se usa actualmente en el desarrollo web.
+
+2.	¿Cuáles son los principios básicos que el W3C recomienda seguir para la creación de documentos con HTML?
+El principal principio que recomienda seguir el W3C es el de Accesibilidad, la Iniciativa de Accesibilidad Web (WAI) del World Wide Web Consortium (W3C) define recomendaciones a propósito de la facilidad de acceso a las páginas web. Las directrices WCAG presentan cómo se puede diseñar la oferta en la web para que sea accesible a todos los usuarios, independientemente de sus capacidades físicas, mentales o motoras. 
+Las Pautas de accesibilidad al contenido web (WCAG) 2.1 cubren una amplia gama de recomendaciones para hacer que el contenido web sea más accesible. Seguir estas pautas hará que el contenido sea más accesible para una gama más amplia de personas con discapacidades, incluidas adaptaciones para ceguera y baja visión, sordera y pérdida auditiva, movimiento limitado, entre otras limitaciones que las personas puedan presentar. WCAG 2.1 amplía las Pautas de accesibilidad al contenido web 2.0 [WCAG20], que se publicaron como Recomendación del W3C en diciembre de 2008.
+Algunos criterios son: 
+	Orientación: El contenido no restringe su visualización y funcionamiento a una única orientación de pantalla, como vertical u horizontal, a menos que una orientación de pantalla específica sea esencial.
+	Distinguible: Facilite a los usuarios ver y escuchar contenido, incluida la separación del primer plano del fondo.
+	Operable: Los componentes de la interfaz de usuario y la navegación deben estar operativos.
+	Teclado accesible: Haga que todas las funciones estén disponibles desde un teclado
+
+3.	En las Especificaciones de HTML, ¿cuándo un elemento o atributo se considera desaprobado? ¿y obsoleto?
+4.	¿Qué es el DTD y cuáles son los posibles DTDs contemplados en la especificación de HTML 4.01?
+5.	¿Qué son los metadatos y cómo se especifican en HTML?
+
+BIBLIOGRAFÍA:
+-	Material de la cátedra 
+-	http://www.aeemt.com/contenidos_socios/Informatica/Informac_Informat_Tecnolog/AMV_AGI_AEEMT_HTML_Historia.pdf
+-	https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/directrices-para-la-accesibilidad-web/
+-	https://www.w3.org/TR/WCAG21/#new-features-in-wcag-2-1
+
 EJERCICIO 2: Analizar los siguientes segmentos de código indicando en qué sección del documento HTML se colocan, cuál es el efecto que producen y señalar cada uno de los elementos, etiquetas, y atributos (nombre y valor), aclarando si es obligatorio.
 2.a) <!-- Código controlado el día 12/08/2009 →
 Este es un comentario. Este elemento no requiere etiquetas de apertura y cierre, y su sintaxis es <!-- comentario -->. Los comentarios pueden ir en cualquier parte del código, para realizar aclaraciones pertinentes a la hora de desarrollar una página web. No tiene efecto en la visualización de la misma.
