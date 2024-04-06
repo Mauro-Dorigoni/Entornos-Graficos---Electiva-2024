@@ -6,12 +6,12 @@
     HTML5 es preferible sobre versiones anteriores debido a su mejor compatibilidad con dispositivos móviles, mejoras en multimedia, semántica mejorada para motores de búsqueda y accesibilidad, APIs integradas para funcionalidades avanzadas, rendimiento mejorado y soporte continuo y evolución.
 
 **3. Enumere Ventajas**
-    -Es gratuito: no requere de ningún software costoso para empezar a programar.
-    -El lenguaje tiene un código claro, ordenado y fácil de aprender.
-    -Las etiquetas descriptivas brindan un mejor posicionamiento en buscadores como Google.
-    -HTML5 soporta multimedia y funcionalidades interactivas.
-    -Las APIs permiten incluir elementos complejos, como dibujos 3D o mapas, directamente en el documento.
-    -Se puede realizar consultas SQL.
-    -HTML5 permite crear aplicaciones web.
-    -El lenguaje optimiza el tiempo de carga de un sitio web.
-    -La información del sitio web está mejor protegida.
+    - Es gratuito: no requere de ningún software costoso para empezar a programar.
+    - El lenguaje tiene un código claro, ordenado y fácil de aprender.
+    - Las etiquetas descriptivas brindan un mejor posicionamiento en buscadores como Google.
+    - HTML5 soporta multimedia y funcionalidades interactivas.
+    - Las APIs permiten incluir elementos complejos, como dibujos 3D o mapas, directamente en el documento.
+    - Se puede realizar consultas SQL.
+    - HTML5 permite crear aplicaciones web.
+    - El lenguaje optimiza el tiempo de carga de un sitio web.
+    - La información del sitio web está mejor protegida.
