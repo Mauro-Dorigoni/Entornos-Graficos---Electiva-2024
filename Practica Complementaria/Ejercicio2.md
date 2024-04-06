@@ -1,0 +1,2 @@
+**Que formatos de audio soporta HTMLS 5**
+    HTML soporta los formatos .mp3, .waw, .aac y .ogg (Vorbis) para el manejo de audio. Cabe aclarar que tambien depende de cada buscador el soporte a estas tecnologias. De los mas comunes, Google Chrome soporta los 3, mientras que Safari no tiene soporte para .ogg
