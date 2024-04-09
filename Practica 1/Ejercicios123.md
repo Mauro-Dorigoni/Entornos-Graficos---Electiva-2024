@@ -91,46 +91,85 @@ Se utiliza para definir una división, y es un contenedor utilizado para agrupar
 
 El elemento `<img>` que se utiliza para insertar una imagen en la página. El atributo src especifica la ubicación de la imagen, el atributo alt proporciona un texto descriptivo para la imagen, siendo esto esencial para la accesibilidad. Los atributos id, name, width, height y longdesc son opcionales y se utilizan para proporcionar identificación y características adicionales a la imagen. Los atributos width y height pueden ponerse fuera del archivo html en una hoja de estilos css junto a otros estilos. Generalmente están ubicadas dentro de un contenedor, aunque también es común ver una imagen dentro de una etiqueta <a> utilizada como “botón” como por ejemplo, los logos de las páginas (normalmente ubicados en la parte superior izquierda) redirigen al usuario a la parte del inicio.
 
-**2.d)** <meta name="keywords" lang="es" content="casa, compra, venta, alquiler " /><meta http-equiv="expires" content="16-Sep-2019 7:49 PM" />
-Estos son elementos <meta> se utilizan para proporcionar metadatos sobre el documento HTML. No son visibles para el usuario, pero si para el motor del navegador. El atributo name proporciona contexto importante para la página (para este caso, lang es el idioma, content con valores asociados con name (en este caso, las palabras clave). La etiqueta <meta> debe usarse siempre dentro del elemento <head>
+**2.d)**
 
-**2.e)** <a href="http://www.e-style.com.ar/resumen.html" type="text/html" hreflang="es" charset="utf-8" rel="help">Resumen HTML </a>
-Un elemento <a> se usa para insertar un hipervínculo a otra página web. Estos generalmente aparecen en azul (cuando el usuario todavía no lo visita), violeta (si el usuario ya lo ha visitado) o en rojo (si está activo). En este caso se trata de un enlace a un resumen html que el usuario podrá visitar al hacer click sobre el texto “Resumen HTML”. El atributo href especifica la url de la página, type especifica que tipo de media es (texto html en este caso), hreflang el lenguaje del documento enlazado, charset el juego de caracteres usado, rel especifica la relación entre la página actual y la página enlazada. El texto dentro de <a> será el texto donde se encontrará el hipervínculo. Los hipervínculos pueden usarse dentro de una lista o un bloque, y pueden conducir a una ubicación externa o interna dentro de la misma página.
+```html
+<meta name="keywords" lang="es" content="casa, compra, venta, alquiler " /><meta
+  http-equiv="expires"
+  content="16-Sep-2019 7:49 PM"
+/>
+```
 
-**2.f)** <table width="200" summary="Datos correspondientes al ejercicio vencido">
+Estos son elementos `<meta>` se utilizan para proporcionar metadatos sobre el documento HTML. No son visibles para el usuario, pero si para el motor del navegador. El atributo name proporciona contexto importante para la página (para este caso, lang es el idioma, content con valores asociados con name (en este caso, las palabras clave). La etiqueta `<meta>` debe usarse siempre dentro del elemento `<head>`
 
-<caption align="top"> Título </caption>
-<tr>
-<th scope="col">&nbsp;</th>
-<th scope="col">A</th>
-<th scope="col">B</th>
-<th scope="col">C</th>
-</tr>
-<tr>
-<th scope="row">1º</th>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<th scope="row">2º</th>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-</table> 
-El elemento <table> se utiliza para crear una tabla en la página. Cada celda de la tabla será definida por etiquetas <td> y </td> (td abreviatura para dato de tabla) y todo entre ellas será el contenido de la tabla. Cada fila comienza con <tr> y finaliza con </tr>. Si se quiere que una celda sea título de la tabla, se usa <th> en vez de <td>. 
-El atributo width especifica el ancho de la tabla en píxeles o porcentaje, y el atributo summary proporciona una descripción de la tabla para usuarios con discapacidad visual. Dentro de la tabla, hay elementos <caption> que se utilizan para proporcionar un título a la tabla. El atributo scope especifica si el título es usado para la fila o la columna, y no tiene incidencia visual en la página, solo contexto de accesibilidad.
+**2.e)**
+
+```html
+<a
+  href="http://www.e-style.com.ar/resumen.html"
+  type="text/html"
+  hreflang="es"
+  charset="utf-8"
+  rel="help"
+  >Resumen HTML
+</a>
+```
+
+Un elemento `<a>` se usa para insertar un hipervínculo a otra página web. Estos generalmente aparecen en azul (cuando el usuario todavía no lo visita), violeta (si el usuario ya lo ha visitado) o en rojo (si está activo). En este caso se trata de un enlace a un resumen html que el usuario podrá visitar al hacer click sobre el texto “Resumen HTML”. El atributo href especifica la url de la página, type especifica que tipo de media es (texto html en este caso), hreflang el lenguaje del documento enlazado, charset el juego de caracteres usado, rel especifica la relación entre la página actual y la página enlazada. El texto dentro de `<a>` será el texto donde se encontrará el hipervínculo. Los hipervínculos pueden usarse dentro de una lista o un bloque, y pueden conducir a una ubicación externa o interna dentro de la misma página.
+
+**2.f)**
+
+```html
+<table width="200" summary="Datos correspondientes al ejercicio vencido">
+  <caption align="top">
+    Título
+  </caption>
+  <tr>
+    <th scope="col">&nbsp;</th>
+    <th scope="col">A</th>
+    <th scope="col">B</th>
+    <th scope="col">C</th>
+  </tr>
+  <tr>
+    <th scope="row">1º</th>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">2º</th>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+```
+
+El elemento `<table>` se utiliza para crear una tabla en la página. Cada celda de la tabla será definida por etiquetas `<td>` y `</td>` (td abreviatura para dato de tabla) y todo entre ellas será el contenido de la tabla. Cada fila comienza con `<tr>` y finaliza con `</tr>`. Si se quiere que una celda sea título de la tabla, se usa `<th>` en vez de `<td>`.
+El atributo width especifica el ancho de la tabla en píxeles o porcentaje, y el atributo summary proporciona una descripción de la tabla para usuarios con discapacidad visual. Dentro de la tabla, hay elementos `<caption>` que se utilizan para proporcionar un título a la tabla. El atributo scope especifica si el título es usado para la fila o la columna, y no tiene incidencia visual en la página, solo contexto de accesibilidad.
 
 **EJERCICIO 3: En cada caso, explicar las diferencias entre los segmentos de código y sus visualizaciones:**
 
 **3.a)**
+
+```html
 <a href="http://www.google.com.ar">Click aquí para ir a Google</a>
-<a href="http://www.google.com.ar" target="_blank">Click aquí para ir a Google</a>
-<a href="http://www. google.com.ar" type="text/html" hreflang="es" charset="utf-8" rel="help">
-<a href="#">Click aquí para ir a Google</a>
-<a href="#arriba">Click aquí para volver arriba</a>
-<a name="arriba" id="arriba"></a>
+<a href="http://www.google.com.ar" target="_blank"
+  >Click aquí para ir a Google</a
+>
+<a
+  href="http://www. google.com.ar"
+  type="text/html"
+  hreflang="es"
+  charset="utf-8"
+  rel="help"
+>
+  <a href="#">Click aquí para ir a Google</a>
+  <a href="#arriba">Click aquí para volver arriba</a>
+  <a name="arriba" id="arriba"></a
+></a>
+```
+
 La función de la primera etiqueta es redireccionar al usuario a la página de google en la misma ventana.
 La segunda tiene la misma función con la diferencia que el atributo target="\_blank" hace que la redirección sea en una nueva ventana permitiendo que al usuario no se le cierre la página actual por la que navega.
 En el tercero, la etiqueta type especifica el tipo de recurso enlazado, en este caso un documento de texto html, hreflang="es" indica que una página debe ser mostrada a los usuarios de un país o idioma específico, el atributo charset especifica la codificación de caracteres utilizada, y el atributo rel define la relación entre la página actual y la enlazada, indicando que ofrece ayuda con la palabra “help”.
@@ -139,164 +178,189 @@ La quinta permitiría volver hacía arriba cuando uno scrollea hacia abajo, mien
 
 **3.b)**
 
-<p><img src="im1.jpg" alt="imagen1" /><a href="http://www.google.com.ar">Click aquí</a></p>
-<p><a href="http://www.google.com.ar"><img src="im1.jpg" alt="imagen1" /></a> Click aquí</p>
-<p><a href="http://www.google.com.ar"><img src="im1.jpg" alt="ima
-gen1" />Click aquí</a></p>
-<p><a href="http://www.google.com.ar"><img src="im1.jpg" alt="imagen1" /></a> <a
-href="http://www.google.com.ar">Click aquí</a></p>
+```html
+<p>
+  <img src="im1.jpg" alt="imagen1" /><a href="http://www.google.com.ar"
+    >Click aquí</a
+  >
+</p>
+<p>
+  <a href="http://www.google.com.ar"><img src="im1.jpg" alt="imagen1" /></a>
+  Click aquí
+</p>
+<p>
+  <a href="http://www.google.com.ar"
+    ><img
+      src="im1.jpg"
+      alt="ima
+gen1"
+    />Click aquí</a
+  >
+</p>
+<p>
+  <a href="http://www.google.com.ar"><img src="im1.jpg" alt="imagen1" /></a>
+  <a href="http://www.google.com.ar">Click aquí</a>
+</p>
+```
 
 En el primer caso, se trata de una imagen seguida de un hipervínculo. El enlace solo se ve sobre el texto “Click aquí” (que se verá en azul)
 En el segundo caso, es un hipervínculo dentro de la propia imagen, con el texto “Click aquí”. Solo se podrá ingresar al enlace haciendo click sobre la imagen.
 En el tercer caso se trata de un hipervínculo dentro de una imagen y del texto “Click aquí. El usuario será redireccionado al mismo sitio tanto si hace click sobre la imagen o sobre el texto.
-En el cuarto caso se trata de un hipervínculo dentro de la imagen y seguido de un hipervínculo con el texto “Click aquí”. Son 2 etiquetas <a> distintas, con el mismo enlace en ambas. El usuario será redireccionado al mismo sitio tanto si hace click sobre la imagen o sobre el texto.
+En el cuarto caso se trata de un hipervínculo dentro de la imagen y seguido de un hipervínculo con el texto “Click aquí”. Son 2 etiquetas `<a>` distintas, con el mismo enlace en ambas. El usuario será redireccionado al mismo sitio tanto si hace click sobre la imagen o sobre el texto.
 
 **3.c)**
-El primer ejemplo es una lista desordenada ( <ul> ) con sus list items ( <li> ), a diferencia del segundo que es una lista ordenada ( <ol> ) con sus items. La tercera son tres listas ordenadas cada una con un ítem, y el atributo value da el valor del ítem, si agregamos más ítems abajo continúa la lista a partir de ese valor. Blockquote permite insertar citas en forma de bloques de contenido, a diferencia de las otras no es interpretada por el navegador como una lista a pesar de que parezca visualmente, la etiqueta p encierra un parrafo.
+El primer ejemplo es una lista desordenada ( `<ul>` ) con sus list items ( `<li>` ), a diferencia del segundo que es una lista ordenada ( `<ol>` ) con sus items. La tercera son tres listas ordenadas cada una con un ítem, y el atributo value da el valor del ítem, si agregamos más ítems abajo continúa la lista a partir de ese valor. Blockquote permite insertar citas en forma de bloques de contenido, a diferencia de las otras no es interpretada por el navegador como una lista a pesar de que parezca visualmente, la etiqueta p encierra un parrafo.
 
 **3.d)**
 
+```html
 <table border="1" width="300">
-<tr>
-<th>Columna 1</th>
-<th>Columna 2</th>
-</tr>
-<tr>
-<td>Celda 1</td>
-<td>Celda 2</td>
-</tr>
-<tr>
-<td>Celda 3</td>
-<td>Celda 4</td>
-</tr>
+  <tr>
+    <th>Columna 1</th>
+    <th>Columna 2</th>
+  </tr>
+  <tr>
+    <td>Celda 1</td>
+    <td>Celda 2</td>
+  </tr>
+  <tr>
+    <td>Celda 3</td>
+    <td>Celda 4</td>
+  </tr>
 </table>
 
 <table border="1" width="300">
-<tr>
-<td><div align="center"><strong>Columna1</strong></div></td>
-<td><div align="center"><strong>Columna
-2</strong></div></td>
-</tr>
-<tr>
-<td>Celda 1</td>
-<td>Celda 2</td>
-</tr>
-<tr>
-<td>Celda 3</td>
-<td>Celda 4</td>
-</tr>
+  <tr>
+    <td>
+      <div align="center"><strong>Columna1</strong></div>
+    </td>
+    <td>
+      <div align="center"><strong>Columna 2</strong></div>
+    </td>
+  </tr>
+  <tr>
+    <td>Celda 1</td>
+    <td>Celda 2</td>
+  </tr>
+  <tr>
+    <td>Celda 3</td>
+    <td>Celda 4</td>
+  </tr>
 </table>
+```
 
-Estos 2 segmentos de códigos se visualizan iguales para el usuario. El primero utiliza las etiquetas <th> para los títulos (headers) Columna 1 y Columna 2 de las columnas. Por naturaleza de la etiqueta, el texto se verá en negrita. Por otra parte, el segundo trozo de código pone los títulos a las columnas utilizando las etiquetas <td> de celdas normales, y dentro usa bloques <div> donde se especifica la alineación y el texto en negrita.
+Estos 2 segmentos de códigos se visualizan iguales para el usuario. El primero utiliza las etiquetas `<th>` para los títulos (headers) Columna 1 y Columna 2 de las columnas. Por naturaleza de la etiqueta, el texto se verá en negrita. Por otra parte, el segundo trozo de código pone los títulos a las columnas utilizando las etiquetas `<td>` de celdas normales, y dentro usa bloques `<div>` donde se especifica la alineación y el texto en negrita.
 
 **3.e)**
 
+```html
 <table width="200">
-<caption>
-Título
-</caption>
-<tr>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
-<tr>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">
-&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr> 
+  <caption>
+    Título
+  </caption>
+  <tr>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
 </table>
 --------------------------------
 <table width="200">
-<tr>
-<td colspan="3"><div 
-align="center">Título</div></td>
-</tr>
-<tr>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
-<tr>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
+  <tr>
+    <td colspan="3"><div align="center">Título</div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
 </table>
+```
 
-La diferencia en estos dos códigos es la forma en la que está puesto el título. El primer ejemplo está puesto con la etiqueta <caption> que se utiliza para agregar un título o una descripción a una tabla. En el segundo ejemplo, crea el título con una fila y una celda con atributo de colspan de 3 que permite agrupar celdas consecutivas en una fila y adentro tiene un <div> contenedor que alinea el texto en el centro.
+La diferencia en estos dos códigos es la forma en la que está puesto el título. El primer ejemplo está puesto con la etiqueta `<caption>` que se utiliza para agregar un título o una descripción a una tabla. En el segundo ejemplo, crea el título con una fila y una celda con atributo de colspan de 3 que permite agrupar celdas consecutivas en una fila y adentro tiene un `<div>` contenedor que alinea el texto en el centro.
 
-**3.f)** <table width="200">
+**3.f)**
 
-<tr>
-<td colspan="3"><div
-align="center">Título</div></td>
-</tr>
-<tr>
-<td rowspan="2" bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
-<tr>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
+```html
+<table width="200">
+  <tr>
+    <td colspan="3"><div align="center">Título</div></td>
+  </tr>
+  <tr>
+    <td rowspan="2" bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
 </table>
 
 <table width="200">
-<tr>
-<td colspan="3"><div
-align="center">Título</div></td>
-</tr>
-<tr>
-<td colspan="2"
-bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
-<tr>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-<td bgcolor="#dddddd">&nbsp;</td>
-</tr>
+  <tr>
+    <td colspan="3"><div align="center">Título</div></td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+    <td bgcolor="#dddddd">&nbsp;</td>
+  </tr>
 </table>
+```
 
 El atributo colspan de una celda refiere a cuantas columnas abarca la celda referenciada, y el rowspan refiere a cuántas filas abarca. Podría pensarse como el “combinar celdas” de toda la vida. Por lo tanto, las únicas diferencias tangibles entre el primer segmento de código y el segundo es que en el primero se visualiza una tabla de 3 columnas y 2 filas donde la primera celda abarca 2 filas (es decir, es una combinación de filas 1 y 2 de la columna 1), mientras que en el segundo trozo de código se visualiza una tabla de 3 columnas y 2 filas donde la primera celda abarca 2 columnas (es decir, una combinación de columnas 1 y 2 sobre la fila 1).
 
 **3.g)**
 
+```html
 <table width="200" border="1">
-<tr>
-<td colspan="3"><div
-align="center">Título</div></td>
-</tr>
-<tr>
-<td colspan="2"rowspan="2">&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td width="50%">&nbsp;</td>
-</tr>
+  <tr>
+    <td colspan="3"><div align="center">Título</div></td>
+  </tr>
+  <tr>
+    <td colspan="2" rowspan="2">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="50%">&nbsp;</td>
+  </tr>
 </table>
 ------------------------------
-<table width="200" border="1" cellpadding="0" 
-cellspacing="0">
-<tr>
-<td colspan="2"><div 
-align="center">Título</div></td>
-</tr>
-<tr>
-<td rowspan="2">&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td width="50%">&nbsp;</td>
-</tr>
+<table width="200" border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="2"><div align="center">Título</div></td>
+  </tr>
+  <tr>
+    <td rowspan="2">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="50%">&nbsp;</td>
+  </tr>
 </table>
+```
 
 La primera tabla no tiene ni cellpadding, ni cellspacing en la tabla, mientras que en el segundo si. El cellpadding determina el espacio entre los bordes de la celda y el contenido de la misma y el cellspacing especifica el espacio entre las diferentes celdas.
 
-**3.h)** <form id="form1" name="form1" action="procesar.php" method="post" target="_blank">
+**3.h)**
+
+```html
+<form id="form1" name="form1" action="procesar.php" method="post" target="_blank">
 
 <fieldset>
 <legend>LOGIN</legend>
@@ -321,43 +385,55 @@ Clave: <input type="password" id="clave3" name="clave3" />
 </fieldset>
 <input type="reset" id="boton3" name="boton3" value="Enviar" />
 </form>
+```
 
 Visualmente, los 3 formularios son muy parecidos para el usuario. La única diferencia es que en el primero el usuario y contraseña ya se encuentran llenados. En cuanto a código, el primer formulario usa en el atributo action enviar los datos completados a un documento .php con el method post (envía los datos como una transacción HTTP)
 El segundo formulario no realiza ninguna acción con los datos completados, pero los envia con el método get (en forma de URL)
 El tercer formulario realiza la acción de enviar los datos obtenidos por mail a la dirección xx@xx.com.
 
-**3.i)** <label>Botón 1
-<button type="button" name="boton1" id="boton1">
-<img src="logo.jpg" alt="Botón con imagen " width="30" height="20" /><br />
-<b>CLICK AQUÍ</b></button></label>
+**3.i)**
 
-<label>Botón 2
-<input type="button" name="boton2" id="boton2" value="CLICK AQUÍ" />
+```html
+<label
+  >Botón 1
+  <button type="button" name="boton1" id="boton1">
+    <img src="logo.jpg" alt="Botón con imagen " width="30" height="20" /><br />
+    <b>CLICK AQUÍ</b>
+  </button></label
+>
+
+<label
+  >Botón 2
+  <input type="button" name="boton2" id="boton2" value="CLICK AQUÍ" />
 </label>
+```
 
 El primer segmento de código muestra un botón con una imagen y el texto “click aquí” debajo de ella dentro del mismo, mientras que el segundo trozo representa solamente un botón con el valor “Click aqui”
 
-**3.k)** <select name="lista">
+**3.k)**
 
-<optgroup label="Caso 1">
-<option>Mayo</option>
-<option>Junio</option>
-</optgroup>
-<optgroup label="Caso 2">
-<option>Mayo</option>
-<option>Junio</option>
-</optgroup>
+```html
+<select name="lista">
+  <optgroup label="Caso 1">
+    <option>Mayo</option>
+    <option>Junio</option>
+  </optgroup>
+  <optgroup label="Caso 2">
+    <option>Mayo</option>
+    <option>Junio</option>
+  </optgroup>
 </select>
 
 <select name="lista[]" multiple="multiple">
-<optgroup label=" Caso 1">
-<option>Mayo</option>
-<option>Junio</option>
-</optgroup>
-<optgroup label=" Caso 2">
-<option>Mayo</option>
-<option>Junio</option>
-</optgroup>
+  <optgroup label=" Caso 1">
+    <option>Mayo</option>
+    <option>Junio</option>
+  </optgroup>
+  <optgroup label=" Caso 2">
+    <option>Mayo</option>
+    <option>Junio</option>
+  </optgroup>
 </select>
+```
 
-La etiqueta <select> indica un menú de selección. Visualmente, el primer segmento de código muestra un dropdown menu donde solamente se puede seleccionar una opción. El segundo segmento de código muestra una lista donde se puede seleccionar más de una opción a la vez. La etiqueta <optgroup> se usa dentro del <select> para agrupar opciones relacionadas.
+La etiqueta `<select>` indica un menú de selección. Visualmente, el primer segmento de código muestra un dropdown menu donde solamente se puede seleccionar una opción. El segundo segmento de código muestra una lista donde se puede seleccionar más de una opción a la vez. La etiqueta `<optgroup>` se usa dentro del `<select>` para agrupar opciones relacionadas.
