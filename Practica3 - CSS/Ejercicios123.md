@@ -42,15 +42,18 @@ p#normal => este selector determina que el estilo dado dentro de la declaración
 #distinto => afecta a los elementos cuyo id sea “distinto”, aplicando un color de fondo #9EC7EB (azul claro, expresado en hexadecimal) y un color de texto rojo. Afecta solo a la última etiqueta `<p>` del código HTML.
 
 **EJERCICIO 3**
+
+```css
 p.quitar {
-color: red;
+  color: red;
 }
 \*.desarrollo {
-font-size: 8px;
+  font-size: 8px;
 }
 .importante {
-font-size: 20px;
+  font-size: 20px;
 }
+```
 
 ```html
 <p class="desarrollo">
