@@ -47,7 +47,7 @@ Los tipos de selectores mas comunes en CSS son:
     a:visited{color:red;} Los enlaces que hayan sido visitados (estado visited) se veran en rojo.
 
 **1.5-**
-Una pseudoclase CSS es una palabra clave que se añade a los selectores y que especifica un estado especial del elemento seleccionado. En el caso de los enlaces, las mas comunes son visited (indica si el usuario ya ha ingresado al enlace) y hover (si el usuario tiene el cursor sobre el vinculo)
+Una pseudoclase CSS es una palabra clave que se añade a los selectores y que especifica un estado especial del elemento seleccionado. En el caso de los enlaces, las mas comunes son visited (indica si el usuario ya ha ingresado al enlace) hover (si el usuario tiene el cursor sobre el vinculo) y active
 
 **1.6-**
 La herencia es el proceso por el cual algunas propiedades CSS aplicadas a una etiqueta se pasan a las etiquetas anidadas. Si un elemento no tiene un valor en cascada para una determinada propiedad, puede heredar uno de un elemento antecesor. Es común aplicar la propiedad font-family al elemento <body>. Todas las etiquetas descendientes de la etiqueta <body>, es decir, las que están dentro de la etiqueta <body> heredarán esta fuente y no es necesario aplicarla explícitamente a cada elemento de la página. Cualquier etiqueta dentro de otra etiqueta es descendiente de esa etiqueta. por ejemplo, una etiqueta <p> dentro de la etiqueta <body> es descendiente de <body>, mientras que la etiqueta <body> es un ancestro de la etiqueta <p>. Hay algunas propiedades en CSS que se heredan y otras que no.
@@ -145,3 +145,30 @@ La primera declaración se aplica a todo el documento HTML por lo que ambos frag
 La primera diferencia que podemos encontrar es en el body, el segundo código tiene la clase “contenido” por lo que a todo el body se le aplicara un tamaño de fuente de 14px y estarán las letras en negrita.
 A diferencia del segundo, el primero solo tiene esta clase en la primera etiqueta `<p>` por lo que se le aplicará al contenido de esta el tamaño de fuente de 14px, pero las letras estarán normales ya que tiene definido un estilo propio en el HTML. A esta etiqueta también se le dio un estilo, que por cascada se aplica luego del estilo aplicado a todo el documento por lo que la letra no será verde, sino que será negra y además la familia de la fuente será arial helvética.
 La etiqueta `<p>` del segundo código tendrá la fuente en negrita debido a la clase “contenido” del body pero luego por la especificidad del selector `<p>` aplicará todos los estilos especificados en el selector p. Y por cascada, no toma el color verde que se le da al documento completo, si no que toma el negro del propio selector p.
+
+**EJERCICIO 5**
+
+**5.1-**
+  h1>b{color: red;}
+
+**5.2-**
+  div>p>*[href]{color:black}
+
+**5.3-**
+  ul>li:last-child{color:yellow}
+  ul>li:last-child>a{color:blue}
+
+**5.4-**
+  div>*#importante{color:green}
+  h1,h2,h3,h4,h5,h6>*#importante{color:red}
+
+**5.5-**
+  h1[title]{color:blue}
+  
+**5.6-**
+ol>li>a{
+    text-decoration: none;
+    color: blue;
+}
+ol>li>a:visited{color: purple;}
+

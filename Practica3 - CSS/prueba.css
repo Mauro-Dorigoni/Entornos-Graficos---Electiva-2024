@@ -1,0 +1,5 @@
+ol>li>a{
+    text-decoration: none;
+    color: blue;
+}
+ol>li>a:visited{color: purple;}
