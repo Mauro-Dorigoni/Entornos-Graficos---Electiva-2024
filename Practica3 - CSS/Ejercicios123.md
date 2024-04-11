@@ -1,15 +1,19 @@
 **EJERCICIO 1: Responder el cuestionario**
+
 **1.1-**
 CSS son las siglas de Cascade Style Sheet que traducido significa hojas de estilo en cascada. Las hojas de estilo es una tecnología que nos permite controlar la apariencia de una página web. CSS describe como los elementos dispuestos en la página son presentados al usuario. CSS es un gran avance que complementa el HTML y la Web en general. Está definido en la Especificaciones CSS1, CSS2 y CSS3 del World Wide Web Consortium (W3C), es un estándar aceptado por toda la industria relacionada con la Web, o por lo menos, gran parte de navegadores. Entonces las Hojas de Estilo en Cascada (Cascading Style Sheets), es un mecanismo simple que describe cómo se va a mostrar un documento en la pantalla, o cómo se va a imprimir, o incluso cómo va a ser pronunciada la información presente en ese documento a través de un dispositivo de lectura. Esta forma de descripción de estilos ofrece a los desarrolladores el control total sobre estilo y formato de sus documentos
+
 **1.2-**
 La regla tiene dos partes: un selector y la declaración. A su vez la declaración está compuesta por una propiedad y el valor que se le asigne. El selector funciona como enlace entre el documento y el estilo, especificando los elementos que se van a ver afectados por esa declaración. La declaración es la parte de la regla que establece cuál será el efecto. Genericamente:
 selector {propiedad:valor;}
+
 **1.3-**
 Las tres formas más conocidas de dar estilo a un documento son las siguientes:
 
 - Utilizando una hoja de estilo externa que estará vinculada a un documento a través del elemento `<link>`, el cual debe ir situado en la sección `<head>`
 - Utilizando el elemento `<style>` en el interior del documento al que se le quiere dar estilo, y que generalmente se situaría en la sección `<head>`. De esta forma los estilos serán reconocidos antes de que la página se cargue por completo
 - Utilizando estilos directamente sobre aquellos elementos que lo permiten a través del atributo `<style>` dentro de `<body>`. Pero este tipo de estilo al mezclarse el contenido con la presentación
+
 **1.4-**
 Los tipos de selectores mas comunes en CSS son:
 1. Selector Universal: el asterisco (*) es el selector universal en CSS. De forma automática, el asterisco selecciona todos los elementos en un documento.
@@ -44,24 +48,26 @@ Los tipos de selectores mas comunes en CSS son:
 
 **1.5-**
 Una pseudoclase CSS es una palabra clave que se añade a los selectores y que especifica un estado especial del elemento seleccionado. En el caso de los enlaces, las mas comunes son visited (indica si el usuario ya ha ingresado al enlace) y hover (si el usuario tiene el cursor sobre el vinculo)
+
 **1.6-**
 La herencia es el proceso por el cual algunas propiedades CSS aplicadas a una etiqueta se pasan a las etiquetas anidadas. Si un elemento no tiene un valor en cascada para una determinada propiedad, puede heredar uno de un elemento antecesor. Es común aplicar la propiedad font-family al elemento <body>. Todas las etiquetas descendientes de la etiqueta <body>, es decir, las que están dentro de la etiqueta <body> heredarán esta fuente y no es necesario aplicarla explícitamente a cada elemento de la página. Cualquier etiqueta dentro de otra etiqueta es descendiente de esa etiqueta. por ejemplo, una etiqueta <p> dentro de la etiqueta <body> es descendiente de <body>, mientras que la etiqueta <body> es un ancestro de la etiqueta <p>. Hay algunas propiedades en CSS que se heredan y otras que no.
+
 **1.7-**
  La cascada es el algoritmo para resolver conflictos donde se aplican múltiples reglas CSS a un elemento HTML. El algoritmo en cascada se divide en 4 etapas distintas:
  1. Posición y orden de aparición: el orden en el que aparecen las reglas CSS. La cascada tiene en cuenta el orden en que aparecen las reglas CSS y cómo aparecen mientras calcula la resolución de conflictos. Si se tiene un <link> que incluye CSS en la parte superior de una página HTML y se tiene otro <link> que incluye un CSS en la parte inferior de la página, el <link> inferior tendrá la mayor especificidad. Lo mismo ocurre con los elementos de <style>. Se vuelven más específicos cuanto más abajo están en la página.
  2. Especifidad: la especificidad es un algoritmo que determina qué selector de CSS es el más específico, utilizando un sistema de ponderación o puntuación para realizar esos cálculos. Al hacer una regla más específica, puede hacer que se aplique incluso si algún otro CSS que coincida con el selector aparece más adelante en el CSS. El CSS dirigido a una clase en un elemento hará que la regla sea más específica y, por lo tanto, se considerará más importante de aplicar que el CSS dirigido solamente al elemento.
  3. Origen: el CSS escrito no es el único CSS que se aplica a una página. La cascada tiene en cuenta el origen del CSS. Este origen incluye la hoja de estilo interna del navegador, los estilos agregados por las extensiones del navegador o el sistema operativo y el CSS creado. El orden de especificidad de estos orígenes, desde el menos específico al más específico, son los siguientes:
-  1. Estilos base de agente de usuario
-  2. Estilos de usuarios locales
-  3. CSS creado
-  4. Los !important creados
-  5. Estilos de usuarios locales !important
-  6. Agente de usuario !important
+    1. Estilos base de agente de usuario
+    2. Estilos de usuarios locales
+    3. CSS creado
+    4. Los !important creados
+    5. Estilos de usuarios locales !important
+    6. Agente de usuario !important
  4. Importancia: no todas las reglas de CSS se calculan de la misma manera entre sí, ni se les da la misma especificidad entre sí. El orden de importancia, de menor a mayor importancia, es el siguiente:
-  1. Tipo de regla normal, como font-size , background o color
-  2. Tipo de regla de animation
-  3. Tipo de regla de !important
-  4. Tipo de regla de transition
+    1. Tipo de regla normal, como font-size , background o color
+    2. Tipo de regla de animation
+    3. Tipo de regla de !important
+    4. Tipo de regla de transition
 
 **EJERCICIO 2**
 
