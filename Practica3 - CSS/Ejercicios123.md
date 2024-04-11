@@ -228,3 +228,7 @@ ol > li > a:visited {
   color: purple;
 }
 ```
+
+**EJERCICIO 7**
+
+![alt text](./Captura%20de%20pantalla%202024-04-11%20194646.png)
