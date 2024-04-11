@@ -76,20 +76,21 @@ La cascada es el algoritmo para resolver conflictos donde se aplican múltiples 
     4. Tipo de regla de transition
 
 **EJERCICIO 2**
+
 ```css
 p#normal {
-font-family: arial, Helvetica;
-font-size: 11px;
-font-weight: bold;
+  font-family: arial, Helvetica;
+  font-size: 11px;
+  font-weight: bold;
 }
 \*#destacado {
-border-style: solid;
-border-color: blue;
-border-width: 2px;
+  border-style: solid;
+  border-color: blue;
+  border-width: 2px;
 }
 #distinto {
-background-color: #9EC7EB;
-color: red;
+  background-color: #9ec7eb;
+  color: red;
 }
 ```
 
@@ -151,49 +152,79 @@ p.quitar => el estilo aplicado en este selector se verá reflejado en las etique
 
 .importante => afecta a los elementos con la clase importante. Aplica un tamaño de fuente de 20px. En el ejemplo se aplica a la última etiqueta `<p>`.
 
-**EJERCICIO 4 (continuar)**
+**EJERCICIO 4**
+
+La primera declaración se aplica a todo el documento HTML por lo que ambos fragmentos de código van a ser de color verde, si en las etiquetas que continúan no se especifica ningún otro color. En este ejemplo, lo único que se mantiene verde son las tablas de ambos códigos.
 
 La primera diferencia que podemos encontrar es en el body, el segundo código tiene la clase “contenido” por lo que a todo el body se le aplicara un tamaño de fuente de 14px y estarán las letras en negrita. El tamaño de la fuente se mantendrá en la tabla y en el enlace, pero no en el párrafo, en este último la letra será de 10px.
 A diferencia del segundo, el primero solo tiene esta clase en la primera etiqueta `<p>` por lo que se le aplicará al contenido de esta el tamaño de fuente de 14px, pero las letras estarán normales ya que tiene definido un estilo propio en el HTML. A esta etiqueta también se le dio un estilo, que por cascada se aplica luego del estilo aplicado a todo el documento por lo que la letra no será verde, sino que será negra y además la familia de la fuente será arial helvética de color negro ya que este estilo esta especificado con el selector `<p>` en la hoja de estilos, el tamaño no será de 10px ya que aplica sobre esta etiqueta la clase “contenido”.
+
 La etiqueta `<p>` del segundo código tendrá la fuente en negrita debido a la clase “contenido” del body pero luego por la especificidad del selector `<p>` aplicará todos los estilos especificados y no toma el color verde que se le da al documento completo, si no que toma el negro del propio selector p.
 Entre las tablas las diferencias están en el tamaño – en el primer caso, es de 16px ya que no tiene un estilo que lo defina, mientras que en el segundo toma el estilo de la clase contenido por lo que tiene 14px – y que el primero no esta en negrita mientras que el segundo sí.
+
 Los enlaces tienen los mismos colores por cada acción, cuando no fueron visitados están grises, cuando esta el mouse encima (hover) se ponen fucsia, cuando visitas el enlace se pone azul, y cuando este activo en rojo. La diferencia está en que el del segundo ejemplo está en negrita y que el tamaño de la fuente es de 14px mientras que el primer enlace no está en negrita y el tamaño es de 16px.
 
 **EJERCICIO 5**
 
 **5.1-**
-  ```css
-  h1>b{color: red;}
-  ```
 
-**5.2-**
 ```css
-  div>p>*[href]{color:black}
-  ```
-
-**5.3-**
-```css
-  ul>li:last-child{color:yellow}
-  ul>li:last-child>a{color:blue}
-  ```
-
-**5.4-**
-```css
-  div>*#importante{color:green}
-  h1,h2,h3,h4,h5,h6>*#importante{color:red}
-  ```
-
-**5.5-**
-```css
-  h1[title]{color:blue}
-  ```
-
-**5.6-**
-```css
-ol>li>a{
-    text-decoration: none;
-    color: blue;
+h1 > b {
+  color: red;
 }
-ol>li>a:visited{color: purple;}
 ```
 
+**5.2-**
+
+```css
+div > p > *[href] {
+  color: black;
+}
+```
+
+**5.3-**
+
+```css
+ul > li:last-child {
+  color: yellow;
+}
+ul > li:last-child > a {
+  color: blue;
+}
+```
+
+**5.4-**
+
+```css
+div > *#importante {
+  color: green;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 > *#importante {
+  color: red;
+}
+```
+
+**5.5-**
+
+```css
+h1[title] {
+  color: blue;
+}
+```
+
+**5.6-**
+
+```css
+ol > li > a {
+  text-decoration: none;
+  color: blue;
+}
+ol > li > a:visited {
+  color: purple;
+}
+```
