@@ -142,12 +142,38 @@
 
 ## Parte 2
 
-**1-**
+**1-** Interfaz web es el nombre que se utiliza para referirse a la estructura diseñada en cualquier aplicación web y que le permite al usuario acceder a los contenidos de dicha web cuando esté navegando. También se puede designar como interfaz de usuario o por sus siglas en inglés como GUI (graphical user interface). La interfaz utiliza un conjunto de componentes visuales (imagen o texto), interactivos (botones, casillas, cuadro de desplazamiento, controles) y de diseño para representar la información y acciones disponibles. 
+Los elementos fundamentales de una interfaz web incluyen:
+        - Elementos de navegación: elementos que permiten a los usuarios del sitio navegar por todas las páginas web de dicho sitio.
 
-**2-**
+        - Elementos de contenidos: zonas donde se muestra el contenido o información relevante de cada página web de un sitio.
 
-**3-**
+        - Elementos de interacción: son las partes de la web en la que se ofrece interactuar al usuario.
 
-**4-**
+**2-** Los sistemas de navegación, compuestos por los diferentes enlaces a las diferentes secciones de un sitio Web, permiten ubicarnos y desplazarnos a través de las estructuras de la información, facilitando a los usuarios saber en cada momento dónde están, dónde pueden ir y cómo está organizada la información. Contestado en preguntas 10- y 11- de parte 1.
+
+**3-** Adobe Flash es una plataforma multimedia que permite la creación de contenido interactivo y animaciones para la web. Inicialmente, Flash fue muy popular para crear animaciones, juegos, aplicaciones, presentaciones y otros tipos de contenido interactivo en línea. Ofrecía una variedad de herramientas para diseñar gráficos, animaciones y sonidos, y para programar interactividad utilizando ActionScript, un lenguaje de programación derivado de JavaScript. Sin embargo, Flash comenzó a caer en desuso a lo largo de la década de 2010 debido a varios problemas:
+
+        1. Compatibilidad y rendimiento: los dispositivos móviles, especialmente los de Apple, no admitían Flash de forma nativa, lo que limitaba su alcance. Además, el rendimiento de Flash en dispositivos móviles y algunos navegadores no era óptimo.
+        
+        2. Seguridad: Flash tenía numerosos problemas de seguridad y vulnerabilidades, lo que lo hacía propenso a ataques y malware.
+        
+        3. Estandarización web: las tecnologías web modernas como HTML5, CSS3 y JavaScript ofrecieron alternativas más eficientes y seguras para crear contenido interactivo y multimedia en la web.
+
+**4-** AJAX, o "Asynchronous JavaScript and XML" (JavaScript asíncrono y XML), es una técnica utilizada en el desarrollo web para crear aplicaciones web dinámicas e interactivas. Permite a una página web enviar y recibir datos de un servidor sin tener que recargar toda la página, lo que mejora la experiencia del usuario al hacer que las interacciones sean más fluidas y rápidas. Algunos de los problemas que conlleva su uso son: 
+
+        1. Compatibilidad con navegadores antiguos: algunos navegadores más antiguos pueden no ser totalmente compatibles con AJAX, lo que puede causar problemas de funcionamiento.
+
+        2. Accesibilidad: debido a la naturaleza dinámica de AJAX, puede resultar en problemas de accesibilidad para los usuarios que utilizan tecnologías de asistencia, como lectores de pantalla. Esto se debe a que algunos cambios en la página no se anuncian automáticamente a estas herramientas.
+
+        3- SEO: los motores de búsqueda pueden tener dificultades para indexar contenido generado dinámicamente mediante AJAX, aunque se han realizado avances en este campo.
+
+        4. Seguridad: AJAX puede exponer al sitio a ciertos riesgos de seguridad, como ataques de cross-site scripting (XSS) y cross-site request forgery (CSRF). Es importante validar y filtrar adecuadamente los datos que se reciben del servidor.
+
+        5. Usabilidad: puede ser difícil para los usuarios entender cómo funciona una aplicación basada en AJAX si no se proporciona retroalimentación visual clara cuando se realizan solicitudes al servidor.
+        
+        6. Historial del navegador: como AJAX actualiza partes de la página sin recargarla, puede afectar al historial del navegador, haciendo que sea más difícil para los usuarios navegar hacia atrás o adelante.
+
+        7. Manejo de errores: los errores en solicitudes AJAX pueden no ser obvios para los usuarios, ya que no se recarga toda la página, por lo que es importante manejar los errores de manera clara.
 
 
