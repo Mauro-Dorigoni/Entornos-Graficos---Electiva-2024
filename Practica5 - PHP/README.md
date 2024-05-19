@@ -36,9 +36,14 @@ $g = $f += 10; // Esta variable es de tipo double
 $i // Esta definida en la función doble, es de tipo double y solo vive dentro de la función
 ```
 
-Los operadores son: - "=" : asignación - "+=" : suma la variable el valor especificado y luego lo asigna a la misma - "condicion ? valor_si_verdadero : valor_si_falso" : operador ternario, se utiliza para la decisión posterior a comparar dos valores - "++$d" : incrementa $d en uno, y luego retorna $d
-    - "*" : operador de multiplicación
-    - "$d++" : retorna $d, y luego incrementa $d en uno
+Los operadores son:
+
+- "=" : asignación
+- "+=" : suma la variable el valor especificado y luego lo asigna a la misma
+- "condicion ? valor_si_verdadero : valor_si_falso" : operador ternario, se utiliza para la decisión posterior a comparar dos valores
+- "++$d" : incrementa $d en uno, y luego retorna $d
+- "\*" : operador de multiplicación
+- "$d++" : retorna $d, y luego incrementa $d en uno
 
 La funcion es:
 
@@ -61,13 +66,14 @@ if (is_string($a)) {
 ```
 
 La salida de este programa va a ser:
-string -> tipo de $b
-boolean -> tipo de $a
-string -> tipo de $c
-integer -> tipo de $d
-1 -> valor de $a
-xyz -> valor de $b
-xyz -> valor de $c
-18 -> valor de $d
-44 -> valor de $f
-44 -> valor de $g
+
+- string -> tipo de $b
+- boolean -> tipo de $a
+- string -> tipo de $c
+- integer -> tipo de $d
+- 1 -> valor de $a
+- xyz -> valor de $b
+- xyz -> valor de $c
+- 18 -> valor de $d
+- 44 -> valor de $f
+- 44 -> valor de $g
