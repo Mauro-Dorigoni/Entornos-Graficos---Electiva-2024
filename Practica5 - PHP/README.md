@@ -81,7 +81,9 @@ La salida de este programa va a ser:
 - 44 -> valor de $g
 
 ## Ejercicio 2
+
 ### a.
+
 ```php
 <?php
 $i = 1;
@@ -105,9 +107,11 @@ do {
 } while ($i<10);
 ?>
 ```
+
 En este caso, los codigos son efectivamete equivalentes, es decir, producen la misma salida. La unica diferencia entre el primer y el segundo codigo es la sintaxis del while, que PHP reconoce tanto por si solo como terminando con el "endwhile". El tercer codigo implementa un "do while", con la variable comenzando en 0 y dentro del loop sumandole 1 antes de printearla (a diferencia de los otros 2, que primero printean y luego suman), y terminando el loop cuando la variable llegue a 10.
 
 ### b.
+
 ```php
 //Codigo 1
 <?php
@@ -141,4 +145,33 @@ for (;;) {
  $i++;
 }
 ?>
+```
+
+## Ejercicio 3
+
+### a.
+
+```php
+<html>
+<head><title>Documento 1</title></head>
+<body>
+```
+
+```php
+<?php
+ echo "<table width = 90% border = '1' >";
+ $row = 5;
+ $col = 2;
+ for ($r = 1; $r <= $row; $r++) {
+ echo "<tr>";
+ for ($c = 1; $c <= $col;$c++) {
+ echo "<td>&nbsp;</td>\n";
+ } echo "</tr>\n";
+ }
+ echo "</table>\n";
+?>
+```
+
+</body>
+</html>
 ```
