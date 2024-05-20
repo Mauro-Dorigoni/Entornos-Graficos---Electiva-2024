@@ -213,4 +213,8 @@ echo " El $flor $color";
 ?>
 ```
 
-Inicialmente el codigo devolvera un error de variable indefinida (tanto para flor como para color) en el primer echo, luego del string "El". Esto es debido a que la llamada al archivo con los datos se realiza despues de este, y php no tiene hoisting, es decir, no "sabe" todavia que se uda el archivo datos.php. En cambio el segundo print funcionara correctamente, ya que se puede realizar el acceso al archivo y comprobar el valor de las variables, retornando "El clavel blanco" en consola. 
+Inicialmente el codigo devolvera un error de variable indefinida (tanto para flor como para color) en el primer echo, luego del string "El". Esto es debido a que la llamada al archivo con los datos se realiza despues de este, y php no tiene hoisting, es decir, no "sabe" todavia que se uda el archivo datos.php. En cambio el segundo print funcionara correctamente, ya que se puede realizar el acceso al archivo y comprobar el valor de las variables, retornando "El clavel blanco" en consola.
+
+## Ejercicio 5
+
+Cada vez que se ejecuta el código html (que cuenta como una visita individual) se realiza una llamada al código contador.php. Este código abre el archivo contador.dat en modo lectura, lee el contenido y lo cierra para posteriormente abrirlo en modo escritura. Agrega una visita, es decir, suma uno al contador de visitas, guarda la modificación y cierra el archivo para luego mostrar en la página el total de visitas.
