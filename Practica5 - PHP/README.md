@@ -170,3 +170,35 @@ for (;;) {
 </body>
 </html>
 ```
+
+Este fragmento de código genera una tabla html mediante el uso de variables de php y mediante dos bucles for. El primero genera las filas y el segundo que se encuentra anidado, genera las columnas. La tabla tiene un ancho del 90% y un borde de 1.
+
+### b.
+
+```php
+<html>
+<head><title>Documento 2</title></head>
+<body>
+<?php
+if (!isset($_POST['submit'])) {
+?>
+ <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+ Edad: <input name="age" size="2">
+ <input type="submit" name="submit" value="Ir">
+ </form>
+<?php
+ }
+else {
+ $age = $_POST['age'];
+ if ($age >= 21) {
+ echo 'Mayor de edad';
+ }
+ else {
+ echo 'Menor de edad';
+ }
+}
+?>
+</body></html>
+```
+
+Este código realiza una validación de la edad ingresada. La condición `if (!isset($_POST['submit']))` verifica si el formulario ha sido enviado. La función `isset()` comprueba si la variable `$_POST['submit']` está definida, lo que indicaría que el formulario ha sido enviado. Si el formulario no fue enviado, entra al if y muestra el formulario en si permitiendo el ingreso de una edad. La etiqueta `<form>` especifica que el formulario enviará los datos mediante el método post a la misma página mediante la siguiente sentencia `<?php echo $_SERVER['PHP_SELF']; ?>`. Cuando el formulario fue enviado, entra en el else donde realiza una verificación de a edad, si es mayor o menor a 21 y muestra en la página el texto según corresponda.
