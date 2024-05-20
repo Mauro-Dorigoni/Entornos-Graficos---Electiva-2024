@@ -202,3 +202,15 @@ else {
 ```
 
 Este código realiza una validación de la edad ingresada. La condición `if (!isset($_POST['submit']))` verifica si el formulario ha sido enviado. La función `isset()` comprueba si la variable `$_POST['submit']` está definida, lo que indicaría que el formulario ha sido enviado. Si el formulario no fue enviado, entra al if y muestra el formulario en si permitiendo el ingreso de una edad. La etiqueta `<form>` especifica que el formulario enviará los datos mediante el método post a la misma página mediante la siguiente sentencia `<?php echo $_SERVER['PHP_SELF']; ?>`. Cuando el formulario fue enviado, entra en el else donde realiza una verificación de a edad, si es mayor o menor a 21 y muestra en la página el texto según corresponda.
+
+## Ejercicio 4
+
+```php
+<?php
+echo "El $flor $color \n";
+include 'datos.php';
+echo " El $flor $color";
+?>
+```
+
+Inicialmente el codigo devolvera un error de variable indefinida (tanto para flor como para color) en el primer echo, luego del string "El". Esto es debido a que la llamada al archivo con los datos se realiza despues de este, y php no tiene hoisting, es decir, no "sabe" todavia que se uda el archivo datos.php. En cambio el segundo print funcionara correctamente, ya que se puede realizar el acceso al archivo y comprobar el valor de las variables, retornando "El clavel blanco" en consola. 
