@@ -155,9 +155,6 @@ for (;;) {
 <html>
 <head><title>Documento 1</title></head>
 <body>
-```
-
-```php
 <?php
  echo "<table width = 90% border = '1' >";
  $row = 5;
@@ -170,8 +167,6 @@ for (;;) {
  }
  echo "</table>\n";
 ?>
-```
-
 </body>
 </html>
 ```
