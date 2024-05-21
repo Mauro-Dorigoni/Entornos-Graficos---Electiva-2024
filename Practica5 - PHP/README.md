@@ -147,6 +147,40 @@ for (;;) {
 ?>
 ```
 
+Los cuatro codigo realizan la misma tarea. Todos imprimen `12345678910`. Sin embargo utilizan logicas distintas para iterar. En el codigo 1, la variable `$i` solo existe dentro de la estructura `for`, y en ella se realiza la comparación. Dentro de las instrucciones que ejecuta en cada iteración el `for` se encuentra la que imprime. El codigo 2, tiene de diferencia que en la exp3 del for ademas de sumar un valor en la variable, imprime. El 3 deja vacio la exp2 del bucle, dando su valor por defecto en TRUE; sin la expreción de break no terminaría jamas. El 4 difiere principalmente en el skope de la variable i. Esta existe fuera del bucle, y se incrementa en su interior. Al igual que con el 3 necesita una sentencia de break. No define una variable sobre la cual itera, no define condicion, y tampoco incremento, dejando vacias las tres expreciones. 
+
+### c.
+
+//Codigo 1
+```php
+<?php
+if ($i == 0) {
+ print "i equals 0";
+} elseif ($i == 1) {
+ print "i equals 1";
+} elseif ($i == 2) {
+ print "i equals 2";
+}
+?>
+```
+//Codigo 2
+```php
+<?php
+switch ($i) {
+ case 0:
+ print "i equals 0";
+ break;
+ case 1:
+ print "i equals 1";
+ break;
+ case 2:
+ print "i equals 2";
+ break;
+}
+?>
+```
+Las dos realizan lo mismo. Solamente difieren en la estructura de control utilizada. Una utiliza `switch`y la otra `if` anidados. 
+
 ## Ejercicio 3
 
 ### a.
