@@ -194,12 +194,13 @@ Las dos realizan lo mismo. Solamente difieren en la estructura de control utiliz
  $row = 5;
  $col = 2;
  for ($r = 1; $r <= $row; $r++) {
- echo "<tr>";
- for ($c = 1; $c <= $col;$c++) {
- echo "<td>&nbsp;</td>\n";
- } echo "</tr>\n";
- }
- echo "</table>\n";
+    echo "<tr>";
+    for ($c = 1; $c <= $col;$c++) {
+        echo "<td>&nbsp;</td>\n";
+    } 
+    echo "</tr>\n";
+    }
+echo "</table>\n";
 ?>
 </body>
 </html>
@@ -247,8 +248,145 @@ echo " El $flor $color";
 ?>
 ```
 
-Inicialmente el codigo devolvera un error de variable indefinida (tanto para flor como para color) en el primer echo, luego del string "El". Esto es debido a que la llamada al archivo con los datos se realiza despues de este, y php no tiene hoisting, es decir, no "sabe" todavia que se uda el archivo datos.php. En cambio el segundo print funcionara correctamente, ya que se puede realizar el acceso al archivo y comprobar el valor de las variables, retornando "El clavel blanco" en consola.
+Inicialmente el codigo devolvera un error de variable indefinida (tanto para flor como para color) en el primer echo, luego del string "El". Esto es debido a que la llamada al archivo con los datos se realiza despues de este, y php no tiene hoisting, es decir, no "sabe" todavia que se usa el archivo datos.php. En cambio el segundo print funcionara correctamente, ya que se puede realizar el acceso al archivo y comprobar el valor de las variables, retornando "El clavel blanco" en consola.
 
 ## Ejercicio 5
 
+//contador.php
+```php 
+<?
+// Archivo para acumular el numero de visitas
+$archivo = "contador.dat";
+// Abrir el archivo para lectura
+$abrir = fopen($archivo, "r");
+// Leer el contenido del archivo
+$cont = fread($abrir, filesize($archivo));
+// Cerrar el archivo
+fclose($abrir);
+// Abrir nuevamente el archivo para escritura
+$abrir = fopen($archivo, "w");
+// Agregar 1 visita
+$cont = $cont + 1;
+// Guardar la modificación
+$guardar = fwrite($abrir, $cont);
+// Cerrar el archivo
+fclose($abrir);
+// Mostrar el total de visitas
+echo "<font face='arial' size='3'>Cantidad de visitas:".$cont."</font>";
+?>
+```
+///vistas.php 
+```php
+<!-- Página que va a contener al contador de visitas -->
+<html>
+<head></head>
+<body>
+<?php include("contador.php") ?>
+</body>
+</html>
+``` 
 Cada vez que se ejecuta el código html (que cuenta como una visita individual) se realiza una llamada al código contador.php. Este código abre el archivo contador.dat en modo lectura, lee el contenido y lo cierra para posteriormente abrirlo en modo escritura. Agrega una visita, es decir, suma uno al contador de visitas, guarda la modificación y cierra el archivo para luego mostrar en la página el total de visitas.
+
+# PHP: arrays, funciones 
+## Ejercicio 1
+
+```php
+//Cogigo 1
+
+<?php
+$a = array( 'color' => 'rojo',
+ 'sabor' => 'dulce',
+ 'forma' => 'redonda',
+ 'nombre' => 'manzana',
+ 4
+ );
+?> 
+
+//Codigo 2
+
+<?php
+$a['color'] = 'rojo';
+$a['sabor'] = 'dulce';
+$a['forma'] = 'redonda';
+$a['nombre'] = 'manzana';
+$a[] = 4;
+?> 
+```
+
+Los dos codigo realizan lo mismo. Con la ferencia que el Codigo 1 define el array mediante la forma clave=>valor, y la forma dos asignandolos individualmente los valores a un indice. 
+
+## Ejercicio 2
+```php
+//Codigo 1
+<?php
+$matriz = array("x" => "bar", 12 => true);
+echo $matriz["x"]; //bar
+echo $matriz[12]; //1
+?>
+
+//Codigo 2
+<?php
+$matriz = array("unamatriz" => array(6 => 5, 13 => 9, "a" => 42));
+echo $matriz["unamatriz"][6]; //5
+echo $matriz["unamatriz"][13]; //9
+echo $matriz["unamatriz"]["a"]; //42
+?>
+
+//Codigo 3
+<?php
+$matriz = array(5 => 1, 12 => 2);
+$matriz[] = 56;
+$matriz["x"] = 42; 
+unset($matriz[5]); //5 quedaria indefinido. Imprimiría ""
+unset($matriz); //El array deja de existir. 
+?>
+//No imprime nada. 
+```
+
+## Ejercicio 3
+```php
+//Codigo 1
+<?php
+$fun = getdate();
+echo "Has entrado en esta pagina a las $fun[hours] horas, con $fun[minutes] minutos y $fun[seconds]
+segundos, del $fun[mday]/$fun[mon]/$fun[year]";
+?>
+
+//Codigo 2
+<?php
+function sumar($sumando1,$sumando2){
+ $suma=$sumando1+$sumando2;
+ echo $sumando1."+".$sumando2."=".$suma;
+}
+sumar(5,6);
+?>
+```
+El codigo 1 imprimiría: `Has entrado en esta pagina a las 21 horas, con 25 minutos y 10 segundos, del 21/5/2024 `
+
+El codigo 2: `5+6=11`
+
+## Ejercicio 4
+```php
+function comprobar_nombre_usuario($nombre_usuario){
+ //compruebo que el tamaño del string sea válido.
+    if (strlen($nombre_usuario)<3 || strlen($nombre_usuario)>20){
+        echo $nombre_usuario . " no es válido<br>";
+        return false;
+    }
+ //compruebo que los caracteres sean los permitidos
+    $permitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
+    for ($i=0; $i<strlen($nombre_usuario); $i++){
+        if (strpos($permitidos, substr($nombre_usuario,$i,1))===false){
+        echo $nombre_usuario . " no es válido<br>";
+        return false;
+        }
+    }
+    echo $nombre_usuario . " es válido<br>";
+    return true;
+} 
+```
+
+Esta función primero verifica que el largo del nombre este entre 3 y 20. Luego define los caracteres permitidos en una variable e itera cada caracter del nombre. 
+La función strpos() se utiliza para encontrar la posición de la primera aparición de una cadena dentro de otra cadena. 
+Con substr() se extrae una parte de una cadena desde un caracter de inicio y una longitud de fin. 
+En cada iteracion busca que un caracter puntual del nombre del usuario pertenezca a la cadena de los permitidos. En caso que todos los caracteres pertenezcan, es decir,que se itere en toda la cadena nombre_usuario y esta tenga todos sus caracteres falsos (nunca entra al if) se devuelte que la cadena es valida. En caso que en alguna posicion de la cadena nombre_usuario se encuentre un caracter que no pertenezca a los permitidos, retorna nombre no valido. 
