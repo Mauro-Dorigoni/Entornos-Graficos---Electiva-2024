@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Alta de Ciudad</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Alta de Ciudad</h2>
+        <form action="alta.php" method="post" class="mt-3">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="pais">País:</label>
+                <input type="text" class="form-control" id="pais" name="pais" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidad_habitantes">Cantidad de Habitantes:</label>
+                <input type="number" class="form-control" id="cantidad_habitantes" name="cantidad_habitantes" required>
+            </div>
+            <div class="form-group">
+                <label for="superficie">Superficie (km²):</label>
+                <input type="number" class="form-control" id="superficie" name="superficie" required>
+            </div>
+            <div class="form-group">
+                <label>Tiene Metro?</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="metro_true" name="tiene_metro" value="true" required>
+                    <label class="form-check-label" for="metro_true">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="metro_false" name="tiene_metro" value="false" required>
+                    <label class="form-check-label" for="metro_false">No</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
