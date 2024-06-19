@@ -9,7 +9,7 @@
 <?php
 $servername = "localhost";
 $username = "root"; 
-$password = "Julianalvarezbrasil19";
+$password = "";
 $dbname = "capitales";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
