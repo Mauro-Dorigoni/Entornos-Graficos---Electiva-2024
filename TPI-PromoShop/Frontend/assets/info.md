@@ -1,0 +1,1 @@
+Assets necesarios para el frontend
