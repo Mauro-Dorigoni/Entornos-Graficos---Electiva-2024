@@ -10,5 +10,21 @@
                 echo "Error: " . $e->getMessage();
             }
         }
+        public static function getByMail(User $user){
+            $userFound = null;
+            try {
+                $userFound = UserData::findByMail($user);
+                if($userFound === null){
+                    throw new Exception("Usuario no encontrado");
+                };
+                if($userFound->getPass() != $user->getPass()){
+                    throw new Exception("Contraseña incorrecta");
+                }
+                return $userFound;
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+            return $userFound;
+        }
     }
 ?>
