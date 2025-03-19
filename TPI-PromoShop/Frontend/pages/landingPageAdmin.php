@@ -1,3 +1,8 @@
+<?php
+require_once "../shared/authFunctions.php/admin.auth.function.php";
+require_once "../../Backend/structs/user.class.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,5 +12,6 @@
 </head>
 <body>
     <h1>Landing Page Admin</h1>
+    <h2>Bienvenido <?php echo $user->getEmail()?></h2>
 </body>
 </html>

@@ -1,3 +1,7 @@
+<?php
+require_once "../shared/authFunctions.php/user.auth.function.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

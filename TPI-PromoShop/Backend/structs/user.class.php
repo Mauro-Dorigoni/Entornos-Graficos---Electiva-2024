@@ -1,13 +1,15 @@
 <?php
-
+require_once "./userCategory.class.php";
 class User {
     private int $id;
     private $email;
     private $pass;
-
     private bool $isAdmin;
-
     private bool $isOwner;
+    private $dateDeleted;
+    private bool $isEmailVerified;
+
+    private UserCategory $userCategory;
 
     public function __construct() {
     }
@@ -41,6 +43,23 @@ class User {
     public function setIsAdmin(bool $isAdmin){
         $this->isAdmin=$isAdmin;   
     }
-
+    public function setDateDeleted($dateDeleted){
+        $this->dateDeleted=$dateDeleted;
+    }
+    public function getDateDeleted(){
+        return $this->dateDeleted;
+    }
+    public function setIsEmailVerified(bool $isEmailVerified){
+        $this->isAdmin=$isEmailVerified;   
+    }
+    public function isEmailVerified(){
+        return $this->isEmailVerified;
+    }
+    public function setUserCategory(UserCategory $userCategory){
+        $this->userCategory=$userCategory;
+    }
+    public function getUserCategory(){
+        return $this->userCategory;
+    }
 }
 ?>
