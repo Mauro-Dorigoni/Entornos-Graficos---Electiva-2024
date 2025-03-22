@@ -1,5 +1,5 @@
 <?php
-require_once "./userCategory.class.php";
+require_once __DIR__."/userCategory.class.php";
 class User {
     private int $id;
     private $email;
@@ -8,6 +8,7 @@ class User {
     private bool $isOwner;
     private $dateDeleted;
     private bool $isEmailVerified;
+    private string $emailToken;
 
     private UserCategory $userCategory;
 
@@ -15,6 +16,12 @@ class User {
     }
     public function getId() {
         return $this->id;
+    }
+    public function setEmailToken(string $token){
+        $this->emailToken=$token;
+    }
+    public function getEmailToken(){
+        return $this->emailToken;
     }
     public function setId($id) {
         $this->id = $id;
@@ -50,7 +57,7 @@ class User {
         return $this->dateDeleted;
     }
     public function setIsEmailVerified(bool $isEmailVerified){
-        $this->isAdmin=$isEmailVerified;   
+        $this->isEmailVerified=$isEmailVerified;   
     }
     public function isEmailVerified(){
         return $this->isEmailVerified;

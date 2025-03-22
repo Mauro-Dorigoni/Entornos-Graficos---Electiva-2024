@@ -15,6 +15,7 @@ create table `user`(
     `isAdmin` boolean default null,
     `isOwner` boolean default null,
     dateDeleted date default null,
+    emailToken varchar(255) default null,
     isEmailVerified boolean,
     idUserCategory int unsigned,
     foreign key (idUserCategory) references userCategory (id) on update cascade
@@ -73,7 +74,7 @@ create table promoUse (
 
 create table validPromoDay (
 	id int unsigned primary key,
-    weekDay varchar(15),
+    weekDay int unsigned,
     idPromotion int unsigned,
     foreign key (idPromotion) references promotion (id) on update cascade
 );

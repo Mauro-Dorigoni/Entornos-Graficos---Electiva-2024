@@ -1,8 +1,8 @@
 <?php 
-require_once "../structs/user.class.php";
-require_once "../logic/user.controller.php";
-require_once "../shared/frontendRoutes.dev.php";
-require_once "../shared/userType.enum.php";
+require_once __DIR__."/../structs/user.class.php";
+require_once __DIR__."/../logic/user.controller.php";
+require_once __DIR__."/../shared/frontendRoutes.dev.php";
+require_once __DIR__."/../shared/userType.enum.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Me traigo los campos del formulario de Login
@@ -20,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($user->getPass() != $pass){
             throw new Exception("Contraseña");
         }
+        /* if(!$userFound->isEmailVerified()){
+            throw new Exception("Email no verificado");
+        } */
         //Inicializo la variable se sesion para autenticacion
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -27,12 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Le encajo el usuario a la variable de sesion
         $_SESSION['user'] = $user;
         //redirijo a la pagina apropiada por el tipo de usuario, y establezco el tipo de usuario en la variable de sesion para corroborar en el front
-        if($user->isAdmin() == 1){
+        if($user->isAdmin()){
             $_SESSION["userType"] = UserType_enum::Admin;
             header("Location: ".frontendURL."/landingPageAdmin.php");
             exit;
         }
-        if($user->isOwner() == 1){
+        if($user->isOwner()){
             $_SESSION["userType"] = UserType_enum::Owner;
             header("Location: ".frontendURL."/landingPageOwner.php"); 
             exit;
