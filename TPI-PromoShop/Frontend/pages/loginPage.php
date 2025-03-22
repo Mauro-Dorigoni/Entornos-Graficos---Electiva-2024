@@ -1,6 +1,7 @@
 <?php
 require_once "../shared/backendRoutes.dev.php";
 require_once "../shared/frontendRoutes.dev.php";
+include "../components/messageModal.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

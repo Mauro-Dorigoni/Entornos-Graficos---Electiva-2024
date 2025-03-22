@@ -26,7 +26,7 @@ class UserData {
             $stmt->execute();
             echo "Usuario agregado exitosamente.";
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            throw new Exception("Error al agregar el usuario a la BD. ".$e->getMessage());
         } finally {
             if (isset($stmt) && $stmt !== false) {
                 $stmt->close();
@@ -69,7 +69,7 @@ class UserData {
             };
             
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            throw new Exception("Error al intentar buscar al ususario por mail en la BD. ".$e->getMessage());
         } finally {
             if (isset($stmt) && $stmt !== false) {
                 $stmt->close();
@@ -114,7 +114,7 @@ class UserData {
             };
             
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            throw new Exception("Error al intentar buscar al usuario por email Token en la BD. ".$e->getMessage());
         } finally {
             if (isset($stmt) && $stmt !== false) {
                 $stmt->close();
@@ -152,7 +152,7 @@ class UserData {
                 throw new Exception("No se actualizó ningún registro.");
             }
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            throw new Exception("Error al intentar actualizar el usuario en la BD. ".$e->getMessage());
         } finally {
             if (isset($stmt) && $stmt !== false) {
                 $stmt->close();

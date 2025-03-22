@@ -14,15 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         //Le pido al controlador que encuentre el usuario
         $user = UserController::getByMail($user);
-        if($user === null){
-            throw new Exception("Error al logearse");
+        if($user === null  || !password_verify($pass, $user->getPass())){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['error_message'] = "Usuario o contraseña incorrectos";
+            header("Location: ".frontendURL."/loginPage.php");
+            exit;
         }
-        if($user->getPass() != $pass){
-            throw new Exception("Contraseña");
-        }
-        /* if(!$userFound->isEmailVerified()){
-            throw new Exception("Email no verificado");
-        } */
         //Inicializo la variable se sesion para autenticacion
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -44,11 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ".frontendURL."/landingPage.php"); 
         exit;
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION['error_message'] = $e->getMessage();
     }
 
 } else {
-    echo "Método de solicitud no permitido.";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    $_SESSION['error_message'] = "Metodo de solicitud no permitido";
 }
 
 ?>

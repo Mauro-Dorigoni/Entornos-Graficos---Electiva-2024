@@ -15,7 +15,7 @@
                 $user->setUserCategory($userCategory);
                 UserData::add($user);
             } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
+                throw new Exception("Error en el registro de usuario. ".$e->getMessage());
             }
             return $user;
         }
@@ -24,7 +24,7 @@
             try {
                 $userFound = UserData::findByMailToken($user);
             } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
+                throw new Exception("Error al tratar de buscar el usuario por mail Token. ".$e->getMessage());
             }
             return $userFound;
         }
@@ -34,27 +34,26 @@
             try {
                 UserData::updateUser($user);
             } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
+                throw new Exception("Error al tratar de validar el mail del usuario. ".$e->getMessage());
             }
         }
         public static function getByMail(User $user){
             $userFound = null;
             try {
                 $userFound = UserData::findByMail($user);
-                if($userFound === null){
+                /* if($userFound === null){
                     throw new Exception("Usuario no encontrado");
-                };
-                if($userFound->getPass() != $user->getPass()){
+                }; */
+                /* if($userFound->getPass() != $user->getPass()){
                     throw new Exception("Contraseña incorrecta");
-                }
-                if($userFound!=null and !$userFound->isEmailVerified()){
+                } */
+                /* if($userFound!=null and !$userFound->isEmailVerified()){
                     throw new Exception("Email no verificado");
-                }
+                } */
                 return $userFound;
             } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
+                throw new Exception("Error al tratar de encontrar al usuario por su mail. ".$e->getMessage());
             }
-            return $userFound;
         }
     }
 ?>

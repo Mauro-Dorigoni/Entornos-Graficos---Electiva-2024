@@ -16,16 +16,35 @@ if (isset($_GET['token'])) {
             } else {
                 UserController::validateUserEmail($userFound);
                 echo "¡Email verificado exitosamente! Ahora puedes iniciar sesión.";
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION['success_message'] = "¡Email verificado exitosamente! Te pediremos que vuelvas a iniciar sesión.";
             }
             header("Location: ".frontendURL."/loginPage.php"); 
             exit;
         } else {
-            echo "Token inválido o expirado.";
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['error_message'] = "Token inválido o expirado.";
+            header("Location: ".frontendURL."/loginPage.php"); 
+            exit;
         }
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION['error_message'] = $e->getMessage();
+        header("Location: ".frontendURL."/loginPage.php"); 
+        exit;
     }
 } else {
-    echo "Token no proporcionado.";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    $_SESSION['error_message'] = "Token no proporcionado.";
+    header("Location: ".frontendURL."/loginPage.php"); 
+    exit;
 }
 ?>
