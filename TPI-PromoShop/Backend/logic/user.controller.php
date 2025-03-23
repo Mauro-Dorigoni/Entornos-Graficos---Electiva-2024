@@ -55,5 +55,12 @@
                 throw new Exception("Error al tratar de encontrar al usuario por su mail. ".$e->getMessage());
             }
         }
+        public static function update($user){
+            try {
+                UserData::updateUser($user);
+            } catch (Exception $e) {
+                throw new Exception("Error al tratar de actualizar los datos del usuario. ".$e->getMessage());
+            }
+        }
     }
 ?>

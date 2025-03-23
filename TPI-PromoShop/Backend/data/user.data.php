@@ -60,6 +60,7 @@ class UserData {
                 $userFound->setPass($row['pass']);
                 $userFound->setIsAdmin((bool)$row['isAdmin']);
                 $userFound->setIsOwner((bool)$row['isOwner']);
+                $userFound->setEmailToken($row["emailToken"]);
                 $userFound->setIsEmailVerified((bool)$row['isEmailVerified']);
                 $userFoundCategory = new UserCategory();
                 $userFoundCategory->setId($row['idUserCategory']);
