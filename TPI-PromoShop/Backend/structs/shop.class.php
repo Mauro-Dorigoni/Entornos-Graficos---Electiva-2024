@@ -1,5 +1,6 @@
 <?php
 require_once "./user.class.php";
+require_once "./shopType.class.php";
 class Shop{
     private int $id;
     private string $name;
@@ -8,6 +9,7 @@ class Shop{
     private $dateDeleted;
     private $imagesUUIDS = [];
     private User $owner;
+    private ShopType $shopType;
 
     public function __construct() {
     }
@@ -32,6 +34,9 @@ class Shop{
     public function setOwner(User $owner){
         $this->owner=$owner;
     }
+    public function setShopType(ShopType $shopType){
+        $this->shopType=$shopType;
+    }
     public function getId(){
         return $this->id;
     }
@@ -52,6 +57,9 @@ class Shop{
     }
     public function getOwner(){
         return $this->owner;
+    }
+    public function getShopType(){
+        return $this->shopType;
     }
 
 }

@@ -4,18 +4,25 @@ Use promoShop;
 
 create table `userCategory`(
 	id int unsigned auto_increment primary key,
-    categoryType varchar(255) not null,
+    categoryType varchar(255) not null unique,
+    dateDeleted date default null
+);
+
+create table `shopType`(
+	id int unsigned auto_increment primary key,
+    `type` varchar(255) unique,
+    `description` text,
     dateDeleted date default null
 );
 
 create table `user`(
 	`id` int unsigned auto_increment primary key,
-    `email` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL unique,
     `pass` varchar(255) not null,
     `isAdmin` boolean default null,
     `isOwner` boolean default null,
     dateDeleted date default null,
-    emailToken varchar(255) default null,
+    emailToken varchar(255) default null unique,
     isEmailVerified boolean,
     idUserCategory int unsigned,
     foreign key (idUserCategory) references userCategory (id) on update cascade
@@ -23,12 +30,14 @@ create table `user`(
 
 create table shop (
 	id int unsigned auto_increment primary key,
-    `name` varchar(255) not null,
+    `name` varchar(255) not null unique,
     location varchar(255) not null,
     `type` varchar(255) not null,
     dateDeleted date default null,
     idOwner int unsigned,
-    foreign key (idOwner) references `user`(id) on update cascade
+    idShopType int unsigned,
+    foreign key (idOwner) references `user`(id) on update cascade,
+    foreign key (idShopType) references shopType (id) on update cascade
 );
 
 create table news(
