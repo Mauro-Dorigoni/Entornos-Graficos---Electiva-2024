@@ -1,0 +1,26 @@
+footer{
+    background-color: #006633;
+}
+.footer-container{
+    background-color: #006633;
+    margin-left: 25px;
+}
+.footer-container h3{
+    color: white;
+}
+.footer-container p{
+    color: white;
+}
+.footer-container span{
+    color: white;
+}
+.footer-container a{
+    color: white;
+}
+.footer-container a:hover{
+    color: white;
+    text-decoration: underline;
+}
+.icon-footer{
+    height: 25px;
+}

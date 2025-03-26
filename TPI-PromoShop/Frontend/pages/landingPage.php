@@ -1,6 +1,8 @@
 <?php
 require_once "../shared/authFunctions.php/user.auth.function.php";
-session_start();
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,5 +18,6 @@ session_start();
 <body>
     <?php include "../components/header.php"?>
     <h1>Landing Page de Usuario</h1>
+    <?php include "../components/footer.php"?>
 </body>
 </html>
