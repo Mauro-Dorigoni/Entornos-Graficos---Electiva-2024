@@ -24,3 +24,29 @@ footer{
 .icon-footer{
     height: 25px;
 }
+#contactModal #contactModalLabel {
+    color: #CC6600;
+    font-weight: bolder;
+}
+#contactModal .modal-header {
+    background-color: #006633;
+}
+#contactModal .modal-content {
+    background-color: #eae8e0;
+}
+#contactModal #submitContactFormButton {
+    background-color: #CC6600;
+    border-color: #CC6600;
+}
+#contactModal .btn-close.custom-close {
+    background-color: #CC6600;
+    border-radius: 10%;
+    opacity: 1;
+}
+
+@media (max-width: 840px) {
+    .footer-container{
+    margin-left: 0px;
+}
+}
+    

@@ -1,5 +1,7 @@
 <?php
 require_once "../shared/authFunctions.php/user.auth.function.php";
+include "../components/messageModal.php";
+
 if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
@@ -19,5 +21,6 @@ if(session_status() == PHP_SESSION_NONE){
     <?php include "../components/header.php"?>
     <h1>Landing Page de Usuario</h1>
     <?php include "../components/footer.php"?>
+
 </body>
 </html>

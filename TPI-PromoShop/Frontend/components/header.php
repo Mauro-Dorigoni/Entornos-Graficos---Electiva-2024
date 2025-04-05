@@ -2,6 +2,11 @@
 require_once "../shared/frontendRoutes.dev.php";
 ?>
 <link rel="stylesheet" href="../assets/styles/header.css">
+<style>
+    .logo-container:hover {
+    text-decoration: none;
+    }
+</style>
 <div class="header">
     <a href=<?php echo frontendURL."/landingPage.php"?> class="logo-container">
         <img src="../assets/LogoPromoShopFondoVerde.png" alt="Logo de PromoShop">
