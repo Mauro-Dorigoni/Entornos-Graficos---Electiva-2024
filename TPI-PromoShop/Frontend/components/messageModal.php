@@ -2,7 +2,9 @@
  impide navegar hacia atras en la pagina, ya que cierra la session, por lo cual tira error
  al intenta recuperar los mensajes -->
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 if (isset($_SESSION['error_message']) || isset($_SESSION['success_message']) || isset($_SESSION['info_message'])):
 ?>
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">

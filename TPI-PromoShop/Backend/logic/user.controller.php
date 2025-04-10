@@ -19,6 +19,21 @@
             }
             return $user;
         }
+        public static function registerOwner(User $owner){
+            try {
+                $owner->setDateDeleted(null);
+                $owner->setIsAdmin(false);
+                $owner->setIsEmailVerified(true);
+                $owner->setIsOwner(true);
+                $userCategory = new UserCategory();
+                $userCategory->setId(1);
+                $owner->setUserCategory($userCategory);
+                UserData::add($owner);
+            } catch (Exception $e) {
+                throw new Exception("Error en el registro de usuario. ".$e->getMessage());
+            }
+            return $owner;
+        }
         public static function getByEmailToken(User $user){
             $userFound = null;
             try {

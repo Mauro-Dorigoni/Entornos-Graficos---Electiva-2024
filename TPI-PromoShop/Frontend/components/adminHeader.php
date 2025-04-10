@@ -63,38 +63,6 @@ require_once "../shared/frontendRoutes.dev.php";
         <?php endif?>
         </div>
     </div>
-    <!-- Menú de navegación en nivel inferior -->
-    <div class="container-fluid nav-menu" style="background-color: #006633;">
-        <div class="row">
-            <div class="col-12">
-                <nav class="navbar navbar-expand-lg navbar-dark p-0">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mx-auto">
-                            <li class="nav-item">
-                                <a class="nav-link px-4" href="<?php echo frontendURL."/localesPage.php"?>">Locales</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-4" href="<?php echo frontendURL."/promocionesPage.php"?>">Promociones</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-4" href="<?php echo frontendURL."/sobreNosotrosPage.php"?>">Sobre nosotros</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-4" href="<?php echo frontendURL."/novedadesPage.php"?>">Novedades</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-4" href="<?php echo frontendURL."/reportesPage.php"?>">Reportes</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {

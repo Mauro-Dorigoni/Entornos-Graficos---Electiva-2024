@@ -11,7 +11,15 @@ require_once "../../Backend/structs/user.class.php";
     <title>Admin landing page</title>
 </head>
 <body>
-    <h1>Landing Page Admin</h1>
-    <h2>Bienvenido <?php echo $user->getEmail()?></h2>
+    <?php include "../components/adminNavBar.php"?>
+    <div class="header-container" style="background-color: #006633;">
+        <?php include "../components/adminHeader.php"?>
+
+    </div>
+    <div class="content">
+        <h1>Landing Page Admin</h1>
+        <h2>Bienvenido <?php echo $user->getEmail()?></h2>
+        
+    </div>
 </body>
 </html>

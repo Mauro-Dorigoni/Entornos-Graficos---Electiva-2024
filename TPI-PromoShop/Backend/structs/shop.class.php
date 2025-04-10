@@ -1,6 +1,6 @@
 <?php
-require_once "./user.class.php";
-require_once "./shopType.class.php";
+require_once __DIR__."/user.class.php";
+require_once __DIR__."/shopType.class.php";
 class Shop{
     private int $id;
     private string $name;

@@ -32,7 +32,6 @@ create table shop (
 	id int unsigned auto_increment primary key,
     `name` varchar(255) not null unique,
     location varchar(255) not null,
-    `type` varchar(255) not null,
     dateDeleted date default null,
     idOwner int unsigned,
     idShopType int unsigned,
