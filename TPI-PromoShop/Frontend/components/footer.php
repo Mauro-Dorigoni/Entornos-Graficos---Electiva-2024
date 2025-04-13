@@ -31,6 +31,12 @@
         border-radius: 10%;
         opacity: 1;
     }
+    p, a {
+        text-decoration: none;
+    }
+    span a {
+        text-decoration: none;
+    }
 </style>
 <!-- Footer con todas sus opciones -->
 <footer>

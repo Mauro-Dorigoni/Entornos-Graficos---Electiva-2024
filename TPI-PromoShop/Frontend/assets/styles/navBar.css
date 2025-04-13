@@ -1,0 +1,112 @@
+.logo-container:hover {
+    text-decoration: none;
+}
+
+#navBarContainer a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-menu .nav-link {
+    position: relative;
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.nav-menu .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #CC6600; 
+    transition: width 0.3s ease;
+}
+
+.nav-menu .nav-link:hover::after {
+    width: 100%;
+}
+
+
+.nav-menu {
+    padding-bottom: 20px ;
+}
+
+.nav-menu .navbar {
+    background-color: #006633 !important;
+}
+
+.custom-submenu {
+    display: none;
+    position: absolute;
+    background-color: #eae8e0;
+    z-index: 1000;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.custom-submenu a {
+    display: block;
+    padding: 8px 16px;
+    color: #dddddda6;
+    text-decoration: none;
+}
+
+.nav-link {
+    color: #fff;
+    position: relative;
+}
+
+.custom-submenu {
+    display: none;
+    /* padding-left: 20px; */
+}
+
+.custom-submenu a{
+    color: black;
+}
+
+.custom-submenu a:hover{
+    background-color: #CC6600;
+}
+
+.custom-submenu.show {
+    display: block;
+}
+
+.submenu-arrow {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.toggle-submenu.active .submenu-arrow {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .custom-submenu {
+        position: absolute;
+        background-color: #eae8e0;
+        z-index: 1000;
+        top: 100%;
+        left: 0;
+        min-width: 180px;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .custom-submenu a {
+        color: black;
+        text-decoration: none;
+        display: block;
+        padding: 8px 16px;
+    }
+
+    .custom-submenu a:hover {
+        background-color: #CC6600;
+    }
+}
