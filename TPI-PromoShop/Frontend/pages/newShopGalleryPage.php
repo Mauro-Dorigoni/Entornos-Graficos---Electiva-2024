@@ -2,6 +2,9 @@
 require_once "../shared/authFunctions.php/owner.auth.function.php";
 require_once "../shared/backendRoutes.dev.php";
 include "../components/messageModal.php";
+require_once "../../Backend/logic/shop.controller.php";
+
+$shop = ShopController::getOneByOwner($user);
 
 ?>
 <!DOCTYPE html>
@@ -32,7 +35,7 @@ include "../components/messageModal.php";
                 Puede seleccionar hasta 5 imagenes (subalas todas de una sola vez)</label>
               <input type="file" id="imagenes" name="imagen[]" accept="image/*" class="form-control form-control-lg" multiple required onchange="checkFiles(this)">
               <div id="fileList" class="mt-3"></div>
-              <input type="hidden" name="idLocal" id="hiddeninput" value="2">
+              <input type="hidden" name="idLocal" id="hiddeninput" value="<?php echo $shop->getId()?>">
             </div>
             <div class="pt-1 mb-4">
               <button type="submit" class="btn btn-lg btn-block btn-outline-orange" id="btn-outline-orange">Aceptar</button>
