@@ -2,6 +2,10 @@
     text-decoration: none;
 }
 
+#navBarContainer {
+    background-color: #006633;
+}
+
 #navBarContainer a:hover {
     text-decoration: none;
     color: white;

@@ -12,22 +12,22 @@
                         <li class="nav-item position-relative">
                             <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
                                 href="#" data-target="#submenu-locales">
-                                Locales 
+                                Local 
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/newLocalPage.php'; ?>">Alta de Local</a>
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/newShopTypePage.php'; ?>">Alta de Tipo</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/newShopGalleryPage.php'; ?>">Alta de Galeria</a>
+                                <a class="dropdown-item" href="">Placeholder</a>
                             </div>
                             </li>
                         <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL.'/promocionesPage.php'; ?>">Promociones</a>
+                            <a class="nav-link px-4" href="">Placeholder</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL.'/novedadesPage.php'; ?>">Novedades</a>
+                            <a class="nav-link px-4" href="">Placeholder</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL.'/reportesPage.php'; ?>">Reportes</a>
+                            <a class="nav-link px-4" href="">Placeholder</a>
                         </li>
 
                     </ul>

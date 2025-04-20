@@ -1,0 +1,27 @@
+body {
+    background-color: #eae8e0 !important;
+  }
+  #center-container {
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  
+  #card-custom {
+    width: 100%;
+    max-width: 700px;
+    background-color: #dddddda6;
+  }
+  
+  /* Botón naranja */
+  #btn-outline-orange {
+    color: white;
+    background-color: #CC6600;
+}
+
+#btn-outline-orange:hover {
+    background-color:rgb(148, 75, 1);
+    color: white;
+}

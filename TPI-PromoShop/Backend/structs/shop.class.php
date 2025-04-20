@@ -5,7 +5,6 @@ class Shop{
     private int $id;
     private string $name;
     private string $location;
-    private string $type;
     private $dateDeleted;
     private $imagesUUIDS = [];
     private User $owner;
@@ -21,9 +20,6 @@ class Shop{
     }
     public function setLocation(string $location){
         $this->location=$location;
-    }
-    public function setType(string $type){
-        $this->type=$type;
     }
     public function setDateDeleted($dateDeleted){
         $this->dateDeleted=$dateDeleted;
@@ -45,9 +41,6 @@ class Shop{
     }
     public function getLocation(){
         return $this->location;
-    }
-    public function getType(){
-        return $this->type;
     }
     public function getDateDeleted(){
         return $this->dateDeleted;
