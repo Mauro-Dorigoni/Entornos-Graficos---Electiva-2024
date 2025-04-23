@@ -16,8 +16,8 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/landingPageOwner.php'; ?>">Mi local</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newShopGalleryPage.php'; ?>">Alta de Galeria</a>
-                                <a class="dropdown-item" href="">Placeholder</a>
                             </div>
                             </li>
                         <li class="nav-item">

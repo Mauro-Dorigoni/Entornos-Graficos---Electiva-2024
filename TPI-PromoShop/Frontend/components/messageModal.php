@@ -2,6 +2,7 @@
  impide navegar hacia atras en la pagina, ya que cierra la session, por lo cual tira error
  al intenta recuperar los mensajes -->
 <?php
+require_once "../shared/userType.enum.php";
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
