@@ -3,7 +3,7 @@ require_once "../shared/authFunctions.php/owner.auth.function.php";
 require_once "../shared/backendRoutes.dev.php";
 include "../components/messageModal.php";
 require_once "../../Backend/logic/shop.controller.php";
-
+//mmmmmmmmmmmm
 $shop = ShopController::getOneByOwner($user);
 
 ?>
