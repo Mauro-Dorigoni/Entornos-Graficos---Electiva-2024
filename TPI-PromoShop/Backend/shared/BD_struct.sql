@@ -200,12 +200,16 @@ DROP TABLE IF EXISTS `validpromoday`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `validpromoday` (
-  `id` int unsigned NOT NULL,
-  `weekDay` int unsigned DEFAULT NULL,
-  `idPromotion` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  `idPromotion` int unsigned NOT NULL,
+  `monday` tinyint(1) DEFAULT '0',
+  `tuesday` tinyint(1) DEFAULT '0',
+  `wednesday` tinyint(1) DEFAULT '0',
+  `thursday` tinyint(1) DEFAULT '0',
+  `friday` tinyint(1) DEFAULT '0',
+  `saturday` tinyint(1) DEFAULT '0',
+  `sunday` tinyint(1) DEFAULT '0',
   KEY `idPromotion` (`idPromotion`),
-  CONSTRAINT `validpromoday_ibfk_1` FOREIGN KEY (`idPromotion`) REFERENCES `promotion` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `validpromoday_ibfk_1` FOREIGN KEY (`idPromotion`) REFERENCES `promotion` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -218,4 +222,4 @@ CREATE TABLE `validpromoday` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-28 12:21:17
+-- Dump completed on 2025-12-28 18:55:59
