@@ -16,6 +16,7 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/shopsCardsPage.php'; ?>">Listado Locales</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newLocalPage.php'; ?>">Alta de Local</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newShopTypePage.php'; ?>">Alta de Tipo</a>
                             </div>

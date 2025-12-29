@@ -226,4 +226,141 @@ class ShopData {
         }
         return $images;
     }
+
+    //Lautaro. No devuelve las imagenes. Solo popula con Owner y Tipo [no todos los atributos].
+    public static function findAll(){
+        $shops=[];
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $query = "SELECT s.id AS shopId, name, location, st.id AS stypeId, st.type AS stName, u.id AS userId, u.email AS userEmail FROM shop AS s 
+                    LEFT JOIN shoptype AS st ON s.idShopType = st.id
+                    LEFT JOIN user AS u ON s.idOwner = u.id
+                    WHERE s.dateDeleted IS NULL AND st.dateDeleted IS NULL AND u.dateDeleted is NULL;";
+            $result = $conn->query($query);
+            if (!$result) {
+                throw new Exception("Error en la consulta: " . $conn->error);
+            }
+    
+            while ($row = $result->fetch_assoc()) {
+                $shopType = new ShopType();
+                $shop = new Shop();
+                $owner = new User();
+                $owner -> setId($row['userId']);
+                $owner -> setEmail($row['userEmail']);
+                $owner -> setIsOwner(TRUE);
+
+                $shopType->setId($row['stypeId']);
+                $shopType->setType($row['stName']);
+
+                $shop -> setShopType( $shopType);
+                $shop -> setId($row['shopId']); 
+                $shop -> setName($row['name']);
+                $shop -> setLocation($row['location']);  
+                $shop -> setOwner($owner);
+                $shops[] = $shop;
+            }
+    
+        } catch (Exception $e) {
+            throw new Exception("Error al recuperar los local en la BD ".$e->getMessage());
+        }finally{
+            if (isset($result)) {
+                $result->free();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+        return $shops;
+    }
+
+   
+    //Solo popula con Owner y Tipo. No todos los atributos. Puede recibir dos '', lo cual genera un return equivalente a un getAll. 
+    public static function findByNameAndType(?ShopType $type, string $name) {
+        $shops = [];
+        $conn = null;
+        $stmt = null;
+
+        try {
+        
+            $conn = new mysqli(servername, username, password, dbName);
+            
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT s.id AS shopId, s.name, s.location, 
+                        st.id AS stypeId, st.type AS stName, 
+                        u.id AS userId, u.email AS userEmail 
+                    FROM shop AS s 
+                    LEFT JOIN shoptype AS st ON s.idShopType = st.id
+                    LEFT JOIN user AS u ON s.idOwner = u.id
+                    WHERE s.dateDeleted IS NULL";
+
+            //Construcción Dinámica según los parametros enviados.
+            $params = [];    // Array para los valores
+            $types = "";     // String para los tipos ("s", "i", etc.)
+
+            // Condición Nombre. Si hay nombre, entonces se incluye a la consulta.
+            if (!empty($name)) {
+                $sql .= " AND s.name LIKE ?";
+                $types .= "s"; // 's' de String
+                $params[] = "%" . $name . "%";
+            }
+
+            // Condición Tipo (si no es null y tiene ID válido). Si hay ID se incluye a la consulta
+            if ($type !== null && $type->getId() > 0) {
+                $sql .= " AND st.id = ?";
+                $types .= "i"; // 'i' de Integer
+                $params[] = $type->getId();
+            }
+
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            }
+
+            // Solo hacemos bind si hay parámetros
+            if (!empty($params)) {
+                // bind_param requiere que los parámetros se pasen individualmente, no como array.
+                // Usamos la desestructuración (...) que es nativa de PHP moderno (8.2)
+                $stmt->bind_param($types, ...$params);
+            }
+
+            $stmt->execute();
+
+            $result = $stmt->get_result(); 
+
+            while ($row = $result->fetch_assoc()) {
+                
+                $owner = new User();
+                $owner->setId($row["userId"]);
+                $owner->setEmail($row["userEmail"]);
+                
+                $shopTypeObj = new ShopType();
+                $shopTypeObj->setId($row["stypeId"]);
+                $shopTypeObj->setType($row["stName"]);
+
+                $shopFound = new Shop();
+                $shopFound->setId($row["shopId"]);
+                $shopFound->setName($row["name"]);
+                $shopFound->setLocation($row["location"]);
+                $shopFound->setOwner($owner);
+                $shopFound->setShopType($shopTypeObj);
+
+                $shops[] = $shopFound;
+            }
+
+        } catch (Exception $e) {
+            throw new Exception("Error al buscar locales: " . $e->getMessage());
+        } finally {
+            // Cerrar recursos si existen
+            if ($stmt) $stmt->close();
+            if ($conn) $conn->close();
+        }
+        
+        return $shops;
+    }
 }

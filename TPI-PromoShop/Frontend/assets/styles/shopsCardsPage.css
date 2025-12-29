@@ -1,0 +1,49 @@
+        body {
+            background-color: #eae8e0 !important;
+        }
+
+        /* ACCESIBILIDAD: Skip Link para navegación por teclado */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #e65100;
+            /* Naranja oscuro para contraste */
+            color: white;
+            padding: 8px;
+            z-index: 10000;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Estilos de Tarjetas */
+        .shop-card {
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+            /* Igualar altura de tarjetas */
+        }
+
+        /* Efecto Focus visible para navegación por teclado */
+        .shop-card:focus-within,
+        .shop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #ff8c00;
+            /* Naranja institucional */
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            background-color: #f8f9fa;
+        }
+
+        /* Asegurar contraste suficiente en textos */
+        .text-muted {
+            color: #6c757d !important;
+            /* Bootstrap default is usually ok, but check contrast */
+        }

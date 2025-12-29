@@ -42,4 +42,52 @@
             return $shopFound;
         }
 
+        public static function getAll(){
+            $shops = null;
+            try {
+                $shops = ShopData::findAll();
+                //Lautaro. No popula imagenes. Ver como lo manejamos. 
+                //$shops->setImagesUUIDS(ShopData::findShopImages($shopFound));
+            } catch (Exception $e) {
+                throw new Exception("Error al recuperar los locales. ".$e->getMessage());
+            }
+            return $shops;
+        }
+        
+        //Recibe un nombre de local y el id del tipo como string. Puede recibir dos campos '', lo cual sería equivalente a un getAll.
+        public static function getByNameAndType(String $busquedaNombre , String $filtroTipo){
+            $shops = [];
+            $typeFinded = null;
+            try {
+                $shopTypes = ShopTypeData::findAll();
+                //Valida que exista parametro filtro. Si es '' es porque campo fue enviado en blanco.
+                if ($filtroTipo != '') { 
+                    $idFiltro = $numero = filter_var($filtroTipo, FILTER_VALIDATE_INT);
+                    if ($numero === false) {
+                        throw new Error("El ID de Tipo no es un Integer valido."); 
+                    }
+                
+                    foreach ($shopTypes as $type) {
+                        if ($type->getId() === $idFiltro) {
+                            $typeFinded = $type;
+                            break; 
+                        }
+                    }
+                    if (!$typeFinded) {
+                        throw new Exception("El Tipo de Local no existe.");}
+                }
+
+                
+
+
+
+                $shops = ShopData::findByNameAndType($typeFinded, $busquedaNombre);
+                //Lautaro. No popula imagenes. Ver como lo manejamos. 
+                //$shops->setImagesUUIDS(ShopData::findShopImages($shopFound));
+            } catch (Exception $e) {
+                throw new Exception("Error al recuperar los locales. ".$e->getMessage());
+            }
+            return $shops;
+        }
+
     } 
