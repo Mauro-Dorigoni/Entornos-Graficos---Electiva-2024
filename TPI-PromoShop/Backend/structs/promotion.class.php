@@ -6,7 +6,8 @@ require_once "./shop.class.php";
 class Promotion{
     private int $id;
     private string $promoText;
-    private bool $isApproved;
+    private string $status;
+    private string $motivoRechazo;
     private string $imageUUID;
     private $dateFrom;
 
@@ -29,8 +30,11 @@ class Promotion{
     public function setPromoText(string $promoText){
         $this->promoText=$promoText;
     }
-    public function setIsApproved(bool $isApproved){
-        $this->isApproved=$isApproved;
+    public function setMotivoRechazo(string $motivoRechazo){
+        $this->motivoRechazo=$motivoRechazo;
+    }
+    public function setStatus(string $status){
+        $this->status=$status;
     }
     public function setImageUUID(string $imageUUID){
         $this->imageUUID=$imageUUID;
@@ -62,9 +66,12 @@ class Promotion{
     public function getPromoText(){
         return $this->promoText;
     }
-    public function isApproved(){
-        return $this->isApproved;
+    public function getStatus(){
+        return $this->status;
     }
+    public function getMotivoRechazo(){
+        return $this->motivoRechazo;
+    }  
     public function getDateDeleted() {
         return $this->dateDeleted;
     }
