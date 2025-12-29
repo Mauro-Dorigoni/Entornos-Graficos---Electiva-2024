@@ -31,6 +31,8 @@
             return $shopFound;
         }
 
+        
+
         public static function getOneByOwner(User $owner){
             $shopFound = null;
             try {
@@ -54,15 +56,15 @@
             return $shops;
         }
         
-        //Recibe un nombre de local y el id del tipo como string. Puede recibir dos campos '', lo cual sería equivalente a un getAll.
-        public static function getByNameAndType(String $busquedaNombre , String $filtroTipo){
+        //Recibe un local con nombre y un tipo con id. Puede recibir nombre: '' y tipo: 0, lo cual sería equivalente a un getAll.
+        public static function getByNameAndType(Shop $shopName , ShopType $filtroTipo){
             $shops = [];
             $typeFinded = null;
             try {
                 $shopTypes = ShopTypeData::findAll();
                 //Valida que exista parametro filtro. Si es '' es porque campo fue enviado en blanco.
-                if ($filtroTipo != '') { 
-                    $idFiltro = $numero = filter_var($filtroTipo, FILTER_VALIDATE_INT);
+                if ($filtroTipo->getId() != 0) { 
+                    $idFiltro = $numero = filter_var($filtroTipo->getId(), FILTER_VALIDATE_INT);
                     if ($numero === false) {
                         throw new Error("El ID de Tipo no es un Integer valido."); 
                     }
@@ -77,11 +79,9 @@
                         throw new Exception("El Tipo de Local no existe.");}
                 }
 
-                
 
 
-
-                $shops = ShopData::findByNameAndType($typeFinded, $busquedaNombre);
+                $shops = ShopData::findByNameAndType($typeFinded, $shopName);
                 //Lautaro. No popula imagenes. Ver como lo manejamos. 
                 //$shops->setImagesUUIDS(ShopData::findShopImages($shopFound));
             } catch (Exception $e) {

@@ -1,9 +1,8 @@
 <?php
-require_once "../shared/authFunctions.php/admin.auth.function.php";
-require_once "../shared/backendRoutes.dev.php";
+require_once "../shared/authFunctions.php/admin.auth.function.php"; //NECESARIO??
+require_once "../shared/backendRoutes.dev.php"; //NECESARIO??
 require_once "../../Backend/logic/shopType.controller.php";
 
-// Asegúrate de que este archivo exista o ajusta la ruta
 require_once "../../Backend/logic/shop.controller.php";
 
 
@@ -17,7 +16,16 @@ $filtroTipo = isset($_GET['localType']) ? filter_var($_GET['localType'], FILTER_
 $shopTypes = ShopTypeController::getAll();
 
 //RECIBE el FILTRO con NOMBRE del LOCAL y ID del TIPO.
- $shops = ShopController::getByNameAndType($busquedaNombre, $filtroTipo); 
+$s = new Shop();
+$s -> setName($busquedaNombre);
+
+$t = new ShopType();
+if ($filtroTipo==='') {
+    $t -> setId(0);
+} else {
+    $t -> setId((int) $filtroTipo);
+};
+ $shops = ShopController::getByNameAndType($s, $t); 
 
 ?>
 
@@ -40,12 +48,11 @@ $shopTypes = ShopTypeController::getAll();
 
   <!-- <a href="#main-content" class="skip-link">Saltar al contenido principal</a> -->
 
-  <header role="banner">
-      <?php include "../components/header.php"?>
-      <?php include "../components/adminNavBar.php"?>
-  </header>
 
-  <main id="main-content" class="container-fluid py-4">
+<?php include "../components/header.php"?>
+<?php include "../components/adminNavBar.php"?>
+
+<main id="main-content" class="container-fluid py-4">
     
     <section class="container mb-5" aria-labelledby="filter-heading">
         <div class="card shadow-sm">
@@ -124,7 +131,7 @@ $shopTypes = ShopTypeController::getAll();
                                 </p>
                                 
                 <!-- REFIERE A LA VENTANA DE LOCAL. HAY QUE HACER HTTP -->
-                                <a href="verLocal.php?id=<?= $shop->getId(); ?>" 
+                                <a href="shopDetailPage.php?id=<?= $shop->getId(); ?>" 
                                    class="btn btn-outline-orange btn-block mt-3"
                                    aria-label="Ver detalles y promociones de <?= htmlspecialchars($shop->getName()); ?>">
                                    Ver Detalles
@@ -146,9 +153,7 @@ $shopTypes = ShopTypeController::getAll();
 
   </main>
 
-  <footer role="contentinfo">
-      <?php include "../components/footer.php"?>
-  </footer>
+    <?php include "../components/footer.php"?>
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

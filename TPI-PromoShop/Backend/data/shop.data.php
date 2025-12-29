@@ -277,8 +277,8 @@ class ShopData {
     }
 
    
-    //Solo popula con Owner y Tipo. No todos los atributos. Puede recibir dos '', lo cual genera un return equivalente a un getAll. 
-    public static function findByNameAndType(?ShopType $type, string $name) {
+    //Solo popula con Owner y Tipo. No todos los atributos. Puede recibir nombre: '' y tipo: 0, lo cual genera un return equivalente a un getAll. 
+    public static function findByNameAndType(?ShopType $type, Shop $name) {
         $shops = [];
         $conn = null;
         $stmt = null;
@@ -307,7 +307,7 @@ class ShopData {
             if (!empty($name)) {
                 $sql .= " AND s.name LIKE ?";
                 $types .= "s"; // 's' de String
-                $params[] = "%" . $name . "%";
+                $params[] = "%" . $name->getName() . "%";
             }
 
             // Condición Tipo (si no es null y tiene ID válido). Si hay ID se incluye a la consulta
