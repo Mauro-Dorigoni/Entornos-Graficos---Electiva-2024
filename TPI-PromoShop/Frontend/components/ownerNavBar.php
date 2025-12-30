@@ -17,6 +17,7 @@
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/landingPageOwner.php'; ?>">Mi local</a>
+                                <!-- YO LO MANDARÍA A LA PAGINA PRINCIPAL GENERICA. Y EN MI LOCAL LA VISTA DE SU LOCAL -->
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newShopGalleryPage.php'; ?>">Alta de Galeria</a>
                             </div>
                             </li>

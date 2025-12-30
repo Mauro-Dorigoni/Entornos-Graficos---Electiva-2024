@@ -1,0 +1,31 @@
+ /* Estilos específicos para Detalle */
+ .carousel-item img {
+     height: 400px;
+     object-fit: cover;
+     /* Evita que las imágenes se deformen */
+     border-radius: 8px;
+ }
+
+ .map-container img {
+     width: 100%;
+     height: 100%;
+     /*250 px*/
+     object-fit: cover;
+     border-radius: 8px;
+ }
+
+ .promo-card {
+     border-left: 5px solid #ff8c00;
+     /* Borde naranja para destacar promos */
+     transition: transform 0.2s;
+ }
+
+ .promo-card:hover {
+     transform: scale(1.02);
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+ }
+
+ .breadcrumb {
+     background-color: transparent;
+     padding-left: 0;
+ }

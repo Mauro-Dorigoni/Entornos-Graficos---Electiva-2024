@@ -1,13 +1,19 @@
 <?php
 
+//debería ser abierto a cualquier usuario, no solo al admin. En todo caso el admin solo puede editar. 
 require_once "../shared/authFunctions.php/admin.auth.function.php";
 require_once "../../Backend/logic/shop.controller.php";
+require_once "../components/shopAction.php";
 
 
 include "../components/messageModal.php";
 
 // ID del local desde GET (Sanitizado)
 $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : 0;
+//verifica que el dato exista, valida que sea un número y asigna un valor por defecto si algo falla. [Operador ? :] Si existe, ejecuta función filter_var, sino asigna cero. 
+//FILTER_VAR Esta función nativa de PHP toma el valor que vino por la URL e intenta validarlo como un número entero (INT). Si no logra hacerlo, devuelve FALSE evitando Injections. 
+
+
 $s = new Shop();
 $s -> setId($id);
 $shop = ShopController::getOne($s);
@@ -34,38 +40,9 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <link rel="stylesheet" href="../assets/styles/newLocalPage.css">
+    <link rel="stylesheet" href="../assets/styles/shopDetailPage.css">
     
-    <style>
-        /* Estilos específicos para Detalle */
-        .carousel-item img {
-            height: 400px;
-            object-fit: cover; /* Evita que las imágenes se deformen */
-            border-radius: 8px;
-        }
-        
-        .map-container img {
-            width: 100%;
-            height: 100%; /*250 px*/ 
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .promo-card {
-            border-left: 5px solid #ff8c00; /* Borde naranja para destacar promos */
-            transition: transform 0.2s;
-        }
-        
-        .promo-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .breadcrumb {
-            background-color: transparent;
-            padding-left: 0;
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -75,19 +52,30 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 <main id="main-content" class="container py-4">
 
     <div class="row mb-5">
+        <div class="d-flex align-items-center p-3">
+            <div>
+                <h2 id="promo-heading" class="mb-3">
+                        <?= $shop-> getName(); ?>
+                </h2>
+            </div>
+            <div class="ml-auto">
+                <?=renderUserShopAction($shop);?>
+            </div>
+        </div>
         <div class="col-lg-8 col-md-12 mb-4">
+            
             <div class="card shadow-sm border-0">
                 <div class="card-body p-2">
                     <div id="carouselShop" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <?php foreach ($shop->getImagesUUIDS() as $index => $img): ?>
+                            <?php foreach ($shop->getImages() as $index => $img): ?>
                                 <li data-target="#carouselShop" data-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
                             <?php endforeach; ?>
                         </ol>
                         <div class="carousel-inner">
-                            <?php foreach ($shop->getImagesUUIDS() as $index => $img): ?>
+                            <?php foreach ($shop->getImages() as $index => $img): ?>
                                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                                    <img class="d-block w-100" src="<?= $img ?>" alt="Foto del local <?= htmlspecialchars($shop->getName()) ?> - Vista <?= $index + 1 ?>">
+                                    <img class="d-block w-100" src="<?= $img->getUUID() ?>" alt="Foto del local <?= htmlspecialchars($shop->getName()) ?> - Vista <?= $index + 1 ?>">
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -105,8 +93,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
             
             <div class="mt-4">
                 <h3>Sobre el local</h3>
-                <!-- HAY QUE VER SI PONEMOS ATRIBUTO DESCRIPCIÓN -->
-                <p><?= htmlspecialchars($shop->getShopType()?->getType()) ?></p>
+                <p><?= htmlspecialchars($shop->getDescription()) ?></p>
             </div>
         </div>
 
@@ -130,8 +117,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="h6 font-weight-bold">Horarios de Atención</h5>
-                    <p class="small mb-0">Lunes a Domingo: 10:00 - 22:00 hs</p>
-                    <!-- deberiamos sacarlo de la bbdd!!!!! -->
+                    <p class="small mb-0"><?= htmlspecialchars($shop->getOpeningHours()) ?></p>
                 </div>
             </div>
 
@@ -172,9 +158,9 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                                             <i class="far fa-calendar-alt"></i> Vence: <?= date("d/m/Y", strtotime($promo->validTo)) ?>
                                         </small>
                                     </div>
-                                    <button type="button" class="btn btn-secondary">
+                                    <button type="button" class="btn btn-outline-orange btn-block mt-3">
 
-                                        <a href="detallePromo.php?id=<?= $promo->id ?>" class="btn btn-block btn-orange text-white font-weight-bold">
+                                        <a href="detallePromo.php?id=<?= $promo->id ?>" class="btn btn-block btn-orange  font-weight-bold">
                                             Obtener Beneficio
                                         </a>
                                     </button>
@@ -192,7 +178,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
             <?php endif; ?>
         </div>
     </section>
-
+    
 </main>
 
 

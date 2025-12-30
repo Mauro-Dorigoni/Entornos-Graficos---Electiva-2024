@@ -21,7 +21,7 @@ $s -> setName($busquedaNombre);
 
 $t = new ShopType();
 if ($filtroTipo==='') {
-    $t -> setId(0);
+    $t -> setId(0); //podria ser null
 } else {
     $t -> setId((int) $filtroTipo);
 };
@@ -46,7 +46,6 @@ if ($filtroTipo==='') {
 </head>
 <body>
 
-  <!-- <a href="#main-content" class="skip-link">Saltar al contenido principal</a> -->
 
 
 <?php include "../components/header.php"?>
@@ -79,9 +78,9 @@ if ($filtroTipo==='') {
                         </div>
                         
                         <div class="col-md-4 col-sm-12 mb-3">
-                            <label for="type-select" class="font-weight-bold">Categoría</label>
+                            <label for="type-select" class="font-weight-bold">Tipo</label>
                             <select id="type-select" name="localType" class="form-control">
-                                <option value="">Todas las categorías</option>
+                                <option value="">Todos los Tipos</option>
                                 <!-- Lista todos los shopType -->
                                 <?php foreach ($shopTypes as $shopType): ?>
                                     <option value="<?= $shopType->getId(); ?>" <?= ($filtroTipo == $shopType->getId()) ? 'selected' : '' ?>>
@@ -109,8 +108,26 @@ if ($filtroTipo==='') {
                 <?php foreach ($shops as $shop): ?>
                     <article class="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div class="card shop-card">
+                            <!-- Cambiar con la imagen que sea Portada -->
+                                 
+                             <?php 
+                             $portada = null;
+                             foreach($shop -> getImages() as $image) {
+                                if ($image->isMain()){
+                                    $portada = $image;
+                                }
+                             }
+                             if (is_null($portada) && !empty($shop->getImages())) {
+                                $portada = $image[0];
+                             } else {
+                                //Si ninguna es portada, y el arreglo esta vacío se asigna foto default. 
+                                $portada = new Image();
+                                $portada -> setUUID("fishertonPlaza.jpg");
+                             }
+                            ?>
+                             <!-- TODO: VER TEMA DE UBICACIÓN DE IMAGENES. -->
                             <img class="card-img-top" 
-                                 src="../assets/fishertonPlaza.jpg" 
+                                 src= "<?="../assets/".$portada->getUUID()?>"
                                  alt="Logo o fachada de <?= htmlspecialchars($shop->getName()); ?>">
                             
                             <div class="card-body d-flex flex-column">
@@ -130,7 +147,7 @@ if ($filtroTipo==='') {
                                     <?= htmlspecialchars($shop->getLocation()); ?>
                                 </p>
                                 
-                <!-- REFIERE A LA VENTANA DE LOCAL. HAY QUE HACER HTTP -->
+                <!-- REFIERE A LA VENTANA DE LOCAL.-->
                                 <a href="shopDetailPage.php?id=<?= $shop->getId(); ?>" 
                                    class="btn btn-outline-orange btn-block mt-3"
                                    aria-label="Ver detalles y promociones de <?= htmlspecialchars($shop->getName()); ?>">

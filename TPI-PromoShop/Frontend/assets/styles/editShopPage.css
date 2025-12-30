@@ -1,0 +1,144 @@
+  /* Estilos Modernos (Reutilizados) */
+  body {
+      background-color: #fff;
+  }
+
+  .page-header {
+      border-bottom: 2px solid #f0f0f0;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+  }
+
+  /* Inputs Editables */
+  .form-control-modern {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 1.2rem 1rem;
+      transition: all 0.3s;
+  }
+
+  .form-control-modern:focus {
+      background-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.15);
+      border-color: #ff8c00;
+  }
+
+  /* Inputs de Solo Lectura (Locked) */
+  .form-control-locked {
+      background-color: #e9ecef;
+      /* Gris más oscuro */
+      border: 1px solid #dee2e6;
+      color: #6c757d;
+      cursor: not-allowed;
+      border-radius: 8px;
+      padding: 1.2rem 1rem;
+  }
+
+  .icon-orange {
+      color: #ff8c00;
+      width: 25px;
+      text-align: center;
+      margin-right: 10px;
+  }
+
+  .form-label {
+      font-weight: 600;
+      color: #495057;
+      margin-bottom: 0.5rem;
+      display: block;
+  }
+
+  /* Estilos para la Galería de Edición */
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 4px solid transparent;
+    /* Reserva espacio para el borde */
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-2px);
+}
+
+/* 1. ESTADO: PORTADA (Borde Naranja) */
+.gallery-item.is-main {
+    border-color: #ff8c00 !important;
+    background-color: #fff8e1;
+    opacity: 1 !important;
+}
+
+/* Badge Portada */
+.badge-main {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff8c00;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.gallery-item.is-main .badge-main {
+    display: block;
+}
+
+
+/* 2. ESTADO: BORRADO (Rojo y Gris) */
+.gallery-item.is-deleted {
+    border-color: #dc3545 !important;
+    /* Rojo */
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+
+/* Badge Basura (Centrado) */
+.badge-trash {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #dc3545;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    /* Centrar icono verticalmente */
+    font-size: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.gallery-item.is-deleted .badge-trash {
+    display: block;
+}
+
+
+/* 3. INTERACCIÓN: MODO BORRAR ACTIVO */
+/* Cuando activas el botón, la grilla cambia de comportamiento visual */
+.mode-delete-active .gallery-item {
+    cursor: no-drop;
+    /* Cursor de prohibido */
+}
+
+.mode-delete-active .gallery-item:hover {
+    border-color: #dc3545;
+    /* Hover rojo preventivo */
+    opacity: 0.8;
+}
+
+/* Ocultar inputs reales */
+.d-none {
+    display: none !important;
+}

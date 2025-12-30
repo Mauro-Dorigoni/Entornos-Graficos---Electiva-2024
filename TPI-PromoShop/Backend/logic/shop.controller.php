@@ -20,11 +20,14 @@
                 throw new Exception("Error en el registro de imagenes del local. ".$e->getMessage());
             }
         }
+        //BUSCA UN LOCAL. Si no existe devuelve null. Manejarlo con error??? LAUTARO.
         public static function getOne(Shop $shop){
             $shopFound = null;
             try {
                 $shopFound = ShopData::findOne($shop);
-                $shopFound->setImagesUUIDS(ShopData::findShopImages($shopFound));
+                if (!is_null($shopFound)) {
+                      $shopFound->setImages(ShopData::findShopImages($shopFound));
+                }
             } catch (Exception $e) {
                 throw new Exception("Error al recuperar el local. ".$e->getMessage());
             }
@@ -37,7 +40,7 @@
             $shopFound = null;
             try {
                 $shopFound = ShopData::findByOwner($owner);
-                $shopFound->setImagesUUIDS(ShopData::findShopImages($shopFound));
+                $shopFound->setImages(ShopData::findShopImages($shopFound));
             } catch (Exception $e) {
                 throw new Exception("Error al recuperar el local. ".$e->getMessage());
             }

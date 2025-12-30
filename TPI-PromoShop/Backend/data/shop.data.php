@@ -85,6 +85,8 @@ class ShopData {
                 $shopFound->setDateDeleted($row["dateDeleted"]);
                 $shopFound->setOwner($owner);
                 $shopFound->setShopType($shopType);
+                $shopFound->setDescription($row["description"]);
+                $shopFound->setOpeningHours($row["openinghours"]);
             }
         } catch (Exception $e) {
             throw new Exception("No se pudo recuperar el Local de la BD ".$e->getMessage());
@@ -101,18 +103,18 @@ class ShopData {
 
     public static function addImages(Shop $shop){
         try {
-            foreach($shop->getImagesUUIDS() as $image){
+            foreach($shop->getImages() as $image){
                 try {
                     $conn = new mysqli(servername, username, password, dbName);
                     if ($conn->connect_error) {
                         throw new Exception("Error de conexión: " . $conn->connect_error);
                     }
-                    $stmt = $conn->prepare("INSERT INTO shopimages (imageUUID, idShop) VALUES (?, ?)");
+                    $stmt = $conn->prepare("INSERT INTO shopimages (imageUUID, idShop, ismain) VALUES (?, ?, ?)");
                     if (!$stmt) {
                         throw new Exception("Error al preparar la consulta: " . $conn->error);
                     }
                     $shopID = $shop->getId();
-                    $stmt->bind_param("si", $image, $shopID);
+                    $stmt->bind_param("sii", $image->getUUID(), $shopID, $image->getIsMain());
                     $stmt->execute();
                 } catch (Exception $e1) {
                     throw new Exception("Error al agregar la imagen a la BD. ".$e1->getMessage());
@@ -130,6 +132,7 @@ class ShopData {
         } 
     }
 
+    //Encuentra un local. Si no existe ID devuelve NULL.
     public static function findOne(Shop $shop){
         $shopFound = null;
         try {
@@ -137,7 +140,7 @@ class ShopData {
             if ($conn->connect_error) {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
-            $stmt = $conn->prepare("SELECT shp.id, shp.name, shp.location, shp.dateDeleted, shp.idOwner, shp.idShopType, sht.type, sht.description, sht.dateDeleted as typeDateDeleted, usu.email, usu.pass, usu.isAdmin, usu.dateDeleted as ownerDateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted from shop shp 
+            $stmt = $conn->prepare("SELECT shp.id, shp.name, shp.location, shp.dateDeleted, shp.idOwner, shp.idShopType, shp.openinghours , shp.description as shopDescription,sht.type, sht.description, sht.dateDeleted as typeDateDeleted, usu.email, usu.pass, usu.isAdmin, usu.dateDeleted as ownerDateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted from shop shp 
             inner join shoptype sht on shp.idShopType=sht.id 
             inner join user usu on shp.idOwner=usu.id 
             inner join usercategory cat on usu.idUserCategory=cat.id
@@ -180,7 +183,9 @@ class ShopData {
                 $shopFound->setDateDeleted($row["dateDeleted"]);
                 $shopFound->setOwner($owner);
                 $shopFound->setShopType($shopType);
-            }
+                $shopFound->setDescription($row["shopDescription"]);
+                $shopFound->setOpeningHours($row["openinghours"]);
+            } 
         } catch (Exception $e) {
             throw new Exception("No se pudo recuperar el Local de la BD ".$e->getMessage());
         } finally {
@@ -201,7 +206,7 @@ class ShopData {
             if ($conn->connect_error) {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
-            $stmt = $conn->prepare("SELECT imageUUID FROM shopimages si INNER JOIN shop sh ON si.idShop = sh.id WHERE sh.id = ?");
+            $stmt = $conn->prepare("SELECT imageUUID, ismain, si.id as imageId FROM shopimages si INNER JOIN shop sh ON si.idShop = sh.id WHERE sh.id = ?");
             if (!$stmt) {
                 throw new Exception("Error en la preparación de la consulta: " . $conn->error);
             }
@@ -212,7 +217,15 @@ class ShopData {
             }
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
-                $images[] = $row['imageUUID'];
+                
+                $image = new Image();
+                $image -> setId($row['imageId']);
+                $image -> setUUID($row['imageUUID']);
+                $image -> setIsMain($row['ismain']);
+
+                $images[] = $image;
+
+
             }   
         } catch (Exception $e) {
             throw new Exception("No se pudieron recuperar las imagenes del local de la BD ".$e->getMessage());
@@ -235,9 +248,10 @@ class ShopData {
             if ($conn->connect_error) {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
-            $query = "SELECT s.id AS shopId, name, location, st.id AS stypeId, st.type AS stName, u.id AS userId, u.email AS userEmail FROM shop AS s 
-                    LEFT JOIN shoptype AS st ON s.idShopType = st.id
-                    LEFT JOIN user AS u ON s.idOwner = u.id
+            $query = "SELECT s.id AS shopId, name, description, openinghours, location, st.id AS stypeId, st.type AS stName, u.id AS userId, u.email AS userEmail 
+                    FROM shop AS s 
+                    INNER JOIN shoptype AS st ON s.idShopType = st.id
+                    INNER JOIN user AS u ON s.idOwner = u.id
                     WHERE s.dateDeleted IS NULL AND st.dateDeleted IS NULL AND u.dateDeleted is NULL;";
             $result = $conn->query($query);
             if (!$result) {
@@ -260,6 +274,8 @@ class ShopData {
                 $shop -> setName($row['name']);
                 $shop -> setLocation($row['location']);  
                 $shop -> setOwner($owner);
+                $shopFound->setDescription($row["description"]);
+                $shopFound->setOpeningHours($row["openinghours"]);
                 $shops[] = $shop;
             }
     
@@ -291,12 +307,12 @@ class ShopData {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
 
-            $sql = "SELECT s.id AS shopId, s.name, s.location, 
+            $sql = "SELECT s.id AS shopId, s.name, s.location, s.description, s.openinghours,
                         st.id AS stypeId, st.type AS stName, 
                         u.id AS userId, u.email AS userEmail 
                     FROM shop AS s 
-                    LEFT JOIN shoptype AS st ON s.idShopType = st.id
-                    LEFT JOIN user AS u ON s.idOwner = u.id
+                    INNER JOIN shoptype AS st ON s.idShopType = st.id
+                    INNER JOIN user AS u ON s.idOwner = u.id
                     WHERE s.dateDeleted IS NULL";
 
             //Construcción Dinámica según los parametros enviados.
@@ -304,7 +320,7 @@ class ShopData {
             $types = "";     // String para los tipos ("s", "i", etc.)
 
             // Condición Nombre. Si hay nombre, entonces se incluye a la consulta.
-            if (!empty($name)) {
+            if (!empty($name->getName())) {
                 $sql .= " AND s.name LIKE ?";
                 $types .= "s"; // 's' de String
                 $params[] = "%" . $name->getName() . "%";
@@ -349,6 +365,8 @@ class ShopData {
                 $shopFound->setLocation($row["location"]);
                 $shopFound->setOwner($owner);
                 $shopFound->setShopType($shopTypeObj);
+                $shopFound->setDescription($row["description"]);
+                $shopFound->setOpeningHours($row["openinghours"]);
 
                 $shops[] = $shopFound;
             }
