@@ -274,8 +274,8 @@ class ShopData {
                 $shop -> setName($row['name']);
                 $shop -> setLocation($row['location']);  
                 $shop -> setOwner($owner);
-                $shopFound->setDescription($row["description"]);
-                $shopFound->setOpeningHours($row["openinghours"]);
+                $shop->setDescription($row["description"]);
+                $shop->setOpeningHours($row["openinghours"]);
                 $shops[] = $shop;
             }
     
