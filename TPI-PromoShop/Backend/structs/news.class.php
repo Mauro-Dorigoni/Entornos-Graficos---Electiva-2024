@@ -1,6 +1,6 @@
 <?php
-require_once "./user.class.php";
-require_once "./userCategory.class.php";
+require_once __DIR__ . "/user.class.php";
+require_once __DIR__ . "/userCategory.class.php";
 
 class News {
     private int $id;
@@ -8,6 +8,7 @@ class News {
     private $dateFrom;
     private $dateTo;
     private $dateDeleted;
+    private $imageUUID = null;
     private User $admin;
     private UserCategory $userCategory;
 
@@ -29,6 +30,9 @@ class News {
     public function setDateDeleted ($dateDeleted){
         $this->dateDeleted=$dateDeleted;
     }
+    public function setImageUUID($imageUUID) {
+        $this->imageUUID = $imageUUID;
+    }
     public function setAdmin (User $admin){
         $this->admin=$admin;
     }
@@ -49,6 +53,9 @@ class News {
     }
     public function getDateDeleted() {
         return $this->dateDeleted;
+    }
+    public function getImageUUID() {
+        return $this->imageUUID;
     }
     public function getAdmin(){
         return $this->admin;
