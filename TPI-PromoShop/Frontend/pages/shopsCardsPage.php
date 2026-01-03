@@ -1,5 +1,6 @@
 <?php
-require_once "../shared/authFunctions.php/admin.auth.function.php"; //NECESARIO??
+//Apta para todo publico
+//require_once "../shared/authFunctions.php/admin.auth.function.php"; //NECESARIO??
 require_once "../shared/backendRoutes.dev.php"; //NECESARIO??
 require_once "../../Backend/logic/shopType.controller.php";
 

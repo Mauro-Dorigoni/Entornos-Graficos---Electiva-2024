@@ -1,7 +1,7 @@
 <?php
 
 //debería ser abierto a cualquier usuario, no solo al admin. En todo caso el admin solo puede editar. 
-require_once "../shared/authFunctions.php/admin.auth.function.php";
+//require_once "../shared/authFunctions.php/admin.auth.function.php";
 require_once "../../Backend/logic/shop.controller.php";
 require_once "../components/shopAction.php";
 

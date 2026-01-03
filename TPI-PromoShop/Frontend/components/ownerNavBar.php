@@ -1,3 +1,16 @@
+<?php
+
+if ($user != null or $userType == UserType_enum::Owner) {
+    $shop = ShopController::getOneByOwner($user);
+    $idShop=$shop->getId();
+    $urlShop = "/shopDetailPage.php?id=".$idShop;
+} else {
+    //no debería entrar nunca aca....
+    $urlShop = "/shopsCardsDetail.php";
+}
+
+?>
+
 
 <link rel="stylesheet" href="../assets/styles/navBar.css">
 <div class="container-fluid nav-menu"  id="navBarContainer" style="background-color: #006633;">
@@ -16,7 +29,7 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/landingPageOwner.php'; ?>">Mi local</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.$urlShop; ?>">Mi local</a>
                                 <!-- YO LO MANDARÍA A LA PAGINA PRINCIPAL GENERICA. Y EN MI LOCAL LA VISTA DE SU LOCAL -->
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newShopGalleryPage.php'; ?>">Alta de Galeria</a>
                             </div>
