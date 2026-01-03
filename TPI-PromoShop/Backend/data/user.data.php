@@ -149,9 +149,9 @@ class UserData {
             echo "EL ID:".$id." EL Verifie:".$isEmailVerified;
             $stmt->bind_param("ssiiisiii", $email, $pass, $isAdmin, $isOwner, $dateDeleted, $emailToken, $isEmailVerified, $idUserCategory, $id);
             $stmt->execute();
-            if ($stmt->affected_rows === 0) {
-                throw new Exception("No se actualizó ningún registro.");
-            }
+            // if ($stmt->affected_rows === 0) {
+            //     throw new Exception("No se actualizó ningún registro.");
+            // }
         } catch (Exception $e) {
             throw new Exception("Error al intentar actualizar el usuario en la BD. ".$e->getMessage());
         } finally {
@@ -162,6 +162,69 @@ class UserData {
                 $conn->close();
             }
         }
+    }
+
+    public static function findOwnerByShopId(Shop $shop)
+    {
+        $userFound = null;
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            // Agregamos el JOIN con la tabla 'shop' (alias s)
+            // Condición: s.idOwner = usu.id (El dueño del shop es el usuario)
+            // Filtro: WHERE s.id = ? (El ID del shop que pasamos por parámetro)
+            $query = "SELECT usu.id, usu.email, usu.pass, usu.isAdmin, usu.isOwner, usu.dateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, 
+                             cat.categoryType, cat.dateDeleted as catDateDeleted 
+                      FROM user usu 
+                      INNER JOIN usercategory cat on usu.idUserCategory=cat.id 
+                      INNER JOIN shop s ON usu.id = s.idOwner
+                      WHERE s.id = ? and usu.dateDeleted is null;";
+
+            $stmt = $conn->prepare($query);
+
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            };
+
+            // 'i' porque el idShop suele ser un entero
+            $shopId = $shop->getId();
+            $stmt->bind_param("i", $shopId);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+
+                // Mapeo del objeto User (Igual que en tu método anterior)
+                $userFound = new User();
+                $userFound->setId($row['id']);
+                $userFound->setEmail($row['email']);
+                $userFound->setPass($row['pass']);
+                $userFound->setIsAdmin((bool)$row['isAdmin']);
+                $userFound->setIsOwner((bool)$row['isOwner']);
+                $userFound->setEmailToken($row["emailToken"]);
+                $userFound->setIsEmailVerified((bool)$row['isEmailVerified']);
+
+                $userFoundCategory = new UserCategory();
+                $userFoundCategory->setId($row['idUserCategory']);
+                $userFoundCategory->setCategoryType($row['categoryType']);
+                $userFound->setUserCategory($userFoundCategory);
+            };
+        } catch (Exception $e) {
+            throw new Exception("Error al intentar buscar al dueño por ID de shop en la BD. " . $e->getMessage());
+        } finally {
+            if (isset($stmt) && $stmt !== false) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+        return $userFound;
     }
 }
 ?>

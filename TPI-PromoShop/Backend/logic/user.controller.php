@@ -77,5 +77,16 @@
                 throw new Exception("Error al tratar de actualizar los datos del usuario. ".$e->getMessage());
             }
         }
+
+        /*Devuelve un usuario (Owner) dado un id de local.*/
+        public static function getOwnerByShopId(Shop $shop): User {
+            $owner = null;
+            try { 
+                $owner = UserData::findOwnerByShopId($shop);
+            } catch (Exception $e) {
+                throw new Exception("Error al buscar el usuario duseño de un local ".$e->getMessage());
+            }
+            return $owner;
+        }
     }
 ?>

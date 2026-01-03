@@ -18,5 +18,17 @@ class ShopTypeController{
             throw new Exception("Error al recuperar todos los tipos de local(logic). ".$e->getMessage());
         }
     }
+    public static function getOne(ShopType $shopType)
+    {
+        try {
+            if (is_null($shopType->getId())) {
+                throw new Exception("El ShopType enviado no tiene ID.");
+            }
+            $shopTypeFound = ShopTypeData::findOne($shopType);
+            return $shopTypeFound;
+        } catch (Exception $e) {
+            throw new Exception("Error al recuperar todos los tipos de local(logic). " . $e->getMessage());
+        }
+    }
 }
 ?>

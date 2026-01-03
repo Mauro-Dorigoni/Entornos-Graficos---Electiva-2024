@@ -111,14 +111,9 @@ if ($filtroTipo==='') {
                             <!-- Cambiar con la imagen que sea Portada -->
                                  
                              <?php 
-                             $portada = null;
-                             foreach($shop -> getImages() as $image) {
-                                if ($image->isMain()){
-                                    $portada = $image;
-                                }
-                             }
-                             if (is_null($portada) && !empty($shop->getImages())) {
-                                $portada = $image[0];
+                             
+                             if (!is_null($shop->getMainImage())) {
+                                $portada = $shop->getMainImage();
                              } else {
                                 //Si ninguna es portada, y el arreglo esta vacío se asigna foto default. 
                                 $portada = new Image();
@@ -127,7 +122,7 @@ if ($filtroTipo==='') {
                             ?>
                              <!-- TODO: VER TEMA DE UBICACIÓN DE IMAGENES. -->
                             <img class="card-img-top" 
-                                 src= "<?="../assets/".$portada->getUUID()?>"
+                                 src= "<?="../../Backend/shared/uploads/".$portada->getUUID()?>"
                                  alt="Logo o fachada de <?= htmlspecialchars($shop->getName()); ?>">
                             
                             <div class="card-body d-flex flex-column">

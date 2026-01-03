@@ -42,6 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         $shop->setImagesUUIDS($images);
+        $imagesObjects = [];
+        foreach($images as $imgUUID) {
+            $i = new Image();
+            $i -> setUUID($imgUUID);
+            $i -> setIsMain(false);
+            $imagesObjects[] = $i;
+        }
+        $shop -> setImages($imagesObjects);
+        
         ShopController::addShopImages($shop);
         $_SESSION['success_message'] = "Imagenes Registradas correctamente";
         header("Location: ".frontendURL."/newShopGalleryPage.php"); 

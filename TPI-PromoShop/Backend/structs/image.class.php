@@ -2,7 +2,7 @@
 class Image {
     private int $id;
     private string $uuid;
-    private bool $isMain;
+    private bool $isMain = false;
 
     public function _constructor() {
     }

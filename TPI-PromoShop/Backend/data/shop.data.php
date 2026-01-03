@@ -42,7 +42,7 @@ class ShopData {
             if ($conn->connect_error) {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
-            $stmt = $conn->prepare("SELECT shp.id, shp.name, shp.location, shp.dateDeleted, shp.idOwner, shp.idShopType, sht.type, sht.description, sht.dateDeleted as typeDateDeleted, usu.email, usu.pass, usu.isAdmin, usu.dateDeleted as ownerDateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted from shop shp 
+            $stmt = $conn->prepare("SELECT shp.id, shp.name, shp.location, shp.dateDeleted, shp.idOwner, shp.idShopType, shp.openinghours, sht.type, sht.description, sht.dateDeleted as typeDateDeleted, usu.email, usu.pass, usu.isAdmin, usu.dateDeleted as ownerDateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted from shop shp 
             inner join shoptype sht on shp.idShopType=sht.id 
             inner join user usu on shp.idOwner=usu.id 
             inner join usercategory cat on usu.idUserCategory=cat.id
@@ -114,7 +114,9 @@ class ShopData {
                         throw new Exception("Error al preparar la consulta: " . $conn->error);
                     }
                     $shopID = $shop->getId();
-                    $stmt->bind_param("sii", $image->getUUID(), $shopID, $image->getIsMain());
+                    $imageUUID = $image->getUUID();
+                    $isMain = $image->isMain();
+                    $stmt->bind_param("sii", $imageUUID, $shopID, $isMain);
                     $stmt->execute();
                 } catch (Exception $e1) {
                     throw new Exception("Error al agregar la imagen a la BD. ".$e1->getMessage());
@@ -309,10 +311,11 @@ class ShopData {
 
             $sql = "SELECT s.id AS shopId, s.name, s.location, s.description, s.openinghours,
                         st.id AS stypeId, st.type AS stName, 
-                        u.id AS userId, u.email AS userEmail 
+                        u.id AS userId, u.email AS userEmail
                     FROM shop AS s 
                     INNER JOIN shoptype AS st ON s.idShopType = st.id
                     INNER JOIN user AS u ON s.idOwner = u.id
+                  
                     WHERE s.dateDeleted IS NULL";
 
             //Construcción Dinámica según los parametros enviados.
@@ -368,7 +371,14 @@ class ShopData {
                 $shopFound->setDescription($row["description"]);
                 $shopFound->setOpeningHours($row["openinghours"]);
 
+
                 $shops[] = $shopFound;
+
+                foreach($shops as $s) {
+                    $images = ShopData::findShopImages($s);
+                    $s->setImages($images);
+                }
+
             }
 
         } catch (Exception $e) {
@@ -380,5 +390,133 @@ class ShopData {
         }
         
         return $shops;
+    }
+
+    public static function deleteImages($imagesUUIDs) {
+        try{
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            // 1. Crear los placeholders dinámicos (?, ?, ?)
+            // Si hay 3 uuids, esto genera string: "?,?,?"
+            $placeholders = implode(',', array_fill(0, count($imagesUUIDs), '?'));
+            $types = implode('', array_fill(0, count($imagesUUIDs), 's'));
+            // 2. Construir la consulta
+            $sql = "DELETE FROM shopimages WHERE imageUUID IN ($placeholders)";
+
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            }
+
+            if (!empty($imagesUUIDs)) {
+                // bind_param requiere que los parámetros se pasen individualmente, no como array.
+                // Usamos la desestructuración (...) que es nativa de PHP moderno (8.2)
+                // El operador ... convierte el array en argumentos separados: 'a1', 'b2', 'c3'
+                $stmt->bind_param($types, ...$imagesUUIDs);
+            }
+
+            $stmt->execute();
+
+        }
+        catch (Exception $e) {
+            throw new Exception("Error al intentar eliminar las imagenes de la BBDD. ".$e->getMessage());
+        } finally {
+            // Cerrar recursos si existen
+            if ($stmt) $stmt->close();
+            if ($conn) $conn->close();
+        }
+    }
+
+    public static function updateMainImage($shop) {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            $sql = "UPDATE shopimages SET ismain = 0 WHERE idShop = ?";
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            }
+            $stmt->bind_param('i', $shop->getId());
+            $stmt->execute();
+
+            $sqlSet = "UPDATE shopimages SET ismain = 1 WHERE imageUUID = ? AND idShop = ?";
+            $stmt = $conn->prepare($sqlSet);
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            }
+            $uuidMain = $shop->getMainImage()->getUUID();
+            $idShop = $shop->getId();
+            $stmt->bind_param('si', $uuidMain, $idShop );
+            $stmt->execute();
+
+
+        }
+        catch (Exception $e) {
+            throw new Exception("Error al intentar asignar una foto de portada en la BBDD. " . $e->getMessage());
+        } finally {
+            // Cerrar recursos si existen
+            if ($stmt) $stmt->close();
+            if ($conn) $conn->close();
+        }
+    }
+
+    public static function update(Shop $shop)
+    {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            $query = "UPDATE shop SET 
+                        name = ?, 
+                        location = ?, 
+                        idShopType = ?, 
+                        description = ?, 
+                        openingHours = ? 
+                      WHERE id = ?";
+
+            $stmt = $conn->prepare($query);
+
+            if (!$stmt) {
+                throw new Exception("Error al preparar update: " . $conn->error);
+            }
+
+            $name = $shop->getName();
+            $loc  = $shop->getLocation();
+
+            $typeId = $shop->getShopType()->getId();
+
+            $desc  = $shop->getDescription();
+            $hours = $shop->getOpeningHours();
+            $id    = $shop->getId();
+
+            $stmt->bind_param("ssissi", $name, $loc, $typeId, $desc, $hours, $id);
+
+            if (!$stmt->execute()) {
+                throw new Exception("Error al ejecutar update: " . $stmt->error);
+            }
+
+            //  if ($stmt->affected_rows === 0) { 
+            //     throw new Exception ("Ningun registro de locales modificado. ID del Shop=".$shop->getId());
+            //   }
+
+        } catch (Exception $e) {
+            throw new Exception("Error al actualizar el Shop: " . $e->getMessage());
+        } finally {
+            if (isset($stmt) && $stmt !== false) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+
     }
 }

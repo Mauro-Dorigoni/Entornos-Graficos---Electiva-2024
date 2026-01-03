@@ -9,6 +9,7 @@ class Shop{
     private $dateDeleted;
     private $imagesUUIDS = [];
     private $images = [];
+    private $mainImage;
     private User $owner;
     private ShopType $shopType;
     private string $description;
@@ -34,6 +35,11 @@ class Shop{
     //ARRAY DEL TIPO IMAGE
     public function setImages(array $images) {
         $this-> images = $images;
+        foreach ($images as $img) {
+            if ($img->isMain()) {
+                $this->setMainImage($img);
+            }
+        }
     }
     public function setOwner(User $owner){
         $this->owner=$owner;
@@ -47,6 +53,9 @@ class Shop{
     }
     public function setOpeningHours(string|null $openingHours){
         $this->openingHours=$openingHours?:'No hay datos.';
+    }
+    public function setMainImage(Image $mainImage) {
+        $this->mainImage=$mainImage;
     }
     public function getId(){
         return $this->id;
@@ -77,6 +86,9 @@ class Shop{
     }
     public function getOpeningHours(){
         return $this->openingHours;
+    }
+    public function getMainImage() {
+        return $this->mainImage;
     }
 
 }

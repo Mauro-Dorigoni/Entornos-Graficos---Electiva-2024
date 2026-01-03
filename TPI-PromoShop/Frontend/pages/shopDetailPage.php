@@ -75,7 +75,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                         <div class="carousel-inner">
                             <?php foreach ($shop->getImages() as $index => $img): ?>
                                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                                    <img class="d-block w-100" src="<?= $img->getUUID() ?>" alt="Foto del local <?= htmlspecialchars($shop->getName()) ?> - Vista <?= $index + 1 ?>">
+                                    <img class="d-block w-100" src="<?= "../../Backend/shared/uploads/".$img->getUUID() ?>" alt="Foto del local <?= htmlspecialchars($shop->getName()) ?> - Vista <?= $index + 1 ?>">
                                 </div>
                             <?php endforeach; ?>
                         </div>
