@@ -1,20 +1,21 @@
 <?php
-require_once "./user.class.php";
-require_once "./userCategory.class.php";
-require_once "./shop.class.php";
+require_once __DIR__."/user.class.php";
+require_once __DIR__."/userCategory.class.php";
+require_once __DIR__."/shop.class.php";
+require_once __DIR__."/../shared/promoStatus.enum.php";
 
 class Promotion{
     private int $id;
     private string $promoText;
-    private string $status;
+    private PromoStatus_enum $status;
     private string $motivoRechazo;
     private string $imageUUID;
-    private $dateFrom;
+    private ?DateTimeImmutable $dateFrom;
 
-    private $dateTo;
+    private ?DateTimeImmutable $dateTo;
     private $validDays = [];
 
-    private $dateDeleted;
+    private ?DateTimeImmutable $dateDeleted;
     private Shop $shop;
 
     private User $admin;
@@ -24,73 +25,131 @@ class Promotion{
     public function __construct() {
     }
 
-    public function setId(int $id){
-            $this->id=$id;
+ public function setId(int $id): void {
+        $this->id = $id;
     }
-    public function setPromoText(string $promoText){
-        $this->promoText=$promoText;
+
+    public function setPromoText(string $promoText): void {
+        $this->promoText = $promoText;
     }
-    public function setMotivoRechazo(string $motivoRechazo){
-        $this->motivoRechazo=$motivoRechazo;
+
+    public function setStatus(PromoStatus_enum $status): void {
+        $this->status = $status;
     }
-    public function setStatus(string $status){
-        $this->status=$status;
+
+    public function setStatusFromString(string $status): void {
+        $this->status = PromoStatus_enum::from($status);
     }
-    public function setImageUUID(string $imageUUID){
-        $this->imageUUID=$imageUUID;
+
+    public function setMotivoRechazo(?string $motivoRechazo): void {
+        $this->motivoRechazo = $motivoRechazo;
     }
-    public function setDateFrom ($dateFrom){
-            $this->dateFrom=$dateFrom;
+
+    public function setImageUUID(?string $imageUUID): void {
+        $this->imageUUID = $imageUUID;
     }
-    public function setDateTo ($dateTo){
-        $this->dateTo=$dateTo;
+
+    public function setDateFrom(DateTimeInterface $dateFrom): void {
+        $this->dateFrom = DateTimeImmutable::createFromInterface($dateFrom);
     }
-    public function setValidDays(array $validDays){
-        $this->validDays=$validDays;
+
+    public function setDateFromString(string $date): void {
+        $this->dateFrom = new DateTimeImmutable($date);
     }
-    public function setDateDeleted ($dateDeleted){
-        $this->dateDeleted=$dateDeleted;
+
+    public function setDateTo(DateTimeInterface $dateTo): void {
+        $this->dateTo = DateTimeImmutable::createFromInterface($dateTo);
     }
-    public function setShop(Shop $shop){
-        $this->shop=$shop;
+
+    public function setDateToString(string $date): void {
+        $this->dateTo = new DateTimeImmutable($date);
     }
-    public function setAdmin (User $admin){
-        $this->admin=$admin;
+
+    public function setDateDeleted(?DateTimeInterface $dateDeleted): void {
+        $this->dateDeleted = $dateDeleted
+            ? DateTimeImmutable::createFromInterface($dateDeleted)
+            : null;
     }
-    public function setUserCategory(UserCategory $userCategory){
-        $this->userCategory=$userCategory;
+
+    public function setDateDeletedString(?string $date): void {
+        $this->dateDeleted = $date ? new DateTimeImmutable($date) : null;
     }
-    public function getId(){
+
+    public function setValidDays(array $validDays): void {
+        $this->validDays = $validDays;
+    }
+    public function setShop(Shop $shop): void {
+        $this->shop = $shop;
+    }
+
+    public function setAdmin(User $admin): void {
+        $this->admin = $admin;
+    }
+
+    public function setUserCategory(UserCategory $userCategory): void {
+        $this->userCategory = $userCategory;
+    }
+
+    public function getId(): int {
         return $this->id;
     }
-    public function getPromoText(){
+
+    public function getPromoText(): string {
         return $this->promoText;
     }
-    public function getStatus(){
+
+    public function getStatus(): PromoStatus_enum {
         return $this->status;
     }
-    public function getMotivoRechazo(){
-        return $this->motivoRechazo;
-    }  
-    public function getDateDeleted() {
-        return $this->dateDeleted;
+
+    public function getStatusValue(): string {
+        return $this->status->value;
     }
-    public function getDateFrom() {
+
+    public function getMotivoRechazo(): ?string {
+        return $this->motivoRechazo;
+    }
+    public function getImageUUID(){
+        return $this->imageUUID;
+    }
+
+    public function getDateFrom(): ?DateTimeInterface {
         return $this->dateFrom;
     }
-    public function getDateTo() {
+
+    public function getDateFromMysql(): ?string {
+        return $this->dateFrom?->format('Y-m-d');
+    }
+
+    public function getDateTo(): ?DateTimeInterface {
         return $this->dateTo;
     }
-    public function getValidDays(){
+
+    public function getDateToMysql(): ?string {
+        return $this->dateTo?->format('Y-m-d');
+    }
+
+    public function getDateDeleted(): ?DateTimeInterface {
+        return $this->dateDeleted;
+    }
+
+    public function getDateDeletedMysql(): ?string {
+        return $this->dateDeleted?->format('Y-m-d');
+    }
+
+    public function getValidDays(): array {
         return $this->validDays;
     }
-    public function getShop(){
+
+    public function getShop(): Shop {
         return $this->shop;
     }
-    public function getAdmin(){
+
+    public function getAdmin(): User {
         return $this->admin;
     }
-    public function getUserCategory(){
+
+    public function getUserCategory(): UserCategory {
         return $this->userCategory;
     }
 }
