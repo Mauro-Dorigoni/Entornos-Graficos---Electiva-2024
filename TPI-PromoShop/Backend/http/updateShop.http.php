@@ -21,17 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $isAdmin = false;
         $isOwner = false;
         //El administrador y Owner tienen permitido editar un local...TODO modificar para que ambos puedan.
-        if (!isset($_SESSION['user']) || $_SESSION['user']->isAdmin() == false || $_SESSION['userType'] != UserType_enum::Admin) {
+        if(!isset($_SESSION['user']) || $_SESSION['userType'] == UserType_enum::User) {
             $_SESSION['error_message'] = "No tienes permisos para acceder a esta pagina";
             header("Location: " . frontendURL . "/loginPage.php");
             exit;
+            
         }
 
         if (isset($_SESSION['user']) && ($_SESSION['user']->isAdmin() == true || $_SESSION['userType'] == UserType_enum::Admin)) {
             $isAdmin = true;
         } elseif (isset($_SESSION['user']) && ($_SESSION['user']->isOwner() == true || $_SESSION['userType'] == UserType_enum::Owner)) {
             $isOwner = true;
-        }
+        } 
 
 
 
