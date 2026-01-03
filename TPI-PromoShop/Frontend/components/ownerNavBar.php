@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . "/../../Backend/logic/shop.controller.php";
 if ($user != null or $userType == UserType_enum::Owner) {
     $shop = ShopController::getOneByOwner($user);
     $idShop=$shop->getId();
@@ -8,10 +8,7 @@ if ($user != null or $userType == UserType_enum::Owner) {
     //no debería entrar nunca aca....
     $urlShop = "/shopsCardsDetail.php";
 }
-
 ?>
-
-
 <link rel="stylesheet" href="../assets/styles/navBar.css">
 <div class="container-fluid nav-menu"  id="navBarContainer" style="background-color: #006633;">
     <div class="row">
