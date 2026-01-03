@@ -36,7 +36,7 @@ class PromotionData {
             }
             $promo->setId($generatedId);
             $stmtPromo->close();
-            $stmtValidDays = $conn->prepare("INSERT INTO validpromoday (idPromotion, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES (?,?,?,?,?,?,?,?");
+            $stmtValidDays = $conn->prepare("INSERT INTO validpromoday (idPromotion, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES (?,?,?,?,?,?,?,?)");
             $idPromotion = $promo->getId();
             $monday = $promo->getValidDays()[0];
             $tuesday = $promo->getValidDays()[1];
@@ -53,6 +53,7 @@ class PromotionData {
             $conn->commit();
         }catch (Throwable $e){
             $conn->rollback();
+            throw $e;
         }finally{
             $conn->close();
         }

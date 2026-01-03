@@ -3,7 +3,7 @@
     require_once __DIR__."/../structs/user.class.php";
     require_once __DIR__."/../structs/promotion.class.php";
     require_once __DIR__."/../structs/shopType.class.php";
-    require_once __DIR__."/../data/promotion.data.phps";
+    require_once __DIR__."/../data/promotion.data.php";
 
     class PromotionContoller{
         public static function registerPromotion (Promotion $promo) {

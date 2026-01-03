@@ -34,8 +34,6 @@
             return $shopFound;
         }
 
-        
-
         public static function getOneByOwner(User $owner){
             $shopFound = null;
             try {

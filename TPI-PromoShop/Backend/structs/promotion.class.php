@@ -1,7 +1,7 @@
 <?php
-require_once "./user.class.php";
-require_once "./userCategory.class.php";
-require_once "./shop.class.php";
+require_once __DIR__."/user.class.php";
+require_once __DIR__."/userCategory.class.php";
+require_once __DIR__."/shop.class.php";
 require_once __DIR__."/../shared/promoStatus.enum.php";
 
 class Promotion{

@@ -42,7 +42,7 @@ class ShopData {
             if ($conn->connect_error) {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
-            $stmt = $conn->prepare("SELECT shp.id, shp.name, shp.location, shp.dateDeleted, shp.idOwner, shp.idShopType, sht.type, sht.description, sht.dateDeleted as typeDateDeleted, usu.email, usu.pass, usu.isAdmin, usu.dateDeleted as ownerDateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted from shop shp 
+            $stmt = $conn->prepare("SELECT shp.id, shp.name, shp.location, shp.dateDeleted, shp.idOwner, shp.idShopType, sht.type, sht.description, shp.openinghours, sht.dateDeleted as typeDateDeleted, usu.email, usu.pass, usu.isAdmin, usu.dateDeleted as ownerDateDeleted, usu.emailToken, usu.isEmailVerified, usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted from shop shp 
             inner join shoptype sht on shp.idShopType=sht.id 
             inner join user usu on shp.idOwner=usu.id 
             inner join usercategory cat on usu.idUserCategory=cat.id

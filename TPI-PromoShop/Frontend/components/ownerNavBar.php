@@ -21,8 +21,16 @@
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newShopGalleryPage.php'; ?>">Alta de Galeria</a>
                             </div>
                             </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-4" href="">Placeholder</a>
+                        <li class="nav-item position-relative">
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
+                               href="#" data-target="#submenu-promociones">
+                                Promociones
+                                <span class="submenu-arrow ml-2">&#9662;</span>
+                            </a>
+                            <div class="custom-submenu" id="submenu-promociones">
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/promocionesPage.php'; ?>">Listado Promociones</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/newPromotionPage.php'; ?>">Alta de Promoción</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-4" href="">Placeholder</a>

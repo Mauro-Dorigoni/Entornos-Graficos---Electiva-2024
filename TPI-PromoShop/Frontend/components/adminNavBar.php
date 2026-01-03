@@ -1,18 +1,19 @@
 
 <link rel="stylesheet" href="../assets/styles/navBar.css">
-<div class="container-fluid nav-menu"  id="navBarContainer" style="background-color: #006633;">
+<div class="container-fluid nav-menu" id="navBarContainer" style="background-color: #006633;">
     <div class="row">
         <div class="col-12">
             <nav class="navbar navbar-expand-lg navbar-dark p-0">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
-                                href="#" data-target="#submenu-locales">
-                                Locales 
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
+                               href="#" data-target="#submenu-locales">
+                                Locales
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
@@ -20,15 +21,40 @@
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newLocalPage.php'; ?>">Alta de Local</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newShopTypePage.php'; ?>">Alta de Tipo</a>
                             </div>
-                            </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL.'/promocionesPage.php'; ?>">Promociones</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL.'/novedadesPage.php'; ?>">Novedades</a>
+                        <li class="nav-item position-relative">
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
+                               href="#" data-target="#submenu-promociones">
+                                Promociones
+                                <span class="submenu-arrow ml-2">&#9662;</span>
+                            </a>
+                            <div class="custom-submenu" id="submenu-promociones">
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/promocionesPage.php'; ?>">Listado Promociones</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL.'/reportesPage.php'; ?>">Reportes</a>
+                        <li class="nav-item position-relative">
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
+                               href="#" data-target="#submenu-novedades">
+                                Novedades
+                                <span class="submenu-arrow ml-2">&#9662;</span>
+                            </a>
+                            <div class="custom-submenu" id="submenu-novedades">
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/newsPage.php'; ?>">Listado Novedades</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/newNewsPage.php'; ?>">Alta de Novedad</a>
+                            </div>
+                        </li>
+
+                        <!-- REPORTES -->
+                        <li class="nav-item position-relative">
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
+                               href="#" data-target="#submenu-reportes">
+                                Reportes
+                                <span class="submenu-arrow ml-2">&#9662;</span>
+                            </a>
+                            <div class="custom-submenu" id="submenu-reportes">
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/reportesPage.php'; ?>">Ver Reportes</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/exportReportPage.php'; ?>">Exportar Reportes</a>
+                            </div>
                         </li>
 
                     </ul>
