@@ -56,4 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['error_message'] = "Metodo de solicitud no permitido";
 }
 
+
+
 ?>

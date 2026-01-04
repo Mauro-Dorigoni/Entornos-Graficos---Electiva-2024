@@ -1,14 +1,15 @@
 <?php
 //no solo es para admin. Lo sacamos
-require_once "../shared/authFunctions.php/admin.auth.function.php";
+//require_once "../shared/authFunctions.php/admin.auth.function.php";
+//require_once "../shared/authFunctions.php/owner.auth.function.php";
+
 require_once "../shared/backendRoutes.dev.php";
 require_once "../../Backend/logic/shopType.controller.php";
 require_once "../../Backend/logic/shop.controller.php";
 require_once "../../Backend/structs/shop.class.php";
 include "../components/messageModal.php";
 
-
-//Obtener ID y Datos del Local
+ //Obtener ID y Datos del Local
 $idLocal = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : 0;
 $shop = null;
 
@@ -21,26 +22,22 @@ if ($idLocal) {
 // Si no existe el local [solo editando id desde url], redirigir o mostrar error. NO SE SI ES LA FORMA CORRECTA. LAUTARO
 if (is_null($shop)) {
     header("Location: " . frontendURL . "/shopsCardsPage.php");
-    $_SESSION['error_message'] = "Shop Inexistente. Intente nuevamente.";
+    $_SESSION['error_message'] = "Local Inexistente. Intente nuevamente.";
+    exit;
+}
+
+if (!isset($_SESSION['user']) || $_SESSION['userType'] == UserType_enum::User) {
+    $_SESSION['error_message'] = "No tienes permisos para acceder a esta pagina";
+    header("Location: " . frontendURL . "/loginPage.php");
     exit;
 }
 
 // Obtener Tipos para el Select
 $shopTypes = ShopTypeController::getAll();
-
+$soloLectura = true;
 // Si es Admin puede editar propiedades
-if (isset($_SESSION["user"])) {
-    $user = $_SESSION["user"];
-    $userType = $_SESSION["userType"];
-
-    if ($user != null && $userType === UserType_enum::Admin) {
-        $soloLectura = '';
-    } else {
-        $soloLectura = 'readonly';
-    }
-} else {
-    //no debería entrar nunca por aca, porque lo redirige el el autenticador. 
-    $soloLectura = 'readonly';
+if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) {
+    $soloLectura = false;
 }
 ?>
 
@@ -60,7 +57,8 @@ if (isset($_SESSION["user"])) {
 
 <body>
     <?php include "../components/header.php" ?>
-    <?php include "../components/adminNavBar.php" ?>
+
+    <?php include "../components/navBarByUserType.php" ?>
 
     <div class="container py-5">
 
@@ -69,7 +67,7 @@ if (isset($_SESSION["user"])) {
                 <div class="page-header d-flex align-items-center justify-content-between">
                     <div>
                         <h2 class="font-weight-bold text-dark mb-0">Editar Local</h2>
-                        <p class="text-muted mb-0 mt-1">Modificando datos de: <strong><?= htmlspecialchars($shop->getName()) ?></strong></p>
+                        <p class="text-muted mb-0 mt-1">Modificando datos de: <strong><?= htmlspecialchars($shop->getName()) ?></strong>- SoloLectura: <?= htmlspecialchars($soloLectura) ?></p>
                     </div>
                     <i class="fas fa-store-alt fa-3x text-black-50 opacity-25"></i>
                 </div>
@@ -95,7 +93,7 @@ if (isset($_SESSION["user"])) {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text border-0 bg-transparent pl-0"><i class="fas fa-envelope icon-orange"></i></span>
                                 </div>
-                                <input name="emailOwner" type="text" class="form-control <?= $soloLectura = '' ? "form-control-locked" : '' ?>" value="<?= htmlspecialchars($shop->getOwner()->getEmail()) ?>" <?= $soloLectura ?>>
+                                <input name="emailOwner" type="text" class="form-control <?= $soloLectura ? "form-control-locked" : '' ?>" value="<?= htmlspecialchars($shop->getOwner()->getEmail()) ?>" <?= $soloLectura ? 'readonly' : '' ?>>
                             </div>
                         </div>
                     </div>
@@ -114,7 +112,7 @@ if (isset($_SESSION["user"])) {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text border-0 bg-transparent pl-0"><i class="fas fa-map-marker-alt icon-orange"></i></span>
                                 </div>
-                                <input name="location" type="text" class="form-control <?= $soloLectura = '' ? "form-control-locked" : '' ?>" value="<?= htmlspecialchars($shop->getLocation()) ?>" <?= $soloLectura ?>>
+                                <input name="location" type="text" class="form-control <?= $soloLectura  ? "form-control-locked" : '' ?>" value="<?= htmlspecialchars($shop->getLocation()) ?>" <?= $soloLectura ? 'readonly' : '' ?>>
                             </div>
                         </div>
                     </div>
