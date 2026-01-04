@@ -1,14 +1,15 @@
 <?php
 //no solo es para admin. Lo sacamos
-require_once "../shared/authFunctions.php/admin.auth.function.php";
+//require_once "../shared/authFunctions.php/admin.auth.function.php";
+//require_once "../shared/authFunctions.php/owner.auth.function.php";
+
 require_once "../shared/backendRoutes.dev.php";
 require_once "../../Backend/logic/shopType.controller.php";
 require_once "../../Backend/logic/shop.controller.php";
 require_once "../../Backend/structs/shop.class.php";
 include "../components/messageModal.php";
 
-
-//Obtener ID y Datos del Local
+ //Obtener ID y Datos del Local
 $idLocal = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : 0;
 $shop = null;
 
@@ -21,7 +22,13 @@ if ($idLocal) {
 // Si no existe el local [solo editando id desde url], redirigir o mostrar error. NO SE SI ES LA FORMA CORRECTA. LAUTARO
 if (is_null($shop)) {
     header("Location: " . frontendURL . "/shopsCardsPage.php");
-    $_SESSION['error_message'] = "Shop Inexistente. Intente nuevamente.";
+    $_SESSION['error_message'] = "Local Inexistente. Intente nuevamente.";
+    exit;
+}
+
+if (!isset($_SESSION['user']) || $_SESSION['userType'] == UserType_enum::User) {
+    $_SESSION['error_message'] = "No tienes permisos para acceder a esta pagina";
+    header("Location: " . frontendURL . "/loginPage.php");
     exit;
 }
 
@@ -60,7 +67,8 @@ if (isset($_SESSION["user"])) {
 
 <body>
     <?php include "../components/header.php" ?>
-    <?php include "../components/adminNavBar.php" ?>
+
+    <?php include "../components/navBarByUserType.php" ?>
 
     <div class="container py-5">
 
