@@ -519,4 +519,48 @@ class ShopData {
         }
 
     }
+
+    public static function delete (Shop $shop) {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            $query = "UPDATE shop SET 
+                        dateDeleted = ?
+                      WHERE id = ?";
+
+            $stmt = $conn->prepare($query);
+
+            if (!$stmt) {
+                throw new Exception("Error al preparar delete: " . $conn->error);
+            }
+
+            $dateDeleted = date('Y-m-d H:i:s');
+            $id    = $shop->getId();
+
+            $stmt->bind_param("si", $dateDeleted, $id);
+
+            if (!$stmt->execute()) {
+                throw new Exception("Error al ejecutar update: " . $stmt->error);
+            }
+
+            //  if ($stmt->affected_rows === 0) { 
+            //     throw new Exception ("Ningun registro de locales modificado. ID del Shop=".$shop->getId());
+            //   }
+
+        } catch (Exception $e) {
+            throw new Exception("Error al eliminar el Local: " . $e->getMessage());
+        } finally {
+            if (isset($stmt) && $stmt !== false) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+
+    }
 }

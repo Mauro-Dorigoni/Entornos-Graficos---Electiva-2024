@@ -62,7 +62,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                         <?= $shop->getName(); ?>
                     </h2>
                 </div>
-                <div class="ml-auto">
+                <div class="ml-auto d-flex ">
                     <?= renderUserShopAction($shop); ?>
                 </div>
             </div>

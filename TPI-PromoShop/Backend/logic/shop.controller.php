@@ -132,4 +132,12 @@ class ShopController
             throw new Exception("Error al actualizar los datos del local" . $e->getMessage());
         }
     }
+
+    public static function deleteShop (Shop $shop) {
+        try {
+            ShopData::delete($shop);
+        } catch (Exception $e) {
+            throw new Exception("Error al eliminar el local" . $e->getMessage());
+        }
+    }
 }
