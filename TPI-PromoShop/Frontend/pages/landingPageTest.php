@@ -1,5 +1,4 @@
 <?php
-require_once "../shared/authFunctions.php/user.auth.function.php";
 include "../components/messageModal.php";
 
 if (session_status() == PHP_SESSION_NONE) {
