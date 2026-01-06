@@ -1,1 +1,3 @@
 **/shared/*.dev.php
+**/shared/*.config.php
+**/shared/*.public.php
