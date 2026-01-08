@@ -4,7 +4,7 @@
 //require_once "../shared/authFunctions.php/admin.auth.function.php";
 require_once "../../Backend/logic/shop.controller.php";
 require_once "../components/shopAction.php";
-
+require_once "../shared/nextcloud.public.php";
 
 include "../components/messageModal.php";
 
@@ -79,7 +79,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                             <div class="carousel-inner">
                                 <?php foreach ($shop->getImages() as $index => $img): ?>
                                     <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                                        <img class="d-block w-100" src="<?= "../../Backend/shared/uploads/" . $img->getUUID() ?>" alt="Foto del local <?= htmlspecialchars($shop->getName()) ?> - Vista <?= $index + 1 ?>">
+                                        <img class="d-block w-100" src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($img->getUUID()) ?>" alt="Foto del local <?= htmlspecialchars($shop->getName()) ?> - Vista <?= $index + 1 ?>">
                                     </div>
                                 <?php endforeach; ?>
                             </div>
