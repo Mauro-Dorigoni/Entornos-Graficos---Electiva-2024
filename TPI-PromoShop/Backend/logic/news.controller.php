@@ -1,6 +1,6 @@
 <?php
-require_once "../structs/news.class.php";
-require_once "../data/news.data.php";
+require_once __DIR__ . "/../structs/news.class.php";
+require_once __DIR__ . "/../data/news.data.php";
 
 class NewsController {
     public static function registerNews(News $news) {
@@ -13,7 +13,7 @@ class NewsController {
             NewsData::add($news);
             return $news;
         } catch (Exception $e) {
-            throw new Exception("Error en el controlador al crear novedad: " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -22,6 +22,33 @@ class NewsController {
             NewsData::updateNews($news);
         } catch (Exception $e) {
             throw new Exception("Error en el controlador al actualizar novedad: " . $e->getMessage());
+        }
+    }
+
+    public static function getAll() {
+        try{
+            return NewsData::getAll();
+        } catch (Exception $e) {
+            throw new Exception("Error al cargar las novedades: " . $e->getMessage());
+        }
+    }
+
+    public static function getOne(News $news) { // Recibe el objeto News
+        $newsFound = null;
+        try {
+            $id = $news->getId(); 
+            $newsFound = NewsData::findById($id);
+        } catch (Exception $e) {
+            throw new Exception("Error al recuperar la novedad. " . $e->getMessage());
+        }
+        return $newsFound;
+    }
+
+    public static function delete(int $id) {
+        try {
+            NewsData::softDelete($id);
+        } catch (Exception $e) {
+            throw new Exception("Error en el controlador al eliminar: " . $e->getMessage());
         }
     }
 }

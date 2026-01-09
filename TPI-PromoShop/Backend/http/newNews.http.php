@@ -32,6 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $news->setNewsText($newsText);
         $news->setDateFrom($dateFrom);
         $news->setDateTo($dateTo);
+        
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) 
         {
             $originalName = $_FILES['image']['name'];
@@ -56,16 +57,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         NewsController::registerNews($news);
 
         $_SESSION['success_message'] = "Novedad publicada exitosamente";
-        header("Location: ".frontendURL."/adminNewsPage.php"); 
+        header("Location: ".frontendURL."/newNewsPage.php"); 
         exit;
 
     } catch (Exception $e){
         $_SESSION['error_message'] = "Error al registrar la novedad: ".$e->getMessage();
-        header("Location: ".frontendURL."/adminNewsPage.php");
+        header("Location: ".frontendURL."/newNewsPage.php");
         exit;
     }
 } else {
     $_SESSION['error_message'] = "Método de solicitud no permitido";
-    header("Location: ".frontendURL."/adminNewsPage.php");
+    header("Location: ".frontendURL."/newNewsPage.php");
 }
 ?>
