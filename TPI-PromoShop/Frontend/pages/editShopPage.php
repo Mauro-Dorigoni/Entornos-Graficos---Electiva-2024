@@ -217,7 +217,7 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
                     </div>
 
                     <div class="d-flex justify-content-end mt-5">
-                        <a href="shopsCardsPage.php" class="btn btn-light btn-lg mr-3 text-muted">Cancelar</a>
+                        <a href="shopDetailPage.php?id=<?= $shop->getId(); ?>" class="btn btn-light btn-lg mr-3 text-muted">Cancelar</a>
                         <button type="submit" class="btn btn-lg px-5 font-weight-bold btn-outline-orange" id="btn-outline-orange">
                             Guardar Cambios
                         </button>

@@ -121,7 +121,7 @@ $shops = ShopController::getByNameAndType($s, $t);
                                 } else {
                                     //Si ninguna es portada, y el arreglo esta vacío se asigna foto default. 
                                     $portada = new Image();
-                                    $portada->setUUID("fishertonPlaza.jpg");
+                                    $portada->setUUID("placeholder.png");
                                 }
                                 ?>
                                 <!-- TODO: VER TEMA DE UBICACIÓN DE IMAGENES. -->

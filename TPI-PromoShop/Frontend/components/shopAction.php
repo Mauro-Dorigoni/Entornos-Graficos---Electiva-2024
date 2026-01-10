@@ -8,7 +8,7 @@ function renderUserShopAction(Shop $shop)
 
         if ($user != null && $userType === UserType_enum::Admin) {
 ?>
-            <button type="button" class="btn btn-primary mr-2">
+            <button type="button" class="btn  mr-2 btn-outline-orange" id="btn-outline-orange">
                 <a class="text-white" href="editShopPage.php?id=<?= $shop->getId(); ?>"
                     aria-label="Editar local <?= htmlspecialchars($shop->getName()); ?>">
                     Editar
@@ -28,7 +28,7 @@ function renderUserShopAction(Shop $shop)
         if ($user != null && $userType === UserType_enum::Owner) {
         ?>
 
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary btn-outline-orange ">
                 <a class="text-white" href="editShopPage.php?id=<?= $shop->getId(); ?>"
                     aria-label="Editar local <?= htmlspecialchars($shop->getName()); ?>">
                     Editar

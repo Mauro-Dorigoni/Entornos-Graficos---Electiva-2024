@@ -141,11 +141,11 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="fas fa-utensils"></i>
+                            <i class="fas fa-percentage"></i>
                         </div>
-                        <h4 class="font-weight-bold">Gastronomía</h4>
-                        <p class="text-muted small">Patios de comida, restaurantes y cafés.</p>
-                        <a href="shopsCardsPage.php?shopType=2" class="btn btn-outline-dark btn-sm rounded-pill mt-auto mx-auto px-4">Ir a Comer</a>
+                        <h4 class="font-weight-bold">Promociones</h4>
+                        <p class="text-muted small">Todas las promociones de nuestro shopping.</p>
+                        <a href="shopsCardsPage.php?shopType=2" class="btn btn-outline-dark btn-sm rounded-pill mt-auto mx-auto px-4">Ver Todas</a>
                     </div>
                 </div>
 

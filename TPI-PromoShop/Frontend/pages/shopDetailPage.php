@@ -3,6 +3,8 @@
 //debería ser abierto a cualquier usuario, no solo al admin. En todo caso el admin solo puede editar. 
 //require_once "../shared/authFunctions.php/admin.auth.function.php";
 require_once "../../Backend/logic/shop.controller.php";
+require_once "../../Backend/logic/promotion.controller.php";
+
 require_once "../components/shopAction.php";
 require_once "../shared/nextcloud.public.php";
 
@@ -18,12 +20,12 @@ $s = new Shop();
 $s->setId($id);
 $shop = ShopController::getOne($s);
 $promotions = [];
-//$promotions = PromotionController::getByShopId($shopId);
-$promotions = [
-    (object) ['id' => 1, 'title' => '2x1 en Calzado Running', 'validTo' => '2025-12-31', 'description' => 'Llevando dos pares de la línea Air Zoom, pagas solo uno.', 'image' => null],
-    (object) ['id' => 2, 'title' => '30% OFF con Tarjeta Santander', 'validTo' => '2025-11-20', 'description' => 'Tope de reintegro $5000. Solo miércoles.', 'image' => null],
-    (object) ['id' => 3, 'title' => 'Camiseta de Regalo', 'validTo' => '2025-10-15', 'description' => 'Con compras superiores a $100.000.', 'image' => null],
-];
+$promotions = PromotionContoller::getAllActiveByShop($s);
+// $promotions = [
+//     (object) ['id' => 1, 'title' => '2x1 en Calzado Running', 'validTo' => '2025-12-31', 'description' => 'Llevando dos pares de la línea Air Zoom, pagas solo uno.', 'image' => null],
+//     (object) ['id' => 2, 'title' => '30% OFF con Tarjeta Santander', 'validTo' => '2025-11-20', 'description' => 'Tope de reintegro $5000. Solo miércoles.', 'image' => null],
+//     (object) ['id' => 3, 'title' => 'Camiseta de Regalo', 'validTo' => '2025-10-15', 'description' => 'Con compras superiores a $100.000.', 'image' => null],
+// ];
 
 $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bedf2d66b/adjuntos/203/imagenes/027/732/0027732077/1200x675/smart/galeriasjpg.jpg"
 ?>
@@ -153,18 +155,34 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                                     <div class="mb-2">
                                         <small class="text-uppercase text-orange font-weight-bold">Oferta</small>
                                     </div>
-                                    <h3 class="card-title h5 font-weight-bold"><?= htmlspecialchars($promo->title) ?></h3>
-                                    <p class="card-text text-muted flex-grow-1"><?= htmlspecialchars($promo->description) ?></p>
+                                    <h3 class="card-title h5 font-weight-bold"><?= htmlspecialchars($promo->getPromoText()) ?></h3>
+
+                                    <?php
+                                    $imgUrl = $promo->getImageUUID() !== null
+                                        ? NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID())
+                                        : NEXTCLOUD_PUBLIC_BASE . urlencode("placeholder.png");
+                                    ?>
+
+                                    <div class="flex-grow-1 mb-3"> <img src="<?= $imgUrl ?>"
+                                            alt="<?= htmlspecialchars($promo->getPromoText()) ?>"
+                                            class="w-100 rounded"
+                                            style="height: 200px; object-fit: cover;">
+                                    </div>
 
                                     <div class="mt-3 pt-3 border-top">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <small class="text-muted">
-                                                <i class="far fa-calendar-alt"></i> Vence: <?= date("d/m/Y", strtotime($promo->validTo)) ?>
+                                                <i class="far fa-calendar-alt"></i> Desde: <?= $promo->getDateFrom()?->format('d/m/Y') ?>
                                             </small>
                                         </div>
-                                        <button type="button" class="btn btn-outline-orange btn-block mt-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <small class="text-muted">
+                                                <i class="far fa-calendar-alt"></i> Vence: <?= $promo->getDateTo()?->format('d/m/Y') ?>
+                                            </small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-orange btn-block mt-3" id="btn-outline-orange">
 
-                                            <a href="detallePromo.php?id=<?= $promo->id ?>" class="btn btn-block btn-orange  font-weight-bold">
+                                            <a href="detallePromo.php?id=<?= $promo->getId() ?>" class="btn btn-block btn-orange text-white font-weight-bold">
                                                 Obtener Beneficio
                                             </a>
                                         </button>
