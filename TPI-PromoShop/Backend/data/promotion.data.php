@@ -58,5 +58,268 @@ class PromotionData {
             $conn->close();
         }
     }
+
+    public static function findPending(): array{
+    $pendingPromos = [];
+    try {
+        $conn = new mysqli(servername, username, password, dbName);
+        if ($conn->connect_error) {
+            throw new Exception("Error de conexión: " . $conn->connect_error);
+        }
+        $result = $conn->query("SELECT p.id AS promo_id, p.promoText, p.dateFrom, p.dateTo, p.imageUUID, p.status,
+                u.id AS usercat_id, u.categoryType,
+                s.id AS shop_id,s.name AS shop_name, s.location, s.description AS shop_description, s.openinghours,
+                st.id AS shoptype_id, st.type AS shoptype_type, st.description AS shoptype_description,
+                v.monday, v.tuesday,v.wednesday, v.thursday, v.friday, v.saturday, v.sunday
+            FROM promotion p
+            INNER JOIN validpromoday v ON v.idPromotion = p.id
+            INNER JOIN shop s ON s.id = p.idShop
+            INNER JOIN shoptype st ON st.id = s.idShopType
+            INNER JOIN usercategory u ON u.id = p.idUserCategory
+            WHERE p.status = 'Pendiente' AND p.dateDeleted IS NULL AND s.dateDeleted IS NULL AND u.dateDeleted IS NULL AND st.dateDeleted IS NULL");
+        if (!$result) {
+            throw new Exception($conn->error);
+        }
+        while ($row = $result->fetch_assoc()) {
+            $category = new UserCategory();
+            $category->setId((int)$row['usercat_id']);
+            $category->setCategoryType($row['categoryType']);
+            $shopType = new ShopType();
+            $shopType->setId((int)$row['shoptype_id']);
+            $shopType->setType($row['shoptype_type']);
+            $shopType->setDescription($row['shoptype_description']);
+            $shop = new Shop();
+            $shop->setId((int)$row['shop_id']);
+            $shop->setName($row['shop_name']);
+            $shop->setLocation($row['location']);
+            $shop->setDescription($row['shop_description']);
+            $shop->setOpeningHours($row['openinghours']);
+            $shop->setShopType($shopType);
+            $promo = new Promotion();
+            $promo->setId((int)$row['promo_id']);
+            $promo->setPromoText($row['promoText']);
+            $promo->setDateFrom(new DateTimeImmutable($row['dateFrom']));
+            $promo->setDateTo( new DateTimeImmutable($row['dateTo']));
+            $promo->setImageUUID($row['imageUUID']);
+            $promo->setStatus(PromoStatus_enum::from($row['status']));
+            $promo->setShop($shop);
+            $promo->setUserCategory($category);
+            $promo->setValidDays([
+                'monday'    => (bool)$row['monday'],
+                'tuesday'   => (bool)$row['tuesday'],
+                'wednesday' => (bool)$row['wednesday'],
+                'thursday'  => (bool)$row['thursday'],
+                'friday'    => (bool)$row['friday'],
+                'saturday'  => (bool)$row['saturday'],
+                'sunday'    => (bool)$row['sunday'],
+            ]);
+            $pendingPromos[] = $promo;
+        }
+    } catch (Exception $e) {
+        throw new Exception(
+            "Error al obtener las promociones pendientes de revisión: " . $e->getMessage()
+        );
+    } finally {
+        if (isset($conn)) {
+            $conn->close();
+        }
+    }
+    return $pendingPromos;
+    }
+
+    public static function findAllActiveByShop(Shop $shop): array{
+    $activePromos = [];
+    try {
+        $conn = new mysqli(servername, username, password, dbName);
+        if ($conn->connect_error) {
+            throw new Exception("Error de conexión: " . $conn->connect_error);
+        }
+        $stmt = $conn->prepare("SELECT p.id AS promo_id, p.promoText, p.dateFrom, p.dateTo, p.imageUUID, p.status,
+                u.id AS usercat_id, u.categoryType,
+                s.id AS shop_id, s.name AS shop_name, s.location, s.description AS shop_description, s.openinghours,
+                st.id AS shoptype_id, st.type AS shoptype_type, st.description AS shoptype_description,
+                v.monday, v.tuesday, v.wednesday, v.thursday, v.friday, v.saturday, v.sunday
+            FROM promotion p
+            INNER JOIN validpromoday v ON v.idPromotion = p.id
+            INNER JOIN shop s ON s.id = p.idShop
+            INNER JOIN shoptype st ON st.id = s.idShopType
+            INNER JOIN usercategory u ON u.id = p.idUserCategory
+            WHERE p.status = 'Vigente' AND p.idShop = ? AND p.dateDeleted IS NULL AND s.dateDeleted IS NULL AND u.dateDeleted IS NULL AND st.dateDeleted IS NULL");
+        if (!$stmt) {
+            throw new Exception($conn->error);
+        }
+        $shopId = $shop->getId();
+        $stmt->bind_param("i", $shopId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $category = new UserCategory();
+            $category->setId((int)$row['usercat_id']);
+            $category->setCategoryType($row['categoryType']);
+            $shopType = new ShopType();
+            $shopType->setId((int)$row['shoptype_id']);
+            $shopType->setType($row['shoptype_type']);
+            $shopType->setDescription($row['shoptype_description']);
+            $shopObj = new Shop();
+            $shopObj->setId((int)$row['shop_id']);
+            $shopObj->setName($row['shop_name']);
+            $shopObj->setLocation($row['location']);
+            $shopObj->setDescription($row['shop_description']);
+            $shopObj->setOpeningHours($row['openinghours']);
+            $shopObj->setShopType($shopType);
+            $promo = new Promotion();
+            $promo->setId((int)$row['promo_id']);
+            $promo->setPromoText($row['promoText']);
+            $promo->setDateFrom(new DateTimeImmutable($row['dateFrom']));
+            $promo->setDateTo(new DateTimeImmutable($row['dateTo']));
+            $promo->setImageUUID($row['imageUUID']);
+            $promo->setStatus(PromoStatus_enum::from($row['status']));
+            $promo->setShop($shopObj);
+            $promo->setUserCategory($category);
+            $promo->setValidDays([
+                'monday'    => (bool)$row['monday'],
+                'tuesday'   => (bool)$row['tuesday'],
+                'wednesday' => (bool)$row['wednesday'],
+                'thursday'  => (bool)$row['thursday'],
+                'friday'    => (bool)$row['friday'],
+                'saturday'  => (bool)$row['saturday'],
+                'sunday'    => (bool)$row['sunday'],
+            ]);
+            $activePromos[] = $promo;
+        }
+        $stmt->close();
+    } catch (Exception $e) {
+        throw new Exception(
+            "Error al obtener las promociones vigentes del local: " . $e->getMessage()
+        );
+    } finally {
+        if (isset($conn)) {
+            $conn->close();
+        }
+    }
+    return $activePromos;
+}
+    public static function rejectPromotion(Promotion $promo, User $admin, string $motivoRechazo): void {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $stmt = $conn->prepare(" UPDATE promotion
+                                            SET status = ?, idAdmin = ?, motivoRechazo = ?
+                                            WHERE id = ? AND dateDeleted IS NULL");
+            if (!$stmt) {
+                throw new Exception($conn->error);
+            }
+            $status = PromoStatus_enum::Rechazada->value;
+            $adminId = $admin->getId();
+            $promoId = $promo->getId();
+            $stmt->bind_param("sisi",$status,$adminId,$motivoRechazo,$promoId);
+            $stmt->execute();
+            if ($stmt->affected_rows === 0) {
+                throw new Exception("No se pudo rechazar la promoción o ya fue modificada.");
+            }
+            $stmt->close();
+            $promo->setStatus(PromoStatus_enum::Rechazada);
+            $promo->setMotivoRechazo($motivoRechazo);
+            $promo->setAdmin($admin);
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al rechazar la promoción: " . $e->getMessage());
+        } finally {
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+
+    public static function approvePromotion(Promotion $promo, User $admin): void {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $today = new DateTimeImmutable('today');
+            $dateTo = $promo->getDateTo();
+            if (!$dateTo instanceof DateTimeInterface) {
+                $dateTo = new DateTimeImmutable($dateTo);
+            }
+            $newStatus = null;
+            if ($dateTo > $today) {
+                $newStatus = PromoStatus_enum::Vigente;
+            }
+            if ($newStatus !== null) {
+                $stmt = $conn->prepare("UPDATE promotion
+                                                SET status = ?, idAdmin = ?
+                                                WHERE id = ? AND dateDeleted IS NULL");
+                if (!$stmt) {
+                    throw new Exception($conn->error);
+                }
+                $statusValue = $newStatus->value;
+                $adminId = $admin->getId();
+                $promoId = $promo->getId();
+                $stmt->bind_param("sii", $statusValue, $adminId, $promoId);
+            } else {
+                $stmt = $conn->prepare("UPDATE promotion
+                                                SET idAdmin = ?
+                                                WHERE id = ? AND dateDeleted IS NULL");
+                if (!$stmt) {
+                    throw new Exception($conn->error);
+                }
+                $adminId = $admin->getId();
+                $promoId = $promo->getId();
+                $stmt->bind_param("ii",$adminId,$promoId);
+            }
+            $stmt->execute();
+            if ($stmt->affected_rows === 0) {
+                throw new Exception("No se pudo aprobar la promoción o ya fue modificada.");
+            }
+            $stmt->close();
+            $promo->setAdmin($admin);
+            if ($newStatus !== null) {
+                $promo->setStatus($newStatus);
+            }
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al aprobar la promoción: " . $e->getMessage());
+        } finally {
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+}
+
+public static function softDeletePromotion(Promotion $promo): void
+{
+    try {
+        $conn = new mysqli(servername, username, password, dbName);
+        if ($conn->connect_error) {
+            throw new Exception("Error de conexión: " . $conn->connect_error);
+        }
+        $stmt = $conn->prepare("UPDATE promotion
+                                        SET dateDeleted = ?
+                                        WHERE id = ? AND dateDeleted IS NULL");
+        if (!$stmt) {
+            throw new Exception($conn->error);
+        }
+        $today = (new DateTimeImmutable('today'))->format('Y-m-d');
+        $promoId = $promo->getId();
+        $stmt->bind_param("si",$today,$promoId);
+        $stmt->execute();
+        if ($stmt->affected_rows === 0) {
+            throw new Exception("La promoción no existe o ya fue eliminada.");
+        }
+        $stmt->close();
+        $promo->setDateDeleted(new DateTimeImmutable('today'));
+    } catch (Exception $e) {
+        throw new Exception(
+            "Error al eliminar lógicamente la promoción: " . $e->getMessage());
+    } finally {
+        if (isset($conn)) {
+            $conn->close();
+        }
+    }
+}
+
 }
 ?>
