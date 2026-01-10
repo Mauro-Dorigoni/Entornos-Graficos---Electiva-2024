@@ -44,6 +44,10 @@ class NewsController {
         return $newsFound;
     }
 
+    public static function search(string $term) {
+        return NewsData::search($term);
+    }
+
     public static function delete(int $id) {
         try {
             NewsData::softDelete($id);

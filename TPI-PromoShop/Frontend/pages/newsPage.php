@@ -2,13 +2,19 @@
 require_once __DIR__ . "/../shared/authFunctions.php/admin.auth.function.php";
 require_once __DIR__ . "/../shared/backendRoutes.dev.php";
 require_once __DIR__ . "/../../Backend/logic/news.controller.php";
+require_once __DIR__ . "/../shared/nextcloud.public.php";
+include "../components/messageModal.php";
+include "../components/confirmationModal.php"; 
 
-// 1. Incluimos los componentes necesarios
-include "../components/messageModal.php"; // Para alertas de éxito/error
-include "../components/confirmationModal.php"; // Nuevo componente de confirmación reutilizable
+// Capturamos el término de búsqueda si existe
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : null;
 
 try {
-    $novedades = NewsController::getAll();
+    if ($searchTerm) {
+        $novedades = NewsController::search($searchTerm); 
+    } else {
+        $novedades = NewsController::getAll(); 
+    }
 } catch (Exception $e) {
     $novedades = [];
 }
@@ -37,47 +43,28 @@ try {
             border: 1px solid #ddd;
         }
         .news-card:hover { transform: scale(1.01); background-color: #f9f9f9; }
-        .news-img-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .news-img {
-            max-width: 150px;
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            object-fit: cover;
-        }
-        .info-box {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-            background: #f8f9fa;
-            border-radius: 4px;
-            min-width: 110px;
-        }
         .text-orange { color: #CC6600 !important; }
-        .btn-outline-orange {
+        
+        /* Estilos para la barra de búsqueda */
+        .search-container .form-control:focus {
             border-color: #CC6600;
-            color: #CC6600;
+            box-shadow: 0 0 0 0.2rem rgba(204, 102, 0, 0.25);
         }
-        .btn-outline-orange:hover {
+        .btn-search {
             background-color: #CC6600;
             color: white;
+            border: none;
         }
-        .category-badge {
-            color: #CC6600;
-            font-weight: bold;
-            text-decoration: underline;
+        .btn-search:hover {
+            background-color: #a35200;
+            color: white;
         }
-        .action-icons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-        }
+        
+        .news-img-container { display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+        .news-img { max-width: 150px; width: 100%; height: auto; border-radius: 4px; object-fit: cover; }
+        .info-box { border: 1px solid #ccc; padding: 8px; text-align: center; background: #f8f9fa; border-radius: 4px; min-width: 110px; }
+        .category-badge { color: #CC6600; font-weight: bold; text-decoration: underline; }
+        .action-icons { display: flex; gap: 20px; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
@@ -87,12 +74,29 @@ try {
     <main class="container py-5">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 text-center text-md-left">
             <h1 class="display-4 font-weight-bold">Novedades</h1>
-            <a href="newNewsPage.php" class="btn btn-outline-orange btn-lg mt-3 mt-md-0">Nueva Novedad</a>
+            
+            <form action="newsPage.php" method="GET" class="search-container input-group col-12 col-md-5 mt-3 mt-md-0 p-0 shadow-sm">
+                <input type="text" name="search" class="form-control" placeholder="Buscar por contenido..." 
+                       value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+                <div class="input-group-append">
+                    <button class="btn btn-search" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <?php if($searchTerm): ?>
+                        <a href="newsPage.php" class="btn btn-secondary shadow-none">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </form>
         </div>
 
         <section>
             <?php if (empty($novedades)): ?>
-                <div class="alert alert-info text-center">No hay novedades vigentes para mostrar.</div>
+                <div class="alert alert-info text-center py-4">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    <?= $searchTerm ? "No se encontraron resultados para '$searchTerm'." : "No hay novedades vigentes para mostrar." ?>
+                </div>
             <?php endif; ?>
 
             <?php foreach ($novedades as $news): ?>
@@ -100,7 +104,7 @@ try {
                     <div class="row align-items-center text-center text-md-left">
                         
                         <div class="col-12 col-md-2 news-img-container">
-                            <img src="../../Backend/shared/uploads/<?= $news->getImageUUID() ?: 'placeholder.jpg' ?>" class="news-img" alt="Novedad">
+                            <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) ?>" class="news-img" alt="Novedad">
                         </div>
                         
                         <div class="col-12 col-md-4 mb-3 mb-md-0">
@@ -110,11 +114,11 @@ try {
 
                         <div class="col-12 col-md-3 d-flex flex-column flex-sm-row flex-md-column justify-content-center align-items-center gap-2 mb-3 mb-md-0">
                             <div class="info-box m-1">
-                                <small class="d-block font-weight-bold">Desde</small>
+                                <small class="d-block font-weight-bold">Vigencia desde</small>
                                 <span class="small"><?= date("d/m/Y", strtotime($news->getDateFrom())) ?></span>
                             </div>
                             <div class="info-box m-1">
-                                <small class="d-block font-weight-bold">Hasta</small>
+                                <small class="d-block font-weight-bold">Vigencia hasta</small>
                                 <span class="small"><?= date("d/m/Y", strtotime($news->getDateTo())) ?></span>
                             </div>
                         </div>
@@ -146,7 +150,6 @@ try {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

@@ -88,7 +88,6 @@ class NewsData {
                 $cat->setCategoryType($row['categoryType']);
                 $news->setUserCategory($cat);
 
-                // El admin lo seteamos solo con el ID por ahora
                 $admin = new User();
                 $admin->setId($row['idAdmin']);
                 $news->setAdmin($admin);
@@ -110,7 +109,6 @@ class NewsData {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
 
-        // Seleccionamos todos los campos, incluyendo imageUUID
             $stmt = $conn->prepare("SELECT * FROM news WHERE id = ? AND dateDeleted IS NULL");
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -141,6 +139,51 @@ class NewsData {
             if (isset($conn)) $conn->close();
         }
     }
+
+    public static function search(string $term) {
+    try {
+        $conn = new mysqli(servername, username, password, dbName);
+        
+        // 1. Usamos la misma consulta con JOIN que tienes en getAll()
+        $query = "SELECT n.*, uc.categoryType 
+                  FROM news n 
+                  INNER JOIN userCategory uc ON n.idUserCategory = uc.id 
+                  WHERE n.newsText LIKE ? AND n.dateDeleted IS NULL 
+                  ORDER BY n.dateFrom DESC";
+        
+        $stmt = $conn->prepare($query);
+        $likeTerm = "%" . $term . "%";
+        $stmt->bind_param("s", $likeTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $list = [];
+        while ($row = $result->fetch_assoc()) {
+            $news = new News();
+            $news->setId($row['id']);
+            $news->setNewsText($row['newsText']);
+            $news->setDateFrom($row['dateFrom']);
+            $news->setDateTo($row['dateTo']);
+            $news->setImageUUID($row['imageUUID']);
+            
+            $cat = new UserCategory();
+            $cat->setId($row['idUserCategory']);
+            $cat->setCategoryType($row['categoryType']);
+            $news->setUserCategory($cat);
+
+            $admin = new User();
+            $admin->setId($row['idAdmin']);
+            $news->setAdmin($admin);
+
+            $list[] = $news;
+        }
+        return $list;
+    } catch (Exception $e) {
+        throw new Exception("Error en la búsqueda: " . $e->getMessage());
+    } finally {
+        if(isset($conn)) $conn->close();
+    }
+}
 
     public static function softDelete(int $id) {
     try {
