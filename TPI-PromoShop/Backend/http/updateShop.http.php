@@ -7,6 +7,7 @@ require_once __DIR__ . "/../structs/user.class.php";
 require_once __DIR__ . "/../shared/frontendRoutes.dev.php";
 require_once __DIR__ . "/../shared/userType.enum.php";
 require_once __DIR__ . "/../shared/backendRoutes.dev.php";
+require_once __DIR__ . "/../shared/nextcloudUpload.php";
 
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -96,19 +97,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $extension = pathinfo($originalName, PATHINFO_EXTENSION);
                     $uuid = uniqid('', true);
                     $newFileName = $uuid . '.' . $extension;
-                    $destination = $uploadDir . $newFileName;
 
                     $i = new Image();
                     $i->setUUID($newFileName);
                     $i->setIsMain(false);
 
-
-                    if (move_uploaded_file($tmpName, $destination)) {
+                    //GUARDA LA IMAGEN EN EL SERVIDOR
+                    try{
+                        uploadToNextcloud($tmpName, $newFileName);
                         //agrego el nombre de la imagen que guarde
                         $newImages[$key] = $newFileName;
                         $imagesObjects[] = $i;
-                    } else {
-                        throw new Exception("Error subiendo la imagen: $originalName");
+                    } catch (Exception $e) {
+                        throw new Exception("Error subiendo la imagen: ". $e->getMessage());
                     }
                 } else {
                     throw new Exception("Error en el archivo: " . $_FILES['newImages']['name'][$key]);

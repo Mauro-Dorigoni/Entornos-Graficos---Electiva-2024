@@ -1,6 +1,7 @@
 body {
     background-color: #eae8e0 !important;
   }
+
   #center-container {
     min-height: 90vh;
     display: flex;

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/nextcloud.config.php';
 
+/* Recibe el path local (tmp_name) y el UUID de la imagen a pubicar [con extensión] - Devuelve una excepción ante fallos o el nombre con el cual se guardó en caso de exito*/
 function uploadToNextcloud(string $localPath, string $remoteName): string
 {
     $ch = curl_init();

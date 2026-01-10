@@ -4,12 +4,14 @@
 //require_once "../shared/authFunctions.php/owner.auth.function.php";
 
 require_once "../shared/backendRoutes.dev.php";
+require_once "../shared/frontendRoutes.dev.php";
+require_once "../shared/nextcloud.public.php";
 require_once "../../Backend/logic/shopType.controller.php";
 require_once "../../Backend/logic/shop.controller.php";
 require_once "../../Backend/structs/shop.class.php";
 include "../components/messageModal.php";
 
- //Obtener ID y Datos del Local
+//Obtener ID y Datos del Local
 $idLocal = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : 0;
 $shop = null;
 
@@ -60,7 +62,7 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
 
     <?php include "../components/navBarByUserType.php" ?>
 
-    <div class="container py-5">
+    <div class="container py-5 ">
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -180,7 +182,7 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
                                 $uuid = $img->getUuid();
                                 $isMain = $img->isMain();
                                 // Asegúrate que la ruta sea correcta
-                                $url =  "../../Backend/shared/uploads/".$img->getUUID();
+                                $url =  NEXTCLOUD_PUBLIC_BASE . urlencode($img->getUUID());
                                 ?>
                                 <div class="col-6 col-md-4 col-lg-3 mb-4">
 
@@ -216,7 +218,7 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
 
                     <div class="d-flex justify-content-end mt-5">
                         <a href="shopsCardsPage.php" class="btn btn-light btn-lg mr-3 text-muted">Cancelar</a>
-                        <button type="submit" class="btn btn-outline-orange btn-lg px-5 font-weight-bold">
+                        <button type="submit" class="btn btn-lg px-5 font-weight-bold btn-outline-orange" id="btn-outline-orange">
                             Guardar Cambios
                         </button>
                     </div>

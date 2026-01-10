@@ -3,7 +3,7 @@
 //require_once "../shared/authFunctions.php/admin.auth.function.php"; //NECESARIO??
 require_once "../shared/backendRoutes.dev.php"; //NECESARIO??
 require_once "../../Backend/logic/shopType.controller.php";
-
+require_once "../shared/nextcloud.public.php";
 require_once "../../Backend/logic/shop.controller.php";
 
 
@@ -126,7 +126,7 @@ $shops = ShopController::getByNameAndType($s, $t);
                                 ?>
                                 <!-- TODO: VER TEMA DE UBICACIÓN DE IMAGENES. -->
                                 <img class="card-img-top"
-                                    src="<?= "../../Backend/shared/uploads/" . $portada->getUUID() ?>"
+                                    src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($portada->getUUID()) ?>"
                                     alt="Logo o fachada de <?= htmlspecialchars($shop->getName()); ?>">
 
                                 <div class="card-body d-flex flex-column">

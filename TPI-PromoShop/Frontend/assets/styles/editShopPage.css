@@ -1,7 +1,14 @@
   /* Estilos Modernos (Reutilizados) */
-  body {
-      background-color: #fff;
-  }
+body {
+    background-color: #eae8e0 !important;
+}
+
+#center-container {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
   .page-header {
       border-bottom: 2px solid #f0f0f0;
@@ -48,6 +55,18 @@
       margin-bottom: 0.5rem;
       display: block;
   }
+
+  /* Botón naranja */
+  #btn-outline-orange {
+      color: white;
+      background-color: #CC6600;
+  }
+
+  #btn-outline-orange:hover {
+      background-color: rgb(148, 75, 1);
+      color: white;
+  }
+
 
   /* Estilos para la Galería de Edición */
 .gallery-item {
