@@ -8,7 +8,7 @@ class Promotion{
     private int $id;
     private string $promoText;
     private PromoStatus_enum $status;
-    private string $motivoRechazo;
+    private ?string $motivoRechazo = null;
     private string $imageUUID;
     private ?DateTimeImmutable $dateFrom;
 

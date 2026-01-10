@@ -29,7 +29,7 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/promocionesPage.php'; ?>">Listado Promociones</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/promoManagementPage.php'; ?>">Gestion Promociones</a>
                             </div>
                         </li>
                         <li class="nav-item position-relative">

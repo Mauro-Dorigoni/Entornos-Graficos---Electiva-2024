@@ -14,6 +14,14 @@
             }
             return $promo;
         }
+        public static function getOne (Promotion $promo) {
+            try {
+                $foundPromo = PromotionData::findById($promo);
+            } catch (Exception $e) {
+                throw new Exception("No se pudo encontrar la promocion. ".$e->getMessage());
+            }
+            return $foundPromo;
+        }
         public static function getAllPending(){
             $pendingPromotions = [];
             try{
@@ -23,27 +31,43 @@
             }
             return $pendingPromotions;
         }
-        public static function getAllActiveByShop(Shop $shop){
-            $activePromotions = [];
-            try{
-                $activePromotions = PromotionData::findAllActiveByShop($shop);
+        public static function getAllActiveByShop(Shop $shop): array{
+            try {
+                $promotions = PromotionData::findAllByShop($shop);
+
+                $activePromotions = array_filter(
+                    $promotions,
+                    fn ($promo) => $promo->getStatus() === PromoStatus_enum::Vigente
+                );
+
+                return array_values($activePromotions);
             } catch (Exception $e) {
-                throw new Exception("Error al buscar las promociones activas del locals. ".$e->getMessage());
+                throw new Exception(
+                    "Error al buscar las promociones activas del local. " . $e->getMessage()
+                );
             }
-            return $activePromotions;
         }
-        public static function approvePromotion(Promotion $promo,User $admin): void {
+        public static function getAllByShop(Shop $shop){ 
+            $activePromotions = []; 
+            try{ 
+                $activePromotions = PromotionData::findAllByShop($shop); 
+            } catch (Exception $e) { 
+                throw new Exception("Error al buscar las promociones activas del locals. ".$e->getMessage()); 
+            } 
+            return $activePromotions; 
+        }
+        public static function approvePromotion(Promotion $promo): void {
         try {
-            PromotionData::approvePromotion($promo, $admin);
+            PromotionData::approvePromotion($promo);
         } catch (Exception $e) {
             throw new Exception(
                 "Error al aprobar la promoción. " . $e->getMessage()
             );
         }
         }
-        public static function rejectPromotion(Promotion $promo,User $admin,string $motivoRechazo): void {
+        public static function rejectPromotion(Promotion $promo): void {
             try {
-                PromotionData::rejectPromotion($promo, $admin, $motivoRechazo);
+                PromotionData::rejectPromotion($promo);
             } catch (Exception $e) {
                 throw new Exception(
                     "Error al rechazar la promoción. " . $e->getMessage()

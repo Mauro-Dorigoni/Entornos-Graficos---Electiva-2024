@@ -7,7 +7,7 @@ require_once "../../Backend/logic/promotion.controller.php";
 
 require_once "../components/shopAction.php";
 require_once "../shared/nextcloud.public.php";
-
+require_once "../shared/dayLabels.php";
 include "../components/messageModal.php";
 
 // ID del local desde GET (Sanitizado)
@@ -168,7 +168,22 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                                             class="w-100 rounded"
                                             style="height: 200px; object-fit: cover;">
                                     </div>
-
+                                    <div class="mb-3">
+                                        <small class="text-muted font-weight-bold">Días válidos:</small>
+                                        <span class="text-muted">
+                                            <?php
+                                            $activeDays = [];
+                                            foreach ($dayLabels as $key => $label) {
+                                                if (!empty($promo->getValidDays()[$key])) {
+                                                    $activeDays[] = $label;
+                                                }
+                                            }
+                                            echo !empty($activeDays)
+                                                ? implode(' · ', $activeDays)
+                                                : 'Todos los días';
+                                            ?>
+                                        </span>
+                                    </div>
                                     <div class="mt-3 pt-3 border-top">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <small class="text-muted">

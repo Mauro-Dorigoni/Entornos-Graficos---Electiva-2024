@@ -40,7 +40,7 @@ if ($user != null or $userType == UserType_enum::Owner) {
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/promocionesPage.php'; ?>">Listado Promociones</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/allShopPromotionsPage.php'; ?>">Listado Promociones</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL.'/newPromotionPage.php'; ?>">Alta de Promoción</a>
                             </div>
                         </li>

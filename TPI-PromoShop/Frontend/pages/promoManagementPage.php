@@ -1,0 +1,184 @@
+<?php
+require_once __DIR__ . "/../shared/authFunctions.php/admin.auth.function.php";
+require_once __DIR__ . "/../shared/backendRoutes.dev.php";
+require_once __DIR__ . "/../../Backend/logic/promotion.controller.php";
+require_once __DIR__ . "/../shared/nextcloud.public.php";
+require_once __DIR__ . "/../shared/dayLabels.php";
+
+include "../components/messageModal.php";
+include "../components/confirmationModal.php";
+
+try {
+    $pendingPromotions = PromotionContoller::getAllPending();
+} catch (Exception $e) {
+    $pendingPromotions = [];
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Promociones</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+        }
+        .text-orange { color: #CC6600 !important; }
+        .news-img {
+            max-width: 140px;
+            border-radius: 4px;
+        }
+        .info-box {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 4px;
+            min-width: 110px;
+        }
+        .action-icons a {
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<form id="acceptPromotionForm" method="POST" action="<?= backendHTTPLayer . '/acceptPromotion.http.php' ?>" style="display:none;">
+    <input type="hidden" name="promotion_id" id="acceptPromotionId">
+</form>
+<body>
+<?php include "../components/header.php" ?>
+<?php include "../components/adminNavBar.php" ?>
+<main class="container py-5">
+    <h1 class="display-4 font-weight-bold mb-4">Promociones Pendientes</h1>
+    <?php if (empty($pendingPromotions)): ?>
+        <div class="alert alert-info text-center">
+            No hay promociones pendientes para mostrar.
+        </div>
+    <?php endif; ?>
+    <?php foreach ($pendingPromotions as $promo): ?>
+        <div class="news-card">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>" class="news-img" alt="Promoción">
+                </div>
+                <div class="col-md-6">
+                    <h4 class="text-orange mb-1">Promoción #<?= $promo->getId() ?></h4>
+                    <div class="mb-1">
+                        <strong>Categoría: </strong><?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
+                    </div>
+                    <p class="mb-0">
+                        <?= nl2br(htmlspecialchars($promo->getPromoText())) ?>
+                    </p>
+                    <div class="mt-2">
+                        <small class="font-weight-bold">Días válidos:</small>
+                        <span>
+                            <?php
+                            $activeDays = [];
+                            foreach ($dayLabels as $key => $label) {
+                                if (!empty($promo->getValidDays()[$key])) {
+                                    $activeDays[] = $label;
+                                }
+                            }
+                            echo implode(' · ', $activeDays);
+                            ?>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex flex-column align-items-center">
+                    <div class="info-box mb-2">
+                        <strong>Desde</strong><br>
+                        <?= $promo->getDateFrom()?->format('d/m/Y') ?>
+                    </div>
+                    <div class="info-box">
+                        <strong>Hasta</strong><br>
+                        <?= $promo->getDateTo()?->format('d/m/Y') ?>
+                    </div>
+                </div>
+                <div class="col-md-1 d-flex flex-column align-items-center action-icons">
+                    <a class="text-success"
+                        onclick="openAcceptModal(<?= $promo->getId() ?>)">
+                            <i class="fas fa-check fa-2x"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="text-danger" onclick="openRejectModal(<?= $promo->getId() ?>)">
+                            <i class="fas fa-times fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+</main>
+
+<div class="modal fade" id="rejectActionModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0">
+      <div class="modal-header border-0"
+           style="background-color: #006633; color: white; padding: 1rem 1.5rem;">
+        <img src="../assets/LogoPromoShopFondoVerde.png" alt="PS" style="width: 45px; margin-right: 15px;">
+        <h2 class="modal-title font-weight-bold" id="rejectModalLabel" style="margin: 0; color:#CC6600; font-size: 1.5rem;"> Rechazar Promoción</h2>
+      </div>
+      <div class="modal-body text-center" style="background-color: #eae8e0; padding: 2.5rem 2rem;">
+        <form method="POST" action="<?= backendHTTPLayer . '/rejectPromotion.http.php' ?>">
+          <input type="hidden" name="promotion_id" id="rejectPromotionId">
+          <p style="font-size: 18px; color: #333; margin-bottom: 1.5rem;">Por favor indique el motivo del rechazo:</p>
+          <textarea name="motivoRechazo" class="form-control mb-4" rows="4" required style="border-radius: 8px; resize: none;"></textarea>
+          <div class="d-flex justify-content-center" style="gap: 15px;">
+            <button type="button" class="btn px-4 py-2 font-weight-bold" data-bs-dismiss="modal" style="background-color: #6c757d; color: white; border: none; border-radius: 8px;">
+              Cancelar
+            </button>
+            <button type="submit" class="btn px-4 py-2 font-weight-bold" style="background-color: #CC6600; color: white; border: none; border-radius: 8px;">
+              Rechazar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php include "../components/footer.php" ?>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+function openRejectModal(promotionId) {
+    const modalElement = document.getElementById('rejectActionModal');
+    if (!modalElement) return;
+
+    document.getElementById('rejectPromotionId').value = promotionId;
+
+    const bsRejectModal = new bootstrap.Modal(modalElement);
+    bsRejectModal.show();
+}
+</script>
+<script>
+function openAcceptModal(promotionId) {
+    document.getElementById('acceptPromotionId').value = promotionId;
+
+    openConfirmModal(
+        '¿Aceptar la promoción <strong>#' + promotionId + '</strong>?',
+        '#',
+        'Confirmar aprobación'
+    );
+
+    const confirmBtn = document.getElementById('confirmModalBtnAction');
+    confirmBtn.onclick = function (e) {
+        e.preventDefault();
+        document.getElementById('acceptPromotionForm').submit();
+    };
+}
+</script>
+</body>
+</html>
