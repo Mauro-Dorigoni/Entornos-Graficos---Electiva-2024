@@ -5,14 +5,10 @@ require_once __DIR__."/../structs/userCategory.class.php";
 require_once __DIR__."/../logic/news.controller.php";
 require_once __DIR__."/../shared/frontendRoutes.dev.php";
 require_once __DIR__."/../shared/userType.enum.php";
+require_once __DIR__."/../shared/nextcloudUpload.php";
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
-}
-
-$uploadDir = __DIR__ . '/../shared/uploads/';
-if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -32,19 +28,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $news->setNewsText($newsText);
         $news->setDateFrom($dateFrom);
         $news->setDateTo($dateTo);
+        
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) 
         {
             $originalName = $_FILES['image']['name'];
-            $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
             $uuid = uniqid('', true);
             $newFileName = $uuid . '.' . $extension;
-            $destination = $uploadDir . $newFileName;
 
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-                $news->setImageUUID($newFileName);
-            } else {
-                throw new Exception("Error al mover la imagen al servidor.");
-            }
+            uploadToNextcloud($_FILES['image']['tmp_name'], $newFileName);
+            
+            $news->setImageUUID($newFileName);
+        } else {
+            throw new Exception("Error en el archivo de imagen");
         }
          
         $news->setAdmin($_SESSION['user']);
@@ -56,16 +52,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         NewsController::registerNews($news);
 
         $_SESSION['success_message'] = "Novedad publicada exitosamente";
-        header("Location: ".frontendURL."/adminNewsPage.php"); 
+        header("Location: ".frontendURL."/newNewsPage.php"); 
         exit;
 
     } catch (Exception $e){
         $_SESSION['error_message'] = "Error al registrar la novedad: ".$e->getMessage();
-        header("Location: ".frontendURL."/adminNewsPage.php");
+        header("Location: ".frontendURL."/newNewsPage.php");
         exit;
     }
 } else {
     $_SESSION['error_message'] = "Método de solicitud no permitido";
-    header("Location: ".frontendURL."/adminNewsPage.php");
+    header("Location: ".frontendURL."/newNewsPage.php");
 }
 ?>

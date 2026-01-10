@@ -80,7 +80,7 @@ try {
                 </div>
                 <hr>
                 <div class="pt-1 mb-4">
-                    <button type="submit" class="btn btn-lg btn-block" id="btn-outline-orange"> Publicar Novedad</button>
+                    <button type="submit" class="btn btn-lg btn-block" id="btn-outline-orange">Publicar Novedad</button>
                 </div>
             </form>
         </div>
