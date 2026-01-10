@@ -192,4 +192,76 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
 </body>
 
+<!-- MODAL TO DELETE -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header" style="background-color: #006633; color: white; display: flex; align-items: center; justify-content: flex-start;">
+                <img src="../assets/LogoPromoShopFondoVerde.png" alt="PromoShop Logo" style="width: 60px; margin-right: 10px;">
+                <strong>
+                    <h2 class="modal-title" id="deleteLabel" style="margin: 0; color:#CC6600">PromoShop</h2>
+                </strong>
+            </div>
+
+            <div class="modal-body text-center" style="background-color: #eae8e0; padding: 2rem;">
+
+                <p style="font-size: 18px; color: #333; margin-bottom: 20px;">
+                    ¿Estás seguro de que deseas eliminar este elemento?
+                </p>
+                <p class="text-muted small mb-4">Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-secondary mr-2" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="button" class="btn" id="btnConfirmDeleteAction" style="background-color: #CC6600; color: white; font-weight: bold;">
+                        Eliminar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 </html>
+
+<script>
+    // Variable para guardar qué formulario quiere borrar
+    let formToDelete = null;
+    // Instancia del modal (Bootstrap 5)
+    let deleteModalInstance = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializamos el modal una sola vez
+        const modalElement = document.getElementById('deleteConfirmationModal');
+        if (modalElement) {
+            deleteModalInstance = new bootstrap.Modal(modalElement);
+        }
+
+        // Lógica del botón "Sí, Eliminar" del modal
+        const confirmBtn = document.getElementById('btnConfirmDeleteAction');
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function() {
+                if (formToDelete) {
+                    formToDelete.submit(); // Enviar el formulario
+                }
+            });
+        }
+    });
+
+    // Función que llamaremos desde el botón de la tarjeta
+    function confirmarBorrado(boton) {
+        // 1. Buscamos el formulario padre del botón clickeado
+        formToDelete = boton.closest('form');
+
+        // 2. Mostramos el modal
+        if (deleteModalInstance) {
+            deleteModalInstance.show();
+        } else {
+            console.error("El modal de borrado no se cargó correctamente.");
+        }
+    }
+</script>
