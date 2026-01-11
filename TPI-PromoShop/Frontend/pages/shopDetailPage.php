@@ -48,7 +48,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
 </head>
 
-<body>
+<body style="background-color: #eae8e0">
 
     <?php include "../components/header.php" ?>
 

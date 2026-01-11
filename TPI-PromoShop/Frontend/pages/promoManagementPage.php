@@ -26,6 +26,9 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
+        body {
+            background-color:#eae8e0 !important;
+        }
         .news-card {
             background: white;
             border-radius: 8px;
@@ -56,7 +59,7 @@ try {
 <form id="acceptPromotionForm" method="POST" action="<?= backendHTTPLayer . '/acceptPromotion.http.php' ?>" style="display:none;">
     <input type="hidden" name="promotion_id" id="acceptPromotionId">
 </form>
-<body>
+<body style="background-color: #eae8e0">
 <?php include "../components/header.php" ?>
 <?php include "../components/adminNavBar.php" ?>
 <main class="container py-5">
@@ -73,7 +76,7 @@ try {
                     <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>" class="news-img" alt="Promoción">
                 </div>
                 <div class="col-md-6">
-                    <h4 class="text-orange mb-1">Promoción #<?= $promo->getId() ?></h4>
+                    <h4 class="text-orange mb-1"><?= $promo->getShop()->getName() ?> Promoción #<?= $promo->getId() ?></h4>
                     <div class="mb-1">
                         <strong>Categoría: </strong><?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
                     </div>

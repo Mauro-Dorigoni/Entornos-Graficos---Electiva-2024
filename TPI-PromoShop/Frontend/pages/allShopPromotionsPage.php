@@ -31,6 +31,9 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
+        body {
+            background-color: #eae8e0 !important;
+        }
         .news-card {
             background: white;
             border-radius: 8px;

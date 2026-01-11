@@ -1,4 +1,7 @@
  /* Estilos específicos para Detalle */
+ body {
+    background-color: #eae8e0 !important;
+}
  .carousel-item img {
      height: 400px;
      object-fit: cover;

@@ -32,6 +32,9 @@ try {
     <link rel="stylesheet" href="../assets/styles/newLocalPage.css">
 
     <style>
+        body {
+            background-color: #eae8e0 !important;
+        }
         .news-card {
             cursor: pointer;
             background: white;
