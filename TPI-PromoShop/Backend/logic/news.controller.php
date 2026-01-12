@@ -44,15 +44,32 @@ class NewsController {
         return $newsFound;
     }
 
-    public static function search(string $term) {
-        return NewsData::search($term);
-    }
-
     public static function delete(int $id) {
         try {
             NewsData::softDelete($id);
         } catch (Exception $e) {
             throw new Exception("Error en el controlador al eliminar: " . $e->getMessage());
+        }
+    }
+
+    public static function filter($search, $dateFrom, $dateTo, $catId) {
+        return NewsData::filter($search, $dateFrom, $dateTo, $catId);
+    }
+
+    public static function filterForUser($search, $dateFrom, $dateTo, $maxCategory) {
+        return NewsData::filterForUser($search, $dateFrom, $dateTo, $maxCategory);
+    }
+
+    public static function getFilteredNews(User $user, $search, $dateFrom, $dateTo, $filterCatId = null) {
+        try {
+            if ($user->isAdmin()) {
+                return NewsData::filter($search, $dateFrom, $dateTo, $filterCatId);
+            } else {
+                $userLevel = $user->getUserCategory()->getId();
+                return NewsData::filterForUser($search, $dateFrom, $dateTo, $userLevel);
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener las novedades: " . $e->getMessage());
         }
     }
 }

@@ -1,14 +1,19 @@
 <?php 
+// Verificamos si existe un usuario en la sesión
 if (isset($_SESSION["user"])) {
-        $user = $_SESSION["user"];
-        $userType = $_SESSION["userType"];
+    $user = $_SESSION["user"];
+    $userType = $_SESSION["userType"];
 
-        if ($user != null && $userType === UserType_enum::Admin) {
+    // Carga la navbar según el rol si hay sesión
+    if ($user != null && $userType === UserType_enum::Admin) {
         include "../components/adminNavBar.php";
-    }
-        if ($user != null && $userType === UserType_enum::Owner) {
-
+    } elseif ($user != null && $userType === UserType_enum::Owner) {
         include "../components/ownerNavBar.php";
-        }
+    } elseif ($user != null && $userType === UserType_enum::User) {
+        include "../components/userNavBar.php";
     }
+} else {
+    // Si NO existe $_SESSION["user"], es un usuario no registrado
+    include "../components/nonUserNavBar.php";
+}
 ?>

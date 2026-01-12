@@ -140,63 +140,162 @@ class NewsData {
         }
     }
 
-    public static function search(string $term) {
-    try {
-        $conn = new mysqli(servername, username, password, dbName);
-        
-        // 1. Usamos la misma consulta con JOIN que tienes en getAll()
-        $query = "SELECT n.*, uc.categoryType 
-                  FROM news n 
-                  INNER JOIN userCategory uc ON n.idUserCategory = uc.id 
-                  WHERE n.newsText LIKE ? AND n.dateDeleted IS NULL 
-                  ORDER BY n.dateFrom DESC";
-        
-        $stmt = $conn->prepare($query);
-        $likeTerm = "%" . $term . "%";
-        $stmt->bind_param("s", $likeTerm);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        $list = [];
-        while ($row = $result->fetch_assoc()) {
-            $news = new News();
-            $news->setId($row['id']);
-            $news->setNewsText($row['newsText']);
-            $news->setDateFrom($row['dateFrom']);
-            $news->setDateTo($row['dateTo']);
-            $news->setImageUUID($row['imageUUID']);
+    public static function filter($search, $dateFrom, $dateTo, $filterCatId) {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
             
-            $cat = new UserCategory();
-            $cat->setId($row['idUserCategory']);
-            $cat->setCategoryType($row['categoryType']);
-            $news->setUserCategory($cat);
+            $sql = "SELECT n.*, uc.categoryType 
+                    FROM news n 
+                    INNER JOIN userCategory uc ON n.idUserCategory = uc.id 
+                    WHERE n.dateDeleted IS NULL";
+            
+            $params = [];
+            $types = "";
 
-            $admin = new User();
-            $admin->setId($row['idAdmin']);
-            $news->setAdmin($admin);
+            if ($search) {
+                $sql .= " AND n.newsText LIKE ?";
+                $params[] = "%$search%";
+                $types .= "s";
+            }
 
-            $list[] = $news;
+            if ($dateFrom) {
+                $sql .= " AND n.dateFrom >= ?";
+                $params[] = $dateFrom;
+                $types .= "s";
+            }
+            
+            if ($dateTo) {
+                $sql .= " AND n.dateTo <= ?";
+                $params[] = $dateTo;
+                $types .= "s";
+            }
+
+            if ($filterCatId) {
+                $sql .= " AND n.idUserCategory = ?";
+                $params[] = $filterCatId;
+                $types .= "i";
+            }
+
+            $sql .= " ORDER BY n.dateFrom DESC";
+            $stmt = $conn->prepare($sql);
+
+            if (!empty($params)) {
+                $stmt->bind_param($types, ...$params);
+            }
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $list = [];
+            while ($row = $result->fetch_assoc()) {
+                $news = new News();
+                $news->setId($row['id']);
+                $news->setNewsText($row['newsText']);
+                $news->setDateFrom($row['dateFrom']);
+                $news->setDateTo($row['dateTo']);
+                $news->setImageUUID($row['imageUUID']);
+                
+                $cat = new UserCategory();
+                $cat->setId($row['idUserCategory']);
+                $cat->setCategoryType($row['categoryType']);
+                $news->setUserCategory($cat);
+
+                $admin = new User();
+                $admin->setId($row['idAdmin']);
+                $news->setAdmin($admin);
+
+                $list[] = $news;
+            }
+            return $list;
+        } catch (Exception $e) {
+            throw new Exception("Error al filtrar: " . $e->getMessage());
+        } finally {
+            if(isset($conn)) $conn->close();
         }
-        return $list;
-    } catch (Exception $e) {
-        throw new Exception("Error en la búsqueda: " . $e->getMessage());
-    } finally {
-        if(isset($conn)) $conn->close();
     }
-}
+
+    public static function filterForUser($search, $dateFrom, $dateTo, $maxCategory) {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            
+            $sql = "SELECT n.*, uc.categoryType 
+                    FROM news n 
+                    INNER JOIN userCategory uc ON n.idUserCategory = uc.id 
+                    WHERE n.dateDeleted IS NULL 
+                    AND n.idUserCategory <= ?"; 
+
+            $params = [$maxCategory];
+            $types = "i"; 
+
+            if ($search) {
+                $sql .= " AND n.newsText LIKE ?";
+                $params[] = "%$search%";
+                $types .= "s";
+            }
+
+            if ($dateFrom) {
+                $sql .= " AND n.dateFrom >= ?";
+                $params[] = $dateFrom;
+                $types .= "s";
+            }
+
+            if ($dateTo) {
+                $sql .= " AND n.dateTo <= ?";
+                $params[] = $dateTo;
+                $types .= "s";
+            }
+
+            $sql .= " ORDER BY n.dateFrom DESC";
+            $stmt = $conn->prepare($sql);
+
+            if (!empty($params)) {
+                $stmt->bind_param($types, ...$params);
+            }
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $list = [];
+            while ($row = $result->fetch_assoc()) {
+                $news = new News();
+                $news->setId($row['id']);
+                $news->setNewsText($row['newsText']);
+                $news->setDateFrom($row['dateFrom']);
+                $news->setDateTo($row['dateTo']);
+                $news->setImageUUID($row['imageUUID']);
+                
+                $cat = new UserCategory();
+                $cat->setId($row['idUserCategory']);
+                $cat->setCategoryType($row['categoryType']);
+                $news->setUserCategory($cat);
+
+                $admin = new User();
+                $admin->setId($row['idAdmin']);
+                $news->setAdmin($admin);
+
+                $list[] = $news;
+            }
+            return $list;
+
+        } catch (Exception $e) {
+            throw new Exception("Error al filtrar novedades para usuario: " . $e->getMessage());
+        } finally {
+            if(isset($conn)) $conn->close();
+        }
+    }
 
     public static function softDelete(int $id) {
-    try {
-        $conn = new mysqli(servername, username, password, dbName);
-        $stmt = $conn->prepare("UPDATE news SET dateDeleted = NOW() WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-    } catch (Exception $e) {
-        throw new Exception("Error al realizar la baja lógica: " . $e->getMessage());
-    } finally {
-        if (isset($conn)) $conn->close();
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            $stmt = $conn->prepare("UPDATE news SET dateDeleted = NOW() WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+            throw new Exception("Error al realizar la baja lógica: " . $e->getMessage());
+        } finally {
+            if (isset($conn)) $conn->close();
+        }
     }
-}
 
 }
 ?>

@@ -1,20 +1,23 @@
 <?php
-require_once __DIR__ . "/../shared/authFunctions.php/admin.auth.function.php";
+require_once __DIR__ . "/../shared/authFunctions.php/user.auth.function.php";
 require_once __DIR__ . "/../shared/backendRoutes.dev.php";
 require_once __DIR__ . "/../../Backend/logic/news.controller.php";
+require_once __DIR__ . "/../../Backend/logic/userCategory.controller.php";
 require_once __DIR__ . "/../shared/nextcloud.public.php";
 include "../components/messageModal.php";
 include "../components/confirmationModal.php"; 
 
-// Capturamos el término de búsqueda si existe
-$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : null;
+$user = $_SESSION['user'];
+$isAdmin = $user->isAdmin();
+
+$search = isset($_GET['search']) ? trim($_GET['search']) : null;
+$dateFrom = !empty($_GET['f_desde']) ? $_GET['f_desde'] : null;
+$dateTo = !empty($_GET['f_hasta']) ? $_GET['f_hasta'] : null;
+$filterCatId = !empty($_GET['f_cat']) ? (int)$_GET['f_cat'] : null;
 
 try {
-    if ($searchTerm) {
-        $novedades = NewsController::search($searchTerm); 
-    } else {
-        $novedades = NewsController::getAll(); 
-    }
+    $userCategories = UserCategoryController::getAll();
+    $novedades = NewsController::getFilteredNews($user, $search, $dateFrom, $dateTo, $filterCatId);
 } catch (Exception $e) {
     $novedades = [];
 }
@@ -25,132 +28,155 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Novedades - Fisherton Plaza</title>
-    
+    <title>Novedades - PromoShop</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../assets/styles/newLocalPage.css">
-
     <style>
+        body { background-color: #eae8e0 !important; }
+        .text-orange { color: #CC6600 !important; }
+        
+        /* Barra de búsqueda unificada según requerimiento visual */
+        .search-wrapper {
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .search-wrapper .form-control { border: none; height: 50px; box-shadow: none; }
+
+        .btn-unified {
+            border: none;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white !important;
+            cursor: pointer;
+            border-radius: 0; /* Puntas no redondeadas entre botones */
+            text-decoration: none !important;
+        }
+        .btn-unified:hover { opacity: 0.9; text-decoration: none !important; }
+
+        .bg-orange-btn { background-color: #CC6600 !important; }
+        .bg-grey-btn { background-color: #6c757d !important; border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+        /* Tarjetas de Novedades */
         .news-card {
             cursor: pointer;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
             padding: 1.5rem;
-            transition: transform 0.2s;
+            margin-bottom: 1rem;
             border: 1px solid #ddd;
+            transition: transform 0.2s;
         }
-        .news-card:hover { transform: scale(1.01); background-color: #f9f9f9; }
-        .text-orange { color: #CC6600 !important; }
+        .news-card:hover { transform: scale(1.01); background-color: #fcfcfc; }
+        .news-img { max-width: 140px; border-radius: 4px; }
+        .info-box { border: 1px solid #ccc; padding: 5px 10px; text-align: center; background: #f8f9fa; border-radius: 4px; }
+        .category-badge { color: #CC6600; font-weight: bold; text-decoration: underline; white-space: nowrap; font-size: 1.1rem; }
         
-        /* Estilos para la barra de búsqueda */
-        .search-container .form-control:focus {
-            border-color: #CC6600;
-            box-shadow: 0 0 0 0.2rem rgba(204, 102, 0, 0.25);
+        .news-content-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
         }
-        .btn-search {
-            background-color: #CC6600;
-            color: white;
-            border: none;
+
+        /* Botones de acción horizontales y grandes */
+        .action-btn-large {
+            font-size: 1.6rem;
+            transition: transform 0.2s;
+            text-decoration: none !important;
         }
-        .btn-search:hover {
-            background-color: #a35200;
-            color: white;
-        }
-        
-        .news-img-container { display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
-        .news-img { max-width: 150px; width: 100%; height: auto; border-radius: 4px; object-fit: cover; }
-        .info-box { border: 1px solid #ccc; padding: 8px; text-align: center; background: #f8f9fa; border-radius: 4px; min-width: 110px; }
-        .category-badge { color: #CC6600; font-weight: bold; text-decoration: underline; }
-        .action-icons { display: flex; gap: 20px; justify-content: center; align-items: center; }
+        .action-btn-large:hover { transform: scale(1.2); text-decoration: none !important; }
     </style>
 </head>
 <body>
     <?php include "../components/header.php"?>
-    <?php include "../components/adminNavBar.php"?>
+    <?php include "../components/navBarByUserType.php"?>
 
     <main class="container py-5">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 text-center text-md-left">
-            <h1 class="display-4 font-weight-bold">Novedades</h1>
-            
-            <form action="newsPage.php" method="GET" class="search-container input-group col-12 col-md-5 mt-3 mt-md-0 p-0 shadow-sm">
-                <input type="text" name="search" class="form-control" placeholder="Buscar por contenido..." 
-                       value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
-                <div class="input-group-append">
-                    <button class="btn btn-search" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <?php if($searchTerm): ?>
-                        <a href="newsPage.php" class="btn btn-secondary shadow-none">
-                            <i class="fas fa-times"></i>
-                        </a>
-                    <?php endif; ?>
-                </div>
-            </form>
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-4"> <h1 class="font-weight-bold display-4">Novedades</h1> </div>
+            <div class="col-md-8">
+                <form action="newsPage.php" method="GET">
+                    <div class="search-wrapper">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar..." value="<?= htmlspecialchars($search ?? '') ?>">
+                        
+                        <?php if($search || $dateFrom || $dateTo || $filterCatId): ?>
+                            <a href="newsPage.php" class="btn-unified bg-orange-btn" title="Limpiar"><i class="fas fa-times"></i></a>
+                        <?php endif; ?>
+
+                        <button type="submit" class="btn-unified bg-orange-btn"><i class="fas fa-search"></i></button>
+                        <button type="button" class="btn-unified bg-grey-btn" data-toggle="collapse" data-target="#filterBox"><i class="fas fa-filter"></i></button>
+                    </div>
+
+                    <div class="collapse mt-3" id="filterBox">
+                        <div class="card card-body shadow-sm">
+                            <div class="row">
+                                <div class="col-md-4"><label class="small font-weight-bold">Vigencia desde</label><input type="date" name="f_desde" class="form-control" value="<?= $dateFrom ?>"></div>
+                                <div class="col-md-4"><label class="small font-weight-bold">Vigencia hasta</label><input type="date" name="f_hasta" class="form-control" value="<?= $dateTo ?>"></div>
+                                <?php if($isAdmin): ?>
+                                <div class="col-md-4"><label class="small font-weight-bold">Categoría</label>
+                                    <select name="f_cat" class="form-control">
+                                        <option value="">Todas</option>
+                                        <?php foreach($userCategories as $c): ?>
+                                            <option value="<?= $c->getId() ?>" <?= ($filterCatId == $c->getId()) ? 'selected' : '' ?>><?= $c->getCategoryType() ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="text-right"><button type="submit" class="btn mt-3 text-white font-weight-bold px-4" style="background:#CC6600;">Aplicar Filtros</button></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <section>
-            <?php if (empty($novedades)): ?>
-                <div class="alert alert-info text-center py-4">
-                    <i class="fas fa-info-circle mr-2"></i>
-                    <?= $searchTerm ? "No se encontraron resultados para '$searchTerm'." : "No hay novedades vigentes para mostrar." ?>
-                </div>
-            <?php endif; ?>
+        <?php foreach ($novedades as $news): ?>
+            <div class="news-card" onclick="window.location.href='newsDetailPage.php?id=<?= $news->getId() ?>'">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) ?>" class="img-fluid news-img">
+                    </div>
+                    
+                    <div class="col-md-3 news-content-center">
+                        <h4 class="h5 font-weight-bold text-orange mb-1">Novedad #<?= $news->getId() ?></h4>
+                        <p class="text-muted small mb-0"><?= htmlspecialchars(substr($news->getNewsText(), 0, 100)) ?></p>
+                    </div>
 
-            <?php foreach ($novedades as $news): ?>
-                <div class="news-card" onclick="window.location.href='newsDetailPage.php?id=<?= $news->getId() ?>'">
-                    <div class="row align-items-center text-center text-md-left">
-                        
-                        <div class="col-12 col-md-2 news-img-container">
-                            <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) ?>" class="news-img" alt="Novedad">
-                        </div>
-                        
-                        <div class="col-12 col-md-4 mb-3 mb-md-0">
-                            <h3 class="h5 font-weight-bold text-orange">Novedad #<?= $news->getId() ?></h3>
-                            <p class="text-muted mb-0 small"><?= htmlspecialchars(substr($news->getNewsText(), 0, 100)) ?>...</p>
-                        </div>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="info-box mx-1"><small class="d-block font-weight-bold">Desde</small><span><?= date("d/m/Y", strtotime($news->getDateFrom())) ?></span></div>
+                        <div class="info-box mx-1"><small class="d-block font-weight-bold">Hasta</small><span><?= $news->getDateTo() ? date("d/m/Y", strtotime($news->getDateTo())) : '-' ?></span></div>
+                    </div>
 
-                        <div class="col-12 col-md-3 d-flex flex-column flex-sm-row flex-md-column justify-content-center align-items-center gap-2 mb-3 mb-md-0">
-                            <div class="info-box m-1">
-                                <small class="d-block font-weight-bold">Vigencia desde</small>
-                                <span class="small"><?= date("d/m/Y", strtotime($news->getDateFrom())) ?></span>
-                            </div>
-                            <div class="info-box m-1">
-                                <small class="d-block font-weight-bold">Vigencia hasta</small>
-                                <span class="small"><?= date("d/m/Y", strtotime($news->getDateTo())) ?></span>
-                            </div>
-                        </div>
+                    <div class="col-md-2 text-center">
+                        <span class="category-badge"><?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?></span>
+                    </div>
 
-                        <div class="col-6 col-md-2 mb-3 mb-md-0">
-                            <span class="category-badge"><?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?></span>
-                        </div>
-
-                        <div class="col-6 col-md-1">
-                            <div class="action-icons">
-                                <a href="editNewsPage.php?id=<?= $news->getId() ?>" class="text-orange" onclick="event.stopPropagation();">
-                                    <i class="fas fa-edit fa-lg"></i>
+                    <div class="col-md-2 text-center">
+                        <?php if($isAdmin): ?>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="editNewsPage.php?id=<?= $news->getId() ?>" class="text-orange mx-3 action-btn-large" onclick="event.stopPropagation();">
+                                    <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="javascript:void(0)" class="text-orange" 
-                                   onclick="event.stopPropagation(); openConfirmModal('¿Quiere eliminar la novedad <strong><?= $news->getId() ?></strong>?', '../../Backend/http/deleteNews.http.php?id=<?= $news->getId() ?>', 'Confirmar Eliminación')">
-                                    <i class="fas fa-times fa-2x"></i>
+                                <a href="javascript:void(0)" class="text-orange mx-3 action-btn-large" 
+                                   onclick="event.stopPropagation(); openConfirmModal('¿Desea eliminar la novedad #<?= $news->getId() ?>?', '../../Backend/http/deleteNews.http.php?id=<?= $news->getId() ?>')">
+                                    <i class="fas fa-times"></i>
                                 </a>
                             </div>
-                        </div>
-
+                        <?php endif; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        </section>
+            </div>
+        <?php endforeach; ?>
     </main>
 
     <?php include "../components/footer.php"?>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

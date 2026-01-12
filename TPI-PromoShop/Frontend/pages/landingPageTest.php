@@ -79,6 +79,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <body>
 
     <?php include "../components/header.php" ?>
+    <?php include "../components/navBarByUserType.php" ?>
     <div class="position-relative d-flex align-items-center justify-content-center text-center" style="height: 85vh; overflow: hidden;">
 
         <img src="https://static.wixstatic.com/media/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png/v1/fill/w_1920,h_1080,al_c/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png"
