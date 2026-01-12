@@ -149,8 +149,8 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
             <div class="row">
                 <?php if (!empty($promotions)): ?>
                     <?php foreach ($promotions as $promo): ?>
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <article class="card h-100 shadow-sm promo-card">
+                        <div class="col-md-6 col-lg-4 mb-4" onclick="window.location.href='promoDetailPage.php?id=<?= $promo->getId() ?>'">
+                            <article class="card h-100 shadow-sm promo-card" >
                                 <div class="card-body d-flex flex-column">
                                     <div class="mb-2">
                                         <small class="text-uppercase text-orange font-weight-bold">Oferta</small>

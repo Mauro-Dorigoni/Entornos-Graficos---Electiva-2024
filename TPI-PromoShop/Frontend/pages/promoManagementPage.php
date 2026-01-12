@@ -30,13 +30,16 @@ try {
             background-color:#eae8e0 !important;
         }
         .news-card {
+            cursor: pointer;
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 1.5rem;
             padding: 1.5rem;
+            transition: transform 0.2s;
             border: 1px solid #ddd;
         }
+        .news-card:hover { transform: scale(1.01); background-color: #f9f9f9; }
         .text-orange { color: #CC6600 !important; }
         .news-img {
             max-width: 140px;
@@ -70,7 +73,7 @@ try {
         </div>
     <?php endif; ?>
     <?php foreach ($pendingPromotions as $promo): ?>
-        <div class="news-card">
+        <div class="news-card" onclick="window.location.href='promoDetailPage.php?id=<?= $promo->getId() ?>'">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center">
                     <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>" class="news-img" alt="Promoción">

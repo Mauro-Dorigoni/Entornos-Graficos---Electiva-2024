@@ -66,11 +66,11 @@
                 <h3>Sitio</h3>
                 <p>
                     <img src="../assets/icons8-privacidad-50.png" alt="Privacy icon" class="icon-footer">
-                    <a href=<?php echo frontendURL."/termsPage.php"?> class="text-white">Política de Privacidad</a>
+                    <a href=<?php echo frontendURL."/privacyPage.php"?> class="text-white">Política de Privacidad</a>
                 </p>
                 <p>
                     <img src="../assets/icons8-términos-y-condiciones-50.png" alt="Terms icon" class="icon-footer">
-                    <a href=<?php echo frontendURL."/privacyPage.php"?> class="text-white">Términos y Condiciones</a>
+                    <a href=<?php echo frontendURL."/termsPage.php"?> class="text-white">Términos y Condiciones</a>
                 </p>
                 <p>
                     <img src="../assets/icons8-mapa-50.png" alt="Map icon" class="icon-footer">
