@@ -19,6 +19,7 @@ if(session_status() == PHP_SESSION_NONE){
 </head>
 <body>
     <?php include "../components/header.php"?>
+    <?php include "../components/userNavBar.php" ?>
     <h1>Landing Page de Usuario</h1>
     <?php include "../components/footer.php"?>
 

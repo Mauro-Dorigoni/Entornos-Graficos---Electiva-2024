@@ -1,10 +1,12 @@
 <?php
+require_once __DIR__ . "/../shared/authFunctions.php/user.auth.function.php";
 require_once "../../Backend/logic/news.controller.php";
 require_once "../../Backend/structs/news.class.php";
 require_once __DIR__ . "/../shared/nextcloud.public.php";
-
-// 1. Incluimos el modal de mensajes para mostrar el éxito de la edición
 include "../components/messageModal.php";
+
+$user = $_SESSION['user'];
+$isAdmin = $user->isAdmin();
 
 $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : 0;
 $n = new News();
@@ -40,7 +42,6 @@ if (!$news) {
         #btn-outline-orange:hover {
             background-color: #a35200 !important;
         }
-
         .detail-card { background: white; border-radius: 15px; overflow: hidden; border: none; }
         .img-container { height: 100%; min-height: 300px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; }
         .news-img { width: 100%; height: 100%; object-fit: cover; }
@@ -49,7 +50,7 @@ if (!$news) {
 </head>
 <body>
     <?php include "../components/header.php" ?>
-    <?php include "../components/navBarByUserType.php" ?>
+    <?php include "../components/adminNavBar.php" ?>
 
     <main class="container py-5">
         <div class="card detail-card shadow-lg">
@@ -68,7 +69,7 @@ if (!$news) {
                         <div class="mb-4">
                             <h5 class="text-dark font-weight-bold"><i class="fas fa-list-alt text-orange mr-2"></i>Detalles de la publicación</h5>
                             <p class="text-secondary mb-1"><strong>Vigencia desde:</strong> <?= date("d/m/Y", strtotime($news->getDateFrom())) ?></p>
-                            <p class="text-secondary"><strong>Vigencia hasta (opcional):</strong> <?= date("d/m/Y", strtotime($news->getDateTo())) ?></p>
+                            <p class="text-secondary"><strong>Vigencia hasta:</strong> <?= $news->getDateTo() ? date("d/m/Y", strtotime($news->getDateTo())) : '-' ?></p>
                         </div>
 
                         <div class="description-box mb-5">
@@ -80,7 +81,10 @@ if (!$news) {
 
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="newsPage.php" class="btn btn-light btn-lg"><i class="fas fa-arrow-left"></i> Volver</a>
-                            <a href="editNewsPage.php?id=<?= $news->getId() ?>" id="btn-outline-orange" class="font-weight-bold">Editar Novedad</a>
+                            
+                            <?php if ($isAdmin): ?>
+                                <a href="editNewsPage.php?id=<?= $news->getId() ?>" id="btn-outline-orange" class="font-weight-bold">Editar Novedad</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -92,7 +96,6 @@ if (!$news) {
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
