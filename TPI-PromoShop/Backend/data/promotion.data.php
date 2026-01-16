@@ -323,7 +323,7 @@ class PromotionData {
             }
             $today = new DateTimeImmutable('today');
             $dateTo = $promo->getDateTo();
-            if (!$dateTo instanceof DateTimeInterface) {
+            if (!$dateTo instanceof DateTimeInterface && $dateTo != null) { //ver por si no funciona
                 $dateTo = new DateTimeImmutable($dateTo);
             }
             $newStatus = null;

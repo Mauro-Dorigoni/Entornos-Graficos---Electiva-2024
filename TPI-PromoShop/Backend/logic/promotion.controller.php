@@ -4,6 +4,7 @@
     require_once __DIR__."/../structs/promotion.class.php";
     require_once __DIR__."/../structs/shopType.class.php";
     require_once __DIR__."/../data/promotion.data.php";
+    require_once __DIR__."/../data/user.data.php";
 
     class PromotionContoller{
         public static function registerPromotion (Promotion $promo) {
@@ -83,6 +84,50 @@
                     "Error al eliminar la promoción. " . $e->getMessage()
                 );
             }
+        }
+
+        public static function usePromotionCode(string $code) {
+            require_once __DIR__."/../data/promoUse.data.php";
+            
+            $promoUse = PromoUseData::findByCode($code);
+            if (!$promoUse) throw new Exception("El código de promoción no es válido.");
+            if ($promoUse->wasUsed()) throw new Exception("Este código ya ha sido utilizado.");
+
+            $promo = $promoUse->getPromo();
+            $today = new DateTimeImmutable('today');
+
+            if ($promo->getStatus() !== PromoStatus_enum::Vigente) {
+                throw new Exception("La promoción no se encuentra vigente o aprobada.");
+            }
+
+            if ($promo->getDateTo() < $today) {
+                throw new Exception("La promoción ha vencido.");
+            }
+
+            $fullPromo = PromotionData::findById($promo); 
+            $dayOfWeek = strtolower($today->format('l'));
+            $validDays = $fullPromo->getValidDays();
+            
+            if (!isset($validDays[$dayOfWeek]) || !$validDays[$dayOfWeek]) {
+                throw new Exception("La promoción no es válida para el día de hoy.");
+            }
+
+            $owner = $_SESSION['user'];
+            $promoUse->setOwner($owner);
+            PromoUseData::markAsUsed($promoUse);
+            $total = PromoUseData::countUsedByUser($promoUse->getUser());
+            $user = UserData::findOne($promoUse->getUser());
+            $idCategory = $user->getUserCategory();
+
+            if ($total >= 25 and $idCategory != 3) {
+                $user->getUserCategory()->setId(3); 
+                UserData::updateUser($user);
+            } elseif ($total >= 10 and $idCategory = 1) {
+                $user->getUserCategory()->setId(2); 
+                UserData::updateUser($user);
+            }
+
+            return true;
         }
     }
     

@@ -37,6 +37,54 @@ class UserData {
         }
     }
 
+    public static function findOne(User $user){
+        $userFound = null;
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $stmt = $conn->prepare("SELECT usu.id, usu.email, usu.pass, usu.isAdmin, usu.isOwner, usu.dateDeleted, usu.emailToken, usu.isEmailVerified, 
+                                    usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted 
+                                    FROM user usu inner join usercategory cat on usu.idUserCategory=cat.id 
+                                    WHERE usu.id = ? and usu.dateDeleted is null;");
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            };
+            $id = $user->getId();
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $userFound = new User();
+                $userFound->setId($row['id']);
+                $userFound->setEmail($row['email']);
+                $userFound->setPass($row['pass']);
+                $userFound->setIsAdmin((bool)$row['isAdmin']);
+                $userFound->setIsOwner((bool)$row['isOwner']);
+                $userFound->setEmailToken($row["emailToken"]);
+                $userFound->setIsEmailVerified((bool)$row['isEmailVerified']);
+                $userFoundCategory = new UserCategory();
+                $userFoundCategory->setId($row['idUserCategory']);
+                $userFoundCategory->setCategoryType($row['categoryType']);
+                $userFound->setUserCategory($userFoundCategory);
+
+            };
+            
+        } catch (Exception $e) {
+            throw new Exception("Error al intentar buscar al ususario por mail en la BD. ".$e->getMessage());
+        } finally {
+            if (isset($stmt) && $stmt !== false) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+        return $userFound;
+    }
+
     public static function findByMail(User $user){
         $userFound = null;
         try {

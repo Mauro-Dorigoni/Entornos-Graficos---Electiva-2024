@@ -1,6 +1,6 @@
 <?php
-require_once "./user.class.php";
-require_once "./promotion.class.php";
+require_once __DIR__."/user.class.php";
+require_once __DIR__."/promotion.class.php";
 
 class PromoUse{
     private int $id;

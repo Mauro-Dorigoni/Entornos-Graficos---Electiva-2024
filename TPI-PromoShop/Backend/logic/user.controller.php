@@ -2,6 +2,8 @@
     require_once "../structs/user.class.php";
     require_once "../data/user.data.php";
     require_once "../structs/userCategory.class.php";
+    require_once __DIR__."/../data/promoUse.data.php";
+    require_once __DIR__."/../data/user.data.php";
 
     class UserController {
         public static function registerUser(User $user){
