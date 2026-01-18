@@ -22,6 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ".frontendURL."/loginPage.php");
             exit;
         }
+        if(!$user->isEmailVerified()){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['error_message'] = "Usted no ha validado su email";
+            header("Location: ".frontendURL."/loginPage.php");
+            exit;
+        }
         //Inicializo la variable se sesion para autenticacion
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
