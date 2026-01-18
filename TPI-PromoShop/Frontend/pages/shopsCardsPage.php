@@ -48,9 +48,6 @@ $shops = ShopController::getByNameAndType($s, $t);
 </head>
 
 <body>
-
-
-
     <?php include "../components/header.php" ?>
 
     <?php include "../components/navBarByUserType.php" ?>
@@ -94,7 +91,6 @@ $shops = ShopController::getByNameAndType($s, $t);
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-
                             <div class="col-md-3 col-sm-12 mb-3">
                                 <button type="submit" class="btn btn-outline-orange btn-block font-weight-bold">
                                     Aplicar Filtros
@@ -148,8 +144,8 @@ $shops = ShopController::getByNameAndType($s, $t);
 
                                     <!-- REFIERE A LA VENTANA DE LOCAL.-->
                                     <a href="shopDetailPage.php?id=<?= $shop->getId(); ?>"
-                                        class="btn btn-outline-orange btn-block mt-3"
-                                        aria-label="Ver detalles y promociones de <?= htmlspecialchars($shop->getName()); ?>">
+                                        class="btn btn-block mt-3 font-weight-bold"
+                                        style="color:#CC6600 !important; border:2px solid #CC6600 !important; background:transparent !important;">
                                         Ver Detalles
                                     </a>
                                 </div>

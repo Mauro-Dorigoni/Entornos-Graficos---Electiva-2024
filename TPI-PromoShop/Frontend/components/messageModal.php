@@ -19,17 +19,25 @@ if (isset($_SESSION['error_message']) || isset($_SESSION['success_message']) || 
       <div class="modal-body text-center" style="background-color: #eae8e0;">
         <?php 
           if (isset($_SESSION['error_message'])) {
-              echo "<p style='color: red; font-size: 16px;'>".$_SESSION['error_message']."</p>";
+              echo "<p style='color: red; font-size: 16px;'>"
+                  . nl2br(htmlspecialchars($_SESSION['error_message'])) .
+                  "</p>";
               unset($_SESSION['error_message']);
           }
+
           if (isset($_SESSION['success_message'])) {
-              echo "<p style='color: green; font-size: 16px;'>".$_SESSION['success_message']."</p>";
+              echo "<p style='color: green; font-size: 16px;'>"
+                  . nl2br(htmlspecialchars($_SESSION['success_message'])) .
+                  "</p>";
               unset($_SESSION['success_message']);
           }
+
           if (isset($_SESSION['info_message'])) {
-            echo "<p style='font-size: 16px;'>".$_SESSION['info_message']."</p>";
-            unset($_SESSION['info_message']);
-        }
+              echo "<p style='font-size: 16px;'>"
+                  . nl2br(htmlspecialchars($_SESSION['info_message'])) .
+                  "</p>";
+              unset($_SESSION['info_message']);
+          }
         ?>
         <button type="button" class="btn" style="background-color: #CC6600; color: white;" data-bs-dismiss="modal">Aceptar</button>
       </div>

@@ -47,3 +47,24 @@
             color: #6c757d !important;
             /* Bootstrap default is usually ok, but check contrast */
         }
+
+        
+        /* Botón naranja institucional */
+        .btn-outline-orange {
+            color: #CC6600;
+            border: 2px solid #CC6600;
+            background-color: transparent;
+            font-weight: 600;
+        }
+
+        .btn-outline-orange:hover,
+        .btn-outline-orange:focus {
+            background-color: #CC6600;
+            color: #ffffff;
+            border-color: #CC6600;
+        }
+
+        .btn-outline-orange:focus-visible {
+            outline: 3px solid rgba(204, 102, 0, 0.4);
+            outline-offset: 2px;
+        }

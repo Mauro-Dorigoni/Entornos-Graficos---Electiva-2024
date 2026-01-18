@@ -14,7 +14,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL . '/shopsCardsDetail.php'; ?>">Locales</a>
+                            <a class="nav-link px-4" href="<?php echo frontendURL . '/shopsCardsPage.php'; ?>">Locales</a>
                         </li>
 
                         <li class="nav-item position-relative">
@@ -24,25 +24,9 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
-                                <a class="dropdown-item" href="<?php echo frontendURL . '/promocionesPage.php'; ?>">Acceder a Promoción</a>
-                                <a class="dropdown-item" href="<?php echo frontendURL . '/promocionesPage.php'; ?>">Detalles Promociones por Local</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/myPromotionsPage.php'; ?>">Mis Promociones</a>
                             </div>
                         </li>
-
-                        <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
-                                href="#" data-target="#submenu-nosotros">
-                                Sobre Nosotros 
-                                <span class="submenu-arrow ml-2">&#9662;</span>
-                            </a>
-                            <div class="custom-submenu" id="submenu-nosotros">
-                                <a class="dropdown-item" href="#">Quienes Somos</a>
-                                <a class="dropdown-item" href="#">Información General</a>
-                                <a class="dropdown-item" href="#">Misión, Visión, Valores</a>
-                                <a class="dropdown-item" href="#">Galería de Imágenes</a>
-                            </div>
-                        </li>
-
                         <li class="nav-item">
                             <a class="nav-link px-4" href="<?php echo frontendURL . '/newsPage.php'; ?>">Novedades</a>
                         </li>

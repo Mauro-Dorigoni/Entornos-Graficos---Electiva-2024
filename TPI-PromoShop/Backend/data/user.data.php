@@ -1,6 +1,6 @@
 <?php
-require_once "../shared/BD.data.dev.php";
-require_once "../structs/user.class.php";
+require_once __DIR__."/../shared/BD.data.dev.php";
+require_once __DIR__."/../structs/user.class.php";
 require_once __DIR__."/../structs/userCategory.class.php";
 
 class UserData {

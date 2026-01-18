@@ -4,7 +4,7 @@ require_once "../../Backend/structs/promotion.class.php";
 require_once __DIR__ . "/../shared/nextcloud.public.php";
 require_once __DIR__ . "/../../Backend/shared/promoStatus.enum.php";
 require_once __DIR__ . "/../shared/dayLabels.php";
-
+require_once __DIR__ . "/../shared/backendRoutes.dev.php";
 
 include "../components/messageModal.php";
 
@@ -14,8 +14,10 @@ $p = new Promotion();
 $p->setId($id);
 $promo = PromotionContoller::getOne($p);
 
+$user = $_SESSION['user'];
+
 if (!$promo) {
-    header("Location: promotionsPage.php");
+    header("Location landingPageTest.php");
     exit;
 }
 ?>
@@ -28,7 +30,7 @@ if (!$promo) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        body { background-color: #eae8e0; min-height: 100vh; }
+        body { background-color: #eae8e0 !important; min-height: 100vh; }
         .text-orange { color: #CC6600 !important; }
 
         #btn-orange {
@@ -145,19 +147,15 @@ if (!$promo) {
                         <a href="javascript:history.back()" class="btn btn-light btn-lg">
                             <i class="fas fa-arrow-left"></i> Volver
                         </a>
-
-                        <?php if ($promo->getStatus() === PromoStatus_enum::Vigente): ?>
-                            <a
-                                href="usePromotion.php?id=<?= $promo->getId() ?>"
-                                id="btn-orange"
-                                class="font-weight-bold"
-                            >
-                                <i class="fas fa-check-circle mr-1"></i>
-                                Utilizar promoción
-                            </a>
-                        <?php endif; ?>
+                        <?php if ($promo->getStatus() === PromoStatus_enum::Vigente && !$user->isAdmin() && !$user->isOwner()) { ?>
+                            <form method="POST" action="<?php echo backendHTTPLayer . '/getPromoCode.http.php'; ?>" class="d-inline">
+                                <input type="hidden" name="promotion_id" value="<?= $promo->getId() ?>">
+                                <button type="submit" id="btn-orange" class="font-weight-bold">
+                                    <i class="fas fa-check-circle mr-1"></i>Utilizar promoción
+                                </button>
+                            </form>
+                        <?php } ?>
                     </div>
-
                 </div>
             </div>
         </div>

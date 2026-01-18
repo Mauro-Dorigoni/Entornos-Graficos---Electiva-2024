@@ -197,8 +197,8 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                                         </div>
                                         <button type="button" class="btn btn-outline-orange btn-block mt-3" id="btn-outline-orange">
 
-                                            <a href="detallePromo.php?id=<?= $promo->getId() ?>" class="btn btn-block btn-orange text-white font-weight-bold">
-                                                Obtener Beneficio
+                                            <a href="promoDetailPage.php?id=<?= $promo->getId() ?>" class="btn btn-block btn-orange text-white font-weight-bold">
+                                                Ver Más
                                             </a>
                                         </button>
                                     </div>

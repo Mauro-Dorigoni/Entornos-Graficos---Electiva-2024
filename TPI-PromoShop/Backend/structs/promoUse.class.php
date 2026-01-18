@@ -6,10 +6,10 @@ class PromoUse{
     private int $id;
     private $useDate;
     private string $uniqueCode;
-    private bool $wasUsed;
+    private ?bool $wasUsed;
     private Promotion $promo;
     private User $user;
-    private User $owner;
+    private ?User $owner = null;
 
     public function setId(int $id){
         $this->id=$id;
@@ -20,7 +20,7 @@ class PromoUse{
     public function setUniqueCode(string $uniqueCode){
         $this->uniqueCode=$uniqueCode;
     }
-    public function setWasUsed(bool $wasUsed){
+    public function setWasUsed(?bool $wasUsed){
         $this->wasUsed=$wasUsed;
     }
     public function setPromo(Promotion $promotion){
@@ -29,7 +29,7 @@ class PromoUse{
     public function setUser(User $user){
         $this->user=$user;
     }
-    public function setOwner(User $owner){
+    public function setOwner(?User $owner){
         $this->owner=$owner;
     }
     public function getId(){
@@ -40,6 +40,9 @@ class PromoUse{
     }
     public function getUniqueCode(){
         return $this->uniqueCode;
+    }
+    public function isUsed(){
+        return $this->wasUsed;
     }
     public function wasUsed(){
         return $this->wasUsed;

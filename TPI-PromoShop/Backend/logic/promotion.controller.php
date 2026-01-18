@@ -5,6 +5,7 @@
     require_once __DIR__."/../structs/shopType.class.php";
     require_once __DIR__."/../data/promotion.data.php";
     require_once __DIR__."/../data/user.data.php";
+    require_once __DIR__."/../data/promoUse.data.php";
 
     class PromotionContoller{
         public static function registerPromotion (Promotion $promo) {
@@ -14,6 +15,24 @@
                 throw new Exception("Error en el registro de la promocion. ".$e->getMessage());
             }
             return $promo;
+        }
+        public static function getAllUsesByUser(){
+            $userUses = [];
+            try{
+                $user = $_SESSION['user'];
+                $userUses = PromoUseData::findAllByUser($user);
+            } catch (Exception $e) {
+                throw new Exception("Error al buscar las promociones usadas por el usuario ".$e->getMessage());
+            }
+            return $userUses;
+        }
+        public static function registerPromoUseCode(PromoUse $use) {
+            try {
+                PromoUseData::add($use);
+            } catch (Exception $e) {
+                throw new Exception("Error en el registro del codigo de uso de la promocion".$e->getMessage());
+            }
+            return $use;
         }
         public static function getOne (Promotion $promo) {
             try {
@@ -86,9 +105,21 @@
             }
         }
 
+        public static function checkSingleUse(PromoUse $use){
+            try {
+                $total = PromoUseData::checkSingleUse($use);
+                if ($total === 0){
+                    return true;
+                }else
+                    return false;
+            } catch(Exception $e) {
+                throw new Exception(
+                    "Error verificar uso unico por usuario. " . $e->getMessage()
+                );
+            }
+        }
+
         public static function usePromotionCode(string $code) {
-            require_once __DIR__."/../data/promoUse.data.php";
-            
             $promoUse = PromoUseData::findByCode($code);
             if (!$promoUse) throw new Exception("El código de promoción no es válido.");
             if ($promoUse->wasUsed()) throw new Exception("Este código ya ha sido utilizado.");
@@ -99,11 +130,9 @@
             if ($promo->getStatus() !== PromoStatus_enum::Vigente) {
                 throw new Exception("La promoción no se encuentra vigente o aprobada.");
             }
-
             if ($promo->getDateTo() < $today) {
                 throw new Exception("La promoción ha vencido.");
             }
-
             $fullPromo = PromotionData::findById($promo); 
             $dayOfWeek = strtolower($today->format('l'));
             $validDays = $fullPromo->getValidDays();
@@ -111,7 +140,6 @@
             if (!isset($validDays[$dayOfWeek]) || !$validDays[$dayOfWeek]) {
                 throw new Exception("La promoción no es válida para el día de hoy.");
             }
-
             $owner = $_SESSION['user'];
             $promoUse->setOwner($owner);
             PromoUseData::markAsUsed($promoUse);
@@ -126,7 +154,6 @@
                 $user->getUserCategory()->setId(2); 
                 UserData::updateUser($user);
             }
-
             return true;
         }
     }

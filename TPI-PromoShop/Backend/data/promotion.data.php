@@ -140,7 +140,6 @@ class PromotionData {
             }
         }
     }
-
     public static function findPending(): array{
     $pendingPromos = [];
     try {

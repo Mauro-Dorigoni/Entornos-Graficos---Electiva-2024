@@ -14,7 +14,6 @@ try {
     $pendingPromotions = [];
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,9 +25,7 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        body {
-            background-color:#eae8e0 !important;
-        }
+        body { background-color:#eae8e0 !important; }
         .news-card {
             cursor: pointer;
             background: white;
@@ -41,10 +38,7 @@ try {
         }
         .news-card:hover { transform: scale(1.01); background-color: #f9f9f9; }
         .text-orange { color: #CC6600 !important; }
-        .news-img {
-            max-width: 140px;
-            border-radius: 4px;
-        }
+        .news-img { max-width: 140px; border-radius: 4px; }
         .info-box {
             border: 1px solid #ccc;
             padding: 6px;
@@ -53,35 +47,46 @@ try {
             border-radius: 4px;
             min-width: 110px;
         }
-        .action-icons a {
-            cursor: pointer;
-            margin-bottom: 12px;
-        }
+        .action-icons a { cursor: pointer; margin-bottom: 12px; }
     </style>
 </head>
-<form id="acceptPromotionForm" method="POST" action="<?= backendHTTPLayer . '/acceptPromotion.http.php' ?>" style="display:none;">
+
+<form id="acceptPromotionForm" method="POST"
+      action="<?= backendHTTPLayer . '/acceptPromotion.http.php' ?>"
+      style="display:none;">
     <input type="hidden" name="promotion_id" id="acceptPromotionId">
 </form>
-<body style="background-color: #eae8e0">
+
+<body>
 <?php include "../components/header.php" ?>
 <?php include "../components/adminNavBar.php" ?>
+
 <main class="container py-5">
     <h1 class="display-4 font-weight-bold mb-4">Promociones Pendientes</h1>
+
     <?php if (empty($pendingPromotions)): ?>
         <div class="alert alert-info text-center">
             No hay promociones pendientes para mostrar.
         </div>
     <?php endif; ?>
+
     <?php foreach ($pendingPromotions as $promo): ?>
-        <div class="news-card" onclick="window.location.href='promoDetailPage.php?id=<?= $promo->getId() ?>'">
+        <div class="news-card"
+             onclick="window.location.href='promoDetailPage.php?id=<?= $promo->getId() ?>'">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center">
-                    <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>" class="news-img" alt="Promoción">
+                    <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>"
+                         class="news-img"
+                         alt="Promoción">
                 </div>
+
                 <div class="col-md-6">
-                    <h4 class="text-orange mb-1"><?= $promo->getShop()->getName() ?> Promoción #<?= $promo->getId() ?></h4>
+                    <h4 class="text-orange mb-1">
+                        <?= $promo->getShop()->getName() ?> Promoción #<?= $promo->getId() ?>
+                    </h4>
                     <div class="mb-1">
-                        <strong>Categoría: </strong><?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
+                        <strong>Categoría:</strong>
+                        <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
                     </div>
                     <p class="mb-0">
                         <?= nl2br(htmlspecialchars($promo->getPromoText())) ?>
@@ -89,18 +94,19 @@ try {
                     <div class="mt-2">
                         <small class="font-weight-bold">Días válidos:</small>
                         <span>
-                            <?php
-                            $activeDays = [];
-                            foreach ($dayLabels as $key => $label) {
-                                if (!empty($promo->getValidDays()[$key])) {
-                                    $activeDays[] = $label;
-                                }
+                        <?php
+                        $activeDays = [];
+                        foreach ($dayLabels as $key => $label) {
+                            if (!empty($promo->getValidDays()[$key])) {
+                                $activeDays[] = $label;
                             }
-                            echo implode(' · ', $activeDays);
-                            ?>
+                        }
+                        echo implode(' · ', $activeDays);
+                        ?>
                         </span>
                     </div>
                 </div>
+
                 <div class="col-md-3 d-flex flex-column align-items-center">
                     <div class="info-box mb-2">
                         <strong>Desde</strong><br>
@@ -111,19 +117,21 @@ try {
                         <?= $promo->getDateTo()?->format('d/m/Y') ?>
                     </div>
                 </div>
+
                 <div class="col-md-1 d-flex flex-column align-items-center action-icons">
                     <a class="text-success"
-                        onclick="openAcceptModal(<?= $promo->getId() ?>)">
-                            <i class="fas fa-check fa-2x"></i>
+                       onclick="openAcceptModal(event, <?= $promo->getId() ?>)">
+                        <i class="fas fa-check fa-2x"></i>
                     </a>
-                    <a href="javascript:void(0)" class="text-danger" onclick="openRejectModal(<?= $promo->getId() ?>)">
-                            <i class="fas fa-times fa-2x"></i>
+
+                    <a class="text-danger"
+                       onclick="openRejectModal(event, <?= $promo->getId() ?>)">
+                        <i class="fas fa-times fa-2x"></i>
                     </a>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
-
 </main>
 
 <div class="modal fade" id="rejectActionModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
@@ -158,19 +166,12 @@ try {
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
-function openRejectModal(promotionId) {
-    const modalElement = document.getElementById('rejectActionModal');
-    if (!modalElement) return;
 
-    document.getElementById('rejectPromotionId').value = promotionId;
-
-    const bsRejectModal = new bootstrap.Modal(modalElement);
-    bsRejectModal.show();
-}
-</script>
 <script>
-function openAcceptModal(promotionId) {
+function openAcceptModal(event, promotionId) {
+    event.stopPropagation();
+    event.preventDefault();
+
     document.getElementById('acceptPromotionId').value = promotionId;
 
     openConfirmModal(
@@ -185,6 +186,19 @@ function openAcceptModal(promotionId) {
         document.getElementById('acceptPromotionForm').submit();
     };
 }
+
+function openRejectModal(event, promotionId) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    document.getElementById('rejectPromotionId').value = promotionId;
+
+    const modal = new bootstrap.Modal(
+        document.getElementById('rejectActionModal')
+    );
+    modal.show();
+}
 </script>
+
 </body>
 </html>
