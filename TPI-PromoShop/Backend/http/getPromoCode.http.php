@@ -23,6 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             throw new Exception("La promoción no existe o fue eliminada.");
         }
         $user = $_SESSION['user'];
+        if ($promo->getUserCategory()->getID() > $user->getUserCategory()->getID()) {
+            throw new Exception("Usted no tiene la categoria necesaria para usar esta promocion.");
+        }
         $use = new PromoUse();
         $use->setPromo($promo);
         $use->setUser($user);

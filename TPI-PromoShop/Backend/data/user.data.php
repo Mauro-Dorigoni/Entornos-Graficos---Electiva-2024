@@ -114,7 +114,6 @@ class UserData {
                 $userFoundCategory->setId($row['idUserCategory']);
                 $userFoundCategory->setCategoryType($row['categoryType']);
                 $userFound->setUserCategory($userFoundCategory);
-
             };
             
         } catch (Exception $e) {

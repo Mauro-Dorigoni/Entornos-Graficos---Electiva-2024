@@ -90,6 +90,11 @@ if (!$promo) {
                         </p>
 
                         <p class="text-secondary mb-1">
+                            <strong>Categoria:</strong>
+                            <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
+                        </p>
+
+                        <p class="text-secondary mb-1">
                             <strong>Vigencia desde:</strong>
                             <?= $promo->getDateFrom()->format("d/m/Y") ?>
                         </p>

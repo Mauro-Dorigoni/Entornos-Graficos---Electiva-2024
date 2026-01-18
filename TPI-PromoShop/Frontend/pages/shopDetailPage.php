@@ -169,6 +169,12 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                                             style="height: 200px; object-fit: cover;">
                                     </div>
                                     <div class="mb-3">
+                                        <?php if ($promo->getUserCategory() !== null): ?>
+                                            <small class="text-muted d-block mb-2">
+                                                <strong>Categoría:</strong>
+                                                <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
+                                            </small>
+                                        <?php endif; ?>
                                         <small class="text-muted font-weight-bold">Días válidos:</small>
                                         <span class="text-muted">
                                             <?php
