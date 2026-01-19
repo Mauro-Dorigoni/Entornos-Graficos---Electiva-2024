@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__."/../shared/sendEmail.php";
 require_once __DIR__."/../shared/frontendRoutes.dev.php";
+require_once __DIR__ . "/../shared/userType.enum.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -69,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_start();
         }
         $_SESSION['error_message'] = $th->getMessage();
+        error_log("Error en contact.http.php: " . $th->getMessage());
     }
 }else{
     if (session_status() == PHP_SESSION_NONE) {
