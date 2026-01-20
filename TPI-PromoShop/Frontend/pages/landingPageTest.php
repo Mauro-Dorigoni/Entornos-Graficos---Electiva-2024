@@ -1,5 +1,6 @@
 <?php
-include "../components/messageModal.php";
+require_once "../../Backend/structs/user.class.php";
+require_once "../shared/UserType.enum.php";
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -79,7 +80,9 @@ if (session_status() == PHP_SESSION_NONE) {
 <body>
 
     <?php include "../components/header.php" ?>
+
     <?php include "../components/navBarByUserType.php" ?>
+
     <div class="position-relative d-flex align-items-center justify-content-center text-center" style="height: 85vh; overflow: hidden;">
 
         <img src="https://static.wixstatic.com/media/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png/v1/fill/w_1920,h_1080,al_c/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png"
@@ -171,6 +174,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </div>
 
     <?php include "../components/footer.php" ?>
+    <?php include "../components/messageModal.php" ?>
 
 </body>
 
