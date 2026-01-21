@@ -39,16 +39,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //redirijo a la pagina apropiada por el tipo de usuario, y establezco el tipo de usuario en la variable de sesion para corroborar en el front
         if($user->isAdmin()){
             $_SESSION["userType"] = UserType_enum::Admin;
-            header("Location: ".frontendURL."/landingPageAdmin.php");
+            header("Location: ".frontendURL."/index.php");
             exit;
         }
         if($user->isOwner()){
             $_SESSION["userType"] = UserType_enum::Owner;
-            header("Location: ".frontendURL."/landingPageOwner.php"); 
+            header("Location: ".frontendURL."/index.php"); 
             exit;
         }
         $_SESSION["userType"] = UserType_enum::User;
-        header("Location: ".frontendURL."/landingPage.php"); 
+        header("Location: ".frontendURL."/index.php"); 
         exit;
     } catch (Exception $e) {
         if (session_status() == PHP_SESSION_NONE) {

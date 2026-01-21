@@ -8,16 +8,16 @@ if (session_status() == PHP_SESSION_NONE) {
 $userType = isset($_SESSION['userType']) ? $_SESSION['userType'] : null;
 switch ($userType) {
     case UserType_enum::Admin:
-        $redirectTo = "/landingPageAdmin.php";
+        $redirectTo = "/index.php";
         break;
     case UserType_enum::Owner:
-        $redirectTo = "/landingPageOwner.php";
+        $redirectTo = "/index.php";
         break;
     case UserType_enum::User:
-        $redirectTo = "/landingPage.php";
+        $redirectTo = "/index.php";
         break;
     default:
-        $redirectTo = "/landingPage.php";
+        $redirectTo = "/index.php";
         break;
     }
 ?>

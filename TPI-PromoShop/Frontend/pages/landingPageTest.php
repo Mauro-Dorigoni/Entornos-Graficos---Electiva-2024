@@ -31,7 +31,7 @@ $tarjeta_2 = [
 //PONER PARA EL Promociones tarjeta_2 [0] una pag que liste todas las promociones. TODO - LAUTARO
 
 $tarjeta_3 = [
-    "iconos" => ["fas fa-user", "fas fa-newspaper-o", "fas fa-newspaper", "fas fa-ticket-alt"],
+    "iconos" => ["fas fa-user", "fas fa-newspaper", "fas fa-newspaper", "fas fa-ticket-alt"],
     "titulos" => ["Iniciar Sesión", "Novedades", "Novedades", "Canje de Promo"],
     "descripcion" => ["Comience a utilizar Tu Shopping", "Mantente al día con el listado de novedades.", "Gestione las novedades.", "Valida el codigo de una promoción."],
     "url" => ["loginPage.php", "newsPage.php", "newsPage.php", "promotionValidationPage.php"],
