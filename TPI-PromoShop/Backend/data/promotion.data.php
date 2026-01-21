@@ -213,6 +213,115 @@ class PromotionData
         return $pendingPromos;
     }
 
+    //Si no recibe parametros funciona como un getAllPending
+    //Recibe un Promotion con Nombre, un ShopType con ID, un UserCategory con Id.
+    //Si no se filtra por  Promotion, promoText = '', si no se filtra por categoria o tipo, id=0.
+    public static function findPendingFilter(Promotion $p, ShopType $st, UserCategory $uc): array
+    {
+        $pendingPromos = [];
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $sql = "SELECT p.id AS promo_id, p.promoText, p.dateFrom, p.dateTo, p.imageUUID, p.status,
+                u.id AS usercat_id, u.categoryType,
+                s.id AS shop_id,s.name AS shop_name, s.location, s.description AS shop_description, s.openinghours,
+                st.id AS shoptype_id, st.type AS shoptype_type, st.description AS shoptype_description,
+                v.monday, v.tuesday,v.wednesday, v.thursday, v.friday, v.saturday, v.sunday
+            FROM promotion p
+            INNER JOIN validpromoday v ON v.idPromotion = p.id
+            INNER JOIN shop s ON s.id = p.idShop
+            INNER JOIN shoptype st ON st.id = s.idShopType
+            INNER JOIN usercategory u ON u.id = p.idUserCategory
+            WHERE p.status = 'Pendiente' AND p.dateDeleted IS NULL AND s.dateDeleted IS NULL AND u.dateDeleted IS NULL AND st.dateDeleted IS NULL";
+
+            $params = [];
+            $types = "";
+
+            if ($p->getPromoText()!='') {
+                $sql .= " AND p.promoText LIKE ?";
+                $search = $p->getPromoText();
+                $params[] = "%$search%";
+                $types .= "s";
+            }
+
+            if ($st->getId()!=0) {
+                $sql .= " AND st.id = ?";
+                $stId= $st->getId();
+                $params[] = $stId;
+                $types .= "i";
+            }
+
+            if ($uc->getId()!=0) {
+                $sql .= " AND u.id = ?";
+                $userCategoryId = $uc->getId();
+                $params[] = $userCategoryId;
+                $types .= "i";
+            }
+
+
+            // $sql .= " ORDER BY n.dateFrom DESC";
+            $stmt = $conn->prepare($sql);
+
+            if (!empty($params)) {
+                $stmt->bind_param($types, ...$params);
+            }
+
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if (!$result) {
+                throw new Exception($conn->error);
+            }
+            while ($row = $result->fetch_assoc()) {
+                $category = new UserCategory();
+                $category->setId((int)$row['usercat_id']);
+                $category->setCategoryType($row['categoryType']);
+                $shopType = new ShopType();
+                $shopType->setId((int)$row['shoptype_id']);
+                $shopType->setType($row['shoptype_type']);
+                $shopType->setDescription($row['shoptype_description']);
+                $shop = new Shop();
+                $shop->setId((int)$row['shop_id']);
+                $shop->setName($row['shop_name']);
+                $shop->setLocation($row['location']);
+                $shop->setDescription($row['shop_description']);
+                $shop->setOpeningHours($row['openinghours']);
+                $shop->setShopType($shopType);
+                $promo = new Promotion();
+                $promo->setId((int)$row['promo_id']);
+                $promo->setPromoText($row['promoText']);
+                $promo->setDateFrom(new DateTimeImmutable($row['dateFrom']));
+                $promo->setDateTo(new DateTimeImmutable($row['dateTo']));
+                $promo->setImageUUID($row['imageUUID']);
+                $promo->setStatus(PromoStatus_enum::from($row['status']));
+                $promo->setShop($shop);
+                $promo->setUserCategory($category);
+                $promo->setValidDays([
+                    'monday'    => (bool)$row['monday'],
+                    'tuesday'   => (bool)$row['tuesday'],
+                    'wednesday' => (bool)$row['wednesday'],
+                    'thursday'  => (bool)$row['thursday'],
+                    'friday'    => (bool)$row['friday'],
+                    'saturday'  => (bool)$row['saturday'],
+                    'sunday'    => (bool)$row['sunday'],
+                ]);
+                $pendingPromos[] = $promo;
+            }
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al obtener las promociones pendientes de revisión filtrando por tipo de comercio, usuario y nombre de local: " . $e->getMessage()
+            );
+        } finally {
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+        return $pendingPromos;
+    }
+
     public static function findAllByShop(Shop $shop): array
     {
         $activePromos = [];

@@ -57,6 +57,20 @@ class PromotionContoller
         }
         return $pendingPromotions;
     }
+    
+    //Si no recibe parametros funciona como un getAllPending
+    //Recibe un Promotion con Nombre, un ShopType con ID, un UserCategory con Id.
+    //Si no se filtra por Promotion, promoText = '', si no se filtra por categoria o tipo, id=0.
+    public static function getAllPendingFilter(Promotion $promotion, ShopType $shopType, UserCategory $userCategory)
+    {
+        $pendingPromotions = [];
+        try {
+            $pendingPromotions = PromotionData::findPendingFilter($promotion, $shopType, $userCategory);
+        } catch (Exception $e) {
+            throw new Exception("Error al buscar las promociones pendientes filtrando por nombre comercio, tipo comercio y categoria de usuario. " . $e->getMessage());
+        }
+        return $pendingPromotions;
+    }
     public static function getAllActiveByShop(Shop $shop): array
     {
         try {
