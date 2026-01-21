@@ -1,10 +1,67 @@
 <?php
 require_once "../../Backend/structs/user.class.php";
+require_once "../../Backend/logic/shop.controller.php";
+
 require_once "../shared/UserType.enum.php";
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+//0:no log. - 1: user - 2:admin - 3: owner - 
+//LOCALES
+$tarjeta_1 = [
+    "iconos" => ["fas fa-shopping-bag", "fas fa-shopping-bag", "fas fa-shopping-bag", "fas fa-shopping-bag"],
+    "titulos" => ["Locales", "Locales", "Locales", "Mi Local"],
+    "descripcion" => ["Descubre las mejores marcas y tiendas.", "Descubre las mejores marcas y tiendas.", "Gestione el listado de locales.", "Gestiona la información de tu marca."],
+    "url" => ["shopsCardsPage.php", "shopDetailPage.php", "shopsCardsPage.php", "shopsCardsPage.php"],
+    "boton" => ["Ver Todos", "Ver Todos", "Ver Todos", "Ver"]
+];
+//PROMOCIONES
+$tarjeta_2 = [
+    "iconos" => ["fas fa-percentage", "fas fa-percentage", "fas fa-percentage", "fas fa-percentage"],
+    "titulos" => ["Promociones", "Mis Promociones", "Promociones", "Mis Promociones"],
+    "descripcion" => ["Todas las promociones de nuestro shopping.", "Gestiona tus promociones seleccionadas.", "Ingrese al panel de gestión de promociones", "Gestione las promociones del local."],
+    "url" => ["allShopPromotionsPage.php", "myPromotionsPage.php", "promoManagementPage.php", "allShopPromotionsPage.php"],
+    "boton" => ["Ver Todas", "Ver Todas", "Ver Todas", "Ver Todas"]
+];
+
+//PONER PARA EL Promociones tarjeta_2 [0] una pag que liste todas las promociones. TODO - LAUTARO
+
+$tarjeta_3 = [
+    "iconos" => ["fas fa-user", "fas fa-newspaper-o", "fas fa-newspaper", "fas fa-ticket-alt"],
+    "titulos" => ["Iniciar Sesión", "Novedades", "Novedades", "Canje de Promo"],
+    "descripcion" => ["Comience a utilizar Tu Shopping", "Mantente al día con el listado de novedades.", "Gestione las novedades.", "Valida el codigo de una promoción."],
+    "url" => ["loginPage.php", "newsPage.php", "newsPage.php", "promotionValidationPage.php"],
+    "boton" => ["Ingresar", "Ver Todas", "Ver Todas", "Canjear"]
+];
+
+$indice = 0;
+
+if (isset($_SESSION["user"])) {
+    $user = $_SESSION["user"];
+    $userType = $_SESSION["userType"];
+
+    if ($user != null && $userType === UserType_enum::Admin) {
+        $indice = 2;
+    } elseif ($user != null && $userType === UserType_enum::Owner) {
+        $indice = 3;
+        if ($user != null && $userType == UserType_enum::Owner) {
+            $shop = ShopController::getOneByOwner($user);
+            $idShop = $shop->getId();
+            $urlShop = "shopDetailPage.php?id=" . $idShop;
+        } else {
+            //no debería entrar nunca aca....
+            $urlShop = "shopsCardsDetail.php";
+        }
+        $tarjeta_1["url"][3] = $urlShop;
+    } elseif ($user != null && $userType === UserType_enum::User) {
+        $indice = 1;
+    }
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,7 +69,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido - Tu Shopping</title>
+    <title>Tu Shopping</title>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -24,16 +81,16 @@ if (session_status() == PHP_SESSION_NONE) {
 
         /* BOTÓN NARANJA */
         .btn-orange {
-            background-color: #ff8c00;
-            color: white;
-            border: none;
-            font-weight: bold;
+            background-color: #ff8c00 !important;
+            color: white !important;
+            border-color: #ff8c00 !important;
+            font-weight: bold !important;
             transition: transform 0.2s;
         }
 
         .btn-orange:hover {
-            background-color: #e07b00;
-            color: white;
+            background-color: #e07b00 !important;
+            color: white !important;
             transform: scale(1.05);
         }
 
@@ -83,14 +140,14 @@ if (session_status() == PHP_SESSION_NONE) {
 
     <?php include "../components/navBarByUserType.php" ?>
 
-    <div class="position-relative d-flex align-items-center justify-content-center text-center" style="height: 85vh; overflow: hidden;">
+    <div class="position-relative d-flex   justify-content-center text-center" style="height: 75vh; overflow: hidden; padding-top: 15vh;">
 
         <img src="https://static.wixstatic.com/media/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png/v1/fill/w_1920,h_1080,al_c/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png"
             alt="Fondo Shopping"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
 
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
-                    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%);">
+                    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.7) 100%);">
         </div>
 
         <div class="container position-relative" style="z-index: 3;">
@@ -104,7 +161,8 @@ if (session_status() == PHP_SESSION_NONE) {
                         Encuentra locales, gastronomía y entretenimiento en un solo lugar.
                     </p>
 
-                    <form action="shopsCardsPage.php" method="GET">
+                    <!-- BARRA DE BUSQUEDA. No la implementamos aca. LAUTARO -->
+                    <!-- <form action="shopsCardsPage.php" method="GET">
                         <div class="input-group input-group-lg shadow-lg" style="border-radius: 50px; overflow: hidden;">
                             <input type="text" name="q" class="form-control border-0 pl-4" placeholder="Buscar local, comida o servicio...">
                             <div class="input-group-append">
@@ -113,14 +171,14 @@ if (session_status() == PHP_SESSION_NONE) {
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
 
-                    <div class="mt-4">
+                    <!-- <div class="mt-4">
                         <small class="mr-2">Sugerencias:</small>
                         <a href="shopsCardsPage.php?cat=Ropa" class="badge badge-light text-dark p-2 mx-1">Ropa</a>
                         <a href="shopsCardsPage.php?cat=Comida" class="badge badge-light text-dark p-2 mx-1">Comida</a>
                         <a href="shopsCardsPage.php?cat=Cine" class="badge badge-light text-dark p-2 mx-1">Cine</a>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -134,43 +192,39 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="fas fa-shopping-bag"></i>
+                            <i class="<?= $tarjeta_1["iconos"][$indice] ?>"></i>
                         </div>
-                        <h4 class="font-weight-bold">Locales</h4>
-                        <p class="text-muted small">Descubre las mejores marcas y tiendas.</p>
-                        <a href="shopsCardsPage.php" class="btn btn-outline-dark btn-sm rounded-pill mt-auto mx-auto px-4">Ver Todos</a>
+                        <h4 class="font-weight-bold"><?= $tarjeta_1["titulos"][$indice] ?></h4>
+                        <p class="text-muted small"><?= $tarjeta_1["descripcion"][$indice] ?></p>
+                        <a href="<?= $tarjeta_1["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_1["boton"][$indice] ?></a>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="fas fa-percentage"></i>
+                            <i class="<?= $tarjeta_2["iconos"][$indice] ?>"></i>
                         </div>
-                        <h4 class="font-weight-bold">Promociones</h4>
-                        <p class="text-muted small">Todas las promociones de nuestro shopping.</p>
-                        <a href="shopsCardsPage.php?shopType=2" class="btn btn-outline-dark btn-sm rounded-pill mt-auto mx-auto px-4">Ver Todas</a>
+                        <h4 class="font-weight-bold"><?= $tarjeta_2["titulos"][$indice] ?></h4>
+                        <p class="text-muted small"><?= $tarjeta_2["descripcion"][$indice] ?></p>
+                        <a href="<?= $tarjeta_2["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_2["boton"][$indice] ?></a>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="fas fa-store-alt"></i>
+                            <i class="<?= $tarjeta_3["iconos"][$indice] ?>"></i>
                         </div>
-                        <h4 class="font-weight-bold">Soy Dueño</h4>
-                        <p class="text-muted small">Gestiona tu local y actualiza tus productos.</p>
-
-                        <?php if (isset($_SESSION['user'])): ?>
-                            <a href="dashboard.php" class="btn btn-orange btn-sm rounded-pill mt-auto mx-auto px-4">Mi Panel</a>
-                        <?php else: ?>
-                            <a href="login.php" class="btn btn-orange btn-sm rounded-pill mt-auto mx-auto px-4">Ingresar</a>
-                        <?php endif; ?>
+                        <h4 class="font-weight-bold"><?= $tarjeta_3["titulos"][$indice] ?></h4>
+                        <p class="text-muted small"><?= $tarjeta_3["descripcion"][$indice] ?></p>
+                        <a href="<?= $tarjeta_3["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_3["boton"][$indice] ?></a>
                     </div>
                 </div>
-
             </div>
+
         </div>
+    </div>
     </div>
 
     <?php include "../components/footer.php" ?>
