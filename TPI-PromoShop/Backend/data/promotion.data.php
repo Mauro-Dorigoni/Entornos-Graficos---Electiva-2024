@@ -397,6 +397,144 @@ class PromotionData
         return $activePromos;
     }
 
+    public static function findCountRecordsFilterByShop(Shop $shop): int {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $sql = "SELECT COUNT(*) AS total
+            FROM promotion p
+            WHERE p.idShop = ? AND p.dateDeleted IS NULL ";
+
+            $shopId = $shop->getId();
+
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception($conn->error);
+            }
+
+            $stmt->bind_param('i', $shopId);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows === 0) {
+                throw new Exception("No hubo devolución en la consulta");
+            }
+            $row = $result->fetch_assoc();
+
+            $totalRecords = $row['total'];
+            $stmt->close();
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al obtener la cantidad de registros de promociones filtrados por shop " . $e->getMessage()
+            );
+        } finally {
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+        return $totalRecords;
+    }
+
+
+    //RECIBE EL COMERCIO POR EL CUAL FILTRA, EL NUMERO DE PAGINA Y LA CANTIDAD DE ELEMENTOS POR PAGINA
+    //SI NO RECIBE NUMERO DE PAGINA ES UN GET ALL TRADICIONAL
+    //LA CANTIDAD DE ELEMENTO POR PAGINAS POR DEFECTO ES 4. 
+    //DEBE CALCULARSE EN OTRA CAPA LA CANTIDAD DE PAGINAS NECESARIAS. SE RECOMIENDA LA FUNCIÓN: findCountRecordsFilterByShop
+    public static function findAllByShopPagination(Shop $shop, int|null $pagNumb=null, int $cantPag = 4): array
+    {
+        $activePromos = [];
+        $params = [];
+        $types = '';
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $sql = "SELECT p.id AS promo_id, p.promoText, p.dateFrom, p.dateTo, p.imageUUID, p.status, p.motivoRechazo,
+                u.id AS usercat_id, u.categoryType,
+                s.id AS shop_id, s.name AS shop_name, s.location, s.description AS shop_description, s.openinghours,
+                st.id AS shoptype_id, st.type AS shoptype_type, st.description AS shoptype_description,
+                v.monday, v.tuesday, v.wednesday, v.thursday, v.friday, v.saturday, v.sunday
+            FROM promotion p
+            INNER JOIN validpromoday v ON v.idPromotion = p.id
+            INNER JOIN shop s ON s.id = p.idShop
+            INNER JOIN shoptype st ON st.id = s.idShopType
+            INNER JOIN usercategory u ON u.id = p.idUserCategory
+            WHERE p.idShop = ? AND p.dateDeleted IS NULL AND s.dateDeleted IS NULL AND u.dateDeleted IS NULL AND st.dateDeleted IS NULL ";
+
+            $shopId = $shop->getId();
+            $params[] = $shopId;
+            $types .= "i";
+
+            //si tengo un numero de pagina
+            if ($pagNumb != null && $pagNumb > 0) {
+                $offset = ($pagNumb - 1) * $cantPag;
+                $sql.= "LIMIT ? OFFSET ?";
+                $params[] = $cantPag;
+                $params[] = $offset;
+                $types .= "ii";
+            }
+
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception($conn->error);
+            }
+            
+            $stmt->bind_param($types, ...$params);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $category = new UserCategory();
+                $category->setId((int)$row['usercat_id']);
+                $category->setCategoryType($row['categoryType']);
+                $shopType = new ShopType();
+                $shopType->setId((int)$row['shoptype_id']);
+                $shopType->setType($row['shoptype_type']);
+                $shopType->setDescription($row['shoptype_description']);
+                $shopObj = new Shop();
+                $shopObj->setId((int)$row['shop_id']);
+                $shopObj->setName($row['shop_name']);
+                $shopObj->setLocation($row['location']);
+                $shopObj->setDescription($row['shop_description']);
+                $shopObj->setOpeningHours($row['openinghours']);
+                $shopObj->setShopType($shopType);
+                $promo = new Promotion();
+                $promo->setId((int)$row['promo_id']);
+                $promo->setPromoText($row['promoText']);
+                $promo->setDateFrom(new DateTimeImmutable($row['dateFrom']));
+                $promo->setDateTo(new DateTimeImmutable($row['dateTo']));
+                $promo->setImageUUID($row['imageUUID']);
+                $promo->setStatus(PromoStatus_enum::from($row['status']));
+                $promo->setMotivoRechazo($row['motivoRechazo']);
+                $promo->setShop($shopObj);
+                $promo->setUserCategory($category);
+                $promo->setValidDays([
+                    'monday'    => (bool)$row['monday'],
+                    'tuesday'   => (bool)$row['tuesday'],
+                    'wednesday' => (bool)$row['wednesday'],
+                    'thursday'  => (bool)$row['thursday'],
+                    'friday'    => (bool)$row['friday'],
+                    'saturday'  => (bool)$row['saturday'],
+                    'sunday'    => (bool)$row['sunday'],
+                ]);
+                $activePromos[] = $promo;
+            }
+            $stmt->close();
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al obtener las promociones vigentes del local: " . $e->getMessage()
+            );
+        } finally {
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+        return $activePromos;
+    }
+
     // RETORNA LAS PROMOCIONES VIGENTES [Puede cambirase el estado.]
     public static function findAll($limit): array
     {

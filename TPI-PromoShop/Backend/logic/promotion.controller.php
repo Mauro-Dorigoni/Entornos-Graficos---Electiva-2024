@@ -57,7 +57,7 @@ class PromotionContoller
         }
         return $pendingPromotions;
     }
-    
+
     //Si no recibe parametros funciona como un getAllPending
     //Recibe un Promotion con Nombre, un ShopType con ID, un UserCategory con Id.
     //Si no se filtra por Promotion, promoText = '', si no se filtra por categoria o tipo, id=0.
@@ -71,6 +71,7 @@ class PromotionContoller
         }
         return $pendingPromotions;
     }
+
     public static function getAllActiveByShop(Shop $shop): array
     {
         try {
@@ -88,13 +89,41 @@ class PromotionContoller
             );
         }
     }
+
+    public static function getCountPromotionsByShop(Shop $shop): int
+    {
+        try {
+            $cant = PromotionData::findCountRecordsFilterByShop($shop);
+
+            return $cant;
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al contar la cantidad de registros de las promociones filtradas por comercio " . $e->getMessage()
+            );
+        }
+    }
+
+    public static function getAllByShopPagination(Shop $shop, int|null $pagNumb = null, int $cantPag = 4): array
+    {
+        try {
+            $promotions = PromotionData::findAllByShopPagination($shop, $pagNumb, $cantPag);
+
+            return $promotions;
+        } catch (Exception $e) {
+            throw new Exception(
+                "Error al buscar las promociones del local con paginación. " . $e->getMessage()
+            );
+        }
+    }
+
+    
     public static function getAllByShop(Shop $shop)
     {
         $activePromotions = [];
         try {
             $activePromotions = PromotionData::findAllByShop($shop);
         } catch (Exception $e) {
-            throw new Exception("Error al buscar las promociones activas del locals. " . $e->getMessage());
+            throw new Exception("Error al buscar las promociones del local. " . $e->getMessage());
         }
         return $activePromotions;
     }
