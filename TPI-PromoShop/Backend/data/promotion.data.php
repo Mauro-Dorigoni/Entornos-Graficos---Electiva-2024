@@ -471,7 +471,7 @@ class PromotionData
             //si tengo un numero de pagina
             if ($pagNumb != null && $pagNumb > 0) {
                 $offset = ($pagNumb - 1) * $cantPag;
-                $sql.= "LIMIT ? OFFSET ?";
+                $sql.= " LIMIT ? OFFSET ?";
                 $params[] = $cantPag;
                 $params[] = $offset;
                 $types .= "ii";

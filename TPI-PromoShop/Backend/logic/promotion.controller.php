@@ -18,17 +18,58 @@ class PromotionContoller
         }
         return $promo;
     }
-    public static function getAllUsesByUser()
+
+    //Tiene dos filtros en capa logica no de datos. Se filtra por el tipo de comercio de la promoción y por si esta fue o no utilizado. Si alguno es null no se aplica. 
+    //StatusUse puede ser = Usada o Pendiente. Se verifica con isUsed
+    //Recibe el $promoName
+    public static function getAllUsesByUser(User $user, ShopType|null $tipoLocal = null, string $statusUse = '', string|null $promoText = null)
     {
-        $userUses = [];
+        $userPromoUses = [];
+        $arrayFiltrado = [];
+        $arrayFiltrado2 = [];
+
         try {
-            $user = $_SESSION['user'];
-            $userUses = PromoUseData::findAllByUser($user);
+            //$user = $_SESSION['user']; //ROMPE LAS CAPAS NOOOO. LAUTARO
+
+            $userPromoUses = PromoUseData::findAllByUser($user);
+
+            if ($statusUse === 'Usada' || $statusUse === 'Pendiente') {
+                if ($statusUse === 'Usada') {
+                    $s = true;
+                } elseif ($statusUse === 'Pendiente') {
+                    $s = false;
+                }
+                $userPromoUses = array_filter(
+                    $userPromoUses,
+                    fn($promo) => $promo->isUsed() === $s
+                );
+            }
+            if ($tipoLocal !== null && $tipoLocal->getId() !== 0) {
+                $userPromoUses = array_filter(
+                    $userPromoUses,
+                    fn($promo) => $promo->getPromo()?->getShop()?->getShopType()?->getId() === $tipoLocal->getId()
+                );
+            }
+            if ($promoText !== null && $promoText !== '') {
+                $userPromoUses = array_filter(
+                    $userPromoUses,
+                    function ($promo) use ($promoText) {
+                        $texto = (string) $promo->getPromo()?->getPromoText();
+                        // stripos: Busca coincidencias sin importar mayúsculas/minúsculas
+                        // !== false: Significa que encontró el texto en alguna posición
+                        return stripos($texto, $promoText) !== false;
+
+            });
+            }
         } catch (Exception $e) {
             throw new Exception("Error al buscar las promociones usadas por el usuario " . $e->getMessage());
         }
-        return $userUses;
+        return $userPromoUses;
+        //return $arrayFiltrado;
     }
+
+
+
     public static function registerPromoUseCode(PromoUse $use)
     {
         try {
@@ -116,7 +157,7 @@ class PromotionContoller
         }
     }
 
-    
+
     public static function getAllByShop(Shop $shop)
     {
         $activePromotions = [];
