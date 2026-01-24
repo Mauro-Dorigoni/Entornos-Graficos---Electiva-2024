@@ -53,15 +53,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             $_SESSION['success_message'] = "Gracias con su consulta! Contestaremos en breve";
             //deberia reenviarlo a la pagina de donde vino, pero no se me ocurre de momento como hacerlo
-            header("Location: ".frontendURL."/landingPage.php"); 
+            $redirect = $_SERVER['HTTP_REFERER'] ?? (frontendURL . "/landingPageTest.php");
+            header("Location: " . $redirect);
             exit;
+
         } else {
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
             $_SESSION['error_message'] = 'Hubo un error al enviar su consulta. Lamentamos las molestias';
             //deberia reenviarlo a la pagina de donde vino, pero no se me ocurre de momento como hacerlo
-            header("Location: ".frontendURL."/landingPage.php"); 
+            $redirect = $_SERVER['HTTP_REFERER'] ?? (frontendURL . "/landingPageTest.php");
+            header("Location: " . $redirect);
             exit;
         }
     } catch (Exception $th) {

@@ -27,7 +27,7 @@ if (!$news) {
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body { background-color: #eae8e0; min-height: 100vh; }
+        body { background-color: #eae8e0 !important; min-height: 100vh; }
         .text-orange { color: #CC6600 !important; }
         
         #btn-outline-orange {

@@ -152,7 +152,7 @@ if (!$promo) {
                         <a href="javascript:history.back()" class="btn btn-light btn-lg">
                             <i class="fas fa-arrow-left"></i> Volver
                         </a>
-                        <?php if ($promo->getStatus() === PromoStatus_enum::Vigente && !$user->isAdmin() && !$user->isOwner()) { ?>
+                        <?php if ($promo->getStatus() === PromoStatus_enum::Vigente && !$user === null && !$user->isAdmin() && !$user->isOwner()) { ?>
                             <form method="POST" action="<?php echo backendHTTPLayer . '/getPromoCode.http.php'; ?>" class="d-inline">
                                 <input type="hidden" name="promotion_id" value="<?= $promo->getId() ?>">
                                 <button type="submit" id="btn-orange" class="font-weight-bold">
