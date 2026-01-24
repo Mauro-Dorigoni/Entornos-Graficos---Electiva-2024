@@ -1,11 +1,13 @@
 <?php
-require_once __DIR__."/../shared/BD.data.dev.php";
-require_once __DIR__."/../structs/promoUse.class.php";
-require_once __DIR__."/../structs/promotion.class.php";
-require_once __DIR__."/../shared/promoStatus.enum.php";
+require_once __DIR__ . "/../shared/BD.data.dev.php";
+require_once __DIR__ . "/../structs/promoUse.class.php";
+require_once __DIR__ . "/../structs/promotion.class.php";
+require_once __DIR__ . "/../shared/promoStatus.enum.php";
 
-class PromoUseData {
-    public static function findByCode(string $code): ?PromoUse {
+class PromoUseData
+{
+    public static function findByCode(string $code): ?PromoUse
+    {
         try {
             $conn = new mysqli(servername, username, password, dbName);
             if ($conn->connect_error) throw new Exception("Error de conexión: " . $conn->connect_error);
@@ -47,14 +49,15 @@ class PromoUseData {
                 return $use;
             }
             return null;
-        } catch (Throwable $e){
+        } catch (Throwable $e) {
             throw $e;
         } finally {
             if (isset($conn)) $conn->close();
         }
     }
 
-    public static function findAllByUser(User $user): array{
+    public static function findAllByUser(User $user): array
+    {
         $results = [];
         try {
             $conn = new mysqli(servername, username, password, dbName);
@@ -64,11 +67,14 @@ class PromoUseData {
             $stmt = $conn->prepare("SELECT pu.id, pu.uniqueCode, pu.wasUsed, pu.useDate, pu.idUser, pu.idOwner, 
                                             p.id AS promo_id, p.promoText, p.dateFrom, p.dateTo, p.status, p.imageUUID,
                                             vpd.monday, vpd.tuesday, vpd.wednesday, vpd.thursday, vpd.friday, vpd.saturday, vpd.sunday,
-                                            s.id as shopId, s.name as shopName
+                                            s.id as shopId, s.name as shopName,
+                                            st.id as shopTypeId, st.type as shopTypeName
                                             FROM promouse pu
                                             INNER JOIN promotion p ON pu.idPromo = p.id
                                             INNER JOIN shop s ON s.id = p.idShop
                                             INNER JOIN validpromoday vpd ON p.id = vpd.idPromotion
+                                            INNER JOIN shoptype st ON s.idShopType = st.id 
+                                            INNER JOIN usercategory u ON u.id = p.idUserCategory
                                             WHERE pu.idUser = ?
                                             AND p.dateDeleted IS NULL
                                             ORDER BY pu.id DESC");
@@ -93,9 +99,18 @@ class PromoUseData {
                     'saturday'  => (bool) $row['saturday'],
                     'sunday'    => (bool) $row['sunday'],
                 ]);
+
                 $shop = new Shop();
                 $shop->setId((int)$row['shopId']);
                 $shop->setName($row['shopName']);
+
+                $shopType = new ShopType();
+                $shopType->setId($row['shopTypeId']);
+                $shopType->setType($row['shopTypeName']);
+
+                $shop->setShopType($shopType);
+
+
                 $promo->setShop($shop);
                 $use = new PromoUse();
                 $use->setId((int) $row['id']);
@@ -118,9 +133,9 @@ class PromoUseData {
                 $results[] = $use;
             }
             return $results;
-        } catch (Throwable $e){
-            throw $e; 
-        }finally {
+        } catch (Throwable $e) {
+            throw $e;
+        } finally {
             if (isset($conn)) {
                 $conn->close();
             }
@@ -128,13 +143,14 @@ class PromoUseData {
     }
 
 
-    public static function add(PromoUse $use){
-                $conn = new mysqli(servername, username, password, dbName);
+    public static function add(PromoUse $use)
+    {
+        $conn = new mysqli(servername, username, password, dbName);
         if ($conn->connect_error) {
             throw new Exception("Error de conexión: " . $conn->connect_error);
         }
         $conn->begin_transaction();
-        try{
+        try {
             $stmtUse = $conn->prepare("INSERT INTO promouse (uniqueCode, idPromo, idUser) values (?,?,?)");
             if (!$stmtUse) {
                 throw new Exception("Error al preparar la consulta: " . $conn->error);
@@ -142,20 +158,21 @@ class PromoUseData {
             $uniqueCode = $use->getUniqueCode();
             $idPromo = $use->getPromo()->getId();
             $idUser = $use->getUser()->getid();
-            $stmtUse->bind_param("sii",$uniqueCode,$idPromo,$idUser);
+            $stmtUse->bind_param("sii", $uniqueCode, $idPromo, $idUser);
             if (!$stmtUse->execute()) {
                 throw new Exception("Error al intentar insertar el pedido de promocion" . $stmtUse->error);
             }
             $conn->commit();
-        }catch (Throwable $e){
+        } catch (Throwable $e) {
             $conn->rollback();
             throw $e;
-        }finally{
+        } finally {
             $conn->close();
         }
     }
 
-    public static function markAsUsed(PromoUse $use): void {
+    public static function markAsUsed(PromoUse $use): void
+    {
         try {
             $conn = new mysqli(servername, username, password, dbName);
             $stmt = $conn->prepare("UPDATE promouse SET wasUsed = 1, useDate = NOW(), idOwner = ? WHERE id = ?");
@@ -169,7 +186,8 @@ class PromoUseData {
         }
     }
 
-    public static function countUsedByUser(User $user): int {
+    public static function countUsedByUser(User $user): int
+    {
         try {
             $conn = new mysqli(servername, username, password, dbName);
             if ($conn->connect_error) throw new Exception("Error de conexión: " . $conn->connect_error);
@@ -180,14 +198,15 @@ class PromoUseData {
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            
+
             return (int)$row['total'];
         } finally {
             if (isset($conn)) $conn->close();
         }
     }
 
-    public static function checkSingleUse(PromoUse $use): int {
+    public static function checkSingleUse(PromoUse $use): int
+    {
         try {
             $conn = new mysqli(servername, username, password, dbName);
             if ($conn->connect_error) throw new Exception("Error de conexión: " . $conn->connect_error);
@@ -199,7 +218,7 @@ class PromoUseData {
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            
+
             return (int)$row['total'];
         } finally {
             if (isset($conn)) $conn->close();

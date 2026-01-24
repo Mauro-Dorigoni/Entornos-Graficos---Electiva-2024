@@ -1,4 +1,11 @@
-<?php 
+<?php
+require_once "../../Backend/structs/user.class.php";
+require_once "../../Backend/structs/userCategory.class.php";
+require_once "../../Backend/structs/user.class.php";
+require_once "../shared/userType.enum.php";
+require_once "../shared/frontendRoutes.dev.php";
+
+
 // Verificamos si existe un usuario en la sesión
 if (isset($_SESSION["user"])) {
     $user = $_SESSION["user"];

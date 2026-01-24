@@ -8,6 +8,11 @@ use PHPMailer\PHPMailer\Exception;
 function enviar($email, $asunto, $body) {
     $mail = new PHPMailer(true);
     try {
+
+        // --- DEBUG (Opcional: Descomenta si sigue fallando para ver el error real) ---
+        // $mail->SMTPDebug = 3; 
+        // $mail->Debugoutput = 'html';
+
         // Configuración del servidor SMTP
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
@@ -16,6 +21,17 @@ function enviar($email, $asunto, $body) {
         $mail->Password = emailPassword;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
+
+        // --- SOLUCIÓN XAMPP (Fix SSL) ---
+        // Esto evita el error de "Certificate verification failed" en local
+        // $mail->SMTPOptions = array(
+        //     'ssl' => array(
+        //         'verify_peer' => false,
+        //         'verify_peer_name' => false,
+        //         'allow_self_signed' => true
+        //     )
+        // );
+        // -------------------------------
 
         $mail->isHTML(true);
         $mail->setFrom(emailAdress, "PromoShop");
@@ -27,7 +43,9 @@ function enviar($email, $asunto, $body) {
         return true; 
 
     } catch (Exception $e) {
+        
         echo "Error al enviar el correo: {$mail->ErrorInfo}";
+        error_log("Error PHPMailer: " . $mail->ErrorInfo);
         sleep(15);
         return false; 
     }
