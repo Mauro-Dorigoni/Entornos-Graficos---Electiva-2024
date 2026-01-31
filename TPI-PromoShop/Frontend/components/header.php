@@ -26,6 +26,17 @@ switch ($userType) {
     .logo-container:hover {
     text-decoration: none;
     }
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 16px; /* separación entre Ingresar y Registrarse */
+    }
+
+    .nav-links .nav-link {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+    }
 </style>
 <div class="header">
     <a href=<?php echo frontendURL.$redirectTo?> class="logo-container">
@@ -33,14 +44,14 @@ switch ($userType) {
         <div class="welcome-message"><h2>PromoShop</h2></div>
     </a>
     <div class="nav-links">
-    <?php if (!isset($_SESSION["user"]) || session_status() == PHP_SESSION_NONE): ?>
+    <?php if (!isset($_SESSION["user"])): ?>
         <a class="nav-link" href=<?php echo frontendURL."/loginPage.php"?>>Ingresar</a>
         <a class="nav-link" href=<?php echo frontendURL."/registerPage.php"?>>Registrarse</a>
     <?php else:?>
         <div class="user-icon">
             <i class="fas fa-user" id="user-icon"></i>
             <div class="user-dropdown-menu" id="user-dropdown-menu" style="display: none;">
-                <a href="">Placeholder</a>
+                <a href=<?php echo frontendURL."/myProfilePage.php"?>>Mi Perfil</a>
                 <a href="">Placeholder</a>
                 <hr>
                 <a href="">Cambiar Contraseña</a>

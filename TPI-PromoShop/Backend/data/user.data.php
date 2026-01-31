@@ -194,13 +194,45 @@ class UserData {
             $idUserCategory=$user->getUserCategory()->getID();
             $id=$user->getId();
             echo "EL ID:".$id." EL Verifie:".$isEmailVerified;
+            if (!$id || !$idUserCategory) {
+                throw new Exception("User ID vacío en updateUser()");
+            }
+
             $stmt->bind_param("ssiiisiii", $email, $pass, $isAdmin, $isOwner, $dateDeleted, $emailToken, $isEmailVerified, $idUserCategory, $id);
             $stmt->execute();
-            // if ($stmt->affected_rows === 0) {
-            //     throw new Exception("No se actualizó ningún registro.");
-            // }
+            if ($stmt->affected_rows === 0) {
+                 throw new Exception("No se actualizó ningún registro.");
+             }
         } catch (Exception $e) {
             throw new Exception("Error al intentar actualizar el usuario en la BD. ".$e->getMessage());
+        } finally {
+            if (isset($stmt) && $stmt !== false) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+
+    public static function deleteUser(User $user){
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $stmt = $conn->prepare("UPDATE user set dateDeleted=CURDATE() WHERE id=?");
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            };
+            $id=$user->getId();
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            if ($stmt->affected_rows === 0) {
+                 throw new Exception("No se actualizó ningún registro.");
+             }
+        } catch (Exception $e) {
+            throw new Exception("Error al intentar eliminar el usuario en la BD. ".$e->getMessage());
         } finally {
             if (isset($stmt) && $stmt !== false) {
                 $stmt->close();
@@ -272,6 +304,34 @@ class UserData {
             }
         }
         return $userFound;
+    }
+
+    public static function findPromoUses(User $user){
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $stmt = $conn->prepare("SELECT count(*) as total from promouse p where p.idUser = ? and p.wasUsed = 1;");
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            };
+            $id = $user->getId();
+            $stmt->bind_param("s", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return (int)$row['total'];
+        } catch (Exception $e) {
+            throw new Exception("Error al intentar obtener el numero de promociones usadas. ".$e->getMessage());
+        } finally {
+            if (isset($stmt) && $stmt !== false) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
     }
 }
 ?>

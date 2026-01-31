@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             unset($_SESSION['token']);
             unset($_SESSION['action']);
-            $_SESSION['success_message'] = "Se ha cambiado la contraeña. Ingrese normalmente";
+            $_SESSION['success_message'] = "Se ha cambiado la contraeña. Le pediremos que se loguee nuevamente";
             header("Location: ".frontendURL."/loginPage.php"); 
             exit;
         }

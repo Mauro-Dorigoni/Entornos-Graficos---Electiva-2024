@@ -1,7 +1,7 @@
 <?php 
-    require_once "../structs/user.class.php";
-    require_once "../data/user.data.php";
-    require_once "../structs/userCategory.class.php";
+    require_once __DIR__."/../structs/user.class.php";
+    require_once __DIR__."/../data/user.data.php";
+    require_once __DIR__."/../structs/userCategory.class.php";
     require_once __DIR__."/../data/promoUse.data.php";
     require_once __DIR__."/../data/user.data.php";
 
@@ -46,6 +46,16 @@
             return $userFound;
         }
 
+        public static function getOne(User $user){
+            $userFound = null;
+            try {
+                $userFound = UserData::findOne($user);
+            } catch (Exception $e) {
+                throw new Exception("Error al tratar de buscar el usuario por id. ".$e->getMessage());
+            }
+            return $userFound;
+        }
+
         public static function validateUserEmail(User $user){
             $user->setIsEmailVerified(true);
             try {
@@ -72,6 +82,14 @@
                 throw new Exception("Error al tratar de encontrar al usuario por su mail. ".$e->getMessage());
             }
         }
+        public static function delete(User $user){
+            try {
+                UserData::deleteUser($user);
+            } catch (Exception $e) {
+                throw new Exception("Error al tratar de borrar su cuenta. ".$e->getMessage());
+            }
+        }
+
         public static function update($user){
             try {
                 UserData::updateUser($user);
@@ -89,6 +107,15 @@
                 throw new Exception("Error al buscar el usuario duseño de un local ".$e->getMessage());
             }
             return $owner;
+        }
+
+        public static function getPromoCount(User $user){
+            try { 
+                $uses = UserData::findPromoUses($user);
+            } catch (Exception $e) {
+                throw new Exception("Error al buscar la cantidad de promociones usadas por el usuario ".$e->getMessage());
+            }
+            return $uses;
         }
     }
 ?>
