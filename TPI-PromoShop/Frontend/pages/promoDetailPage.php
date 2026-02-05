@@ -5,6 +5,8 @@ require_once __DIR__ . "/../shared/nextcloud.public.php";
 require_once __DIR__ . "/../../Backend/shared/promoStatus.enum.php";
 require_once __DIR__ . "/../shared/dayLabels.php";
 require_once __DIR__ . "/../shared/backendRoutes.dev.php";
+require_once __DIR__ . "/../../Backend/structs/user.class.php";
+require_once __DIR__ . "/../shared/userType.enum.php";
 
 include "../components/messageModal.php";
 
@@ -14,7 +16,7 @@ $p = new Promotion();
 $p->setId($id);
 $promo = PromotionContoller::getOne($p);
 
-$user = $_SESSION['user'];
+$user = $_SESSION['user'] ?? null;;
 
 if (!$promo) {
     header("Location landingPageTest.php");
@@ -153,7 +155,7 @@ if (!$promo) {
                         <a href="javascript:history.back()" class="btn btn-light btn-lg">
                             <i class="fas fa-arrow-left"></i> Volver
                         </a>
-                        <?php if ($promo->getStatus() === PromoStatus_enum::Vigente && !$user === null && !$user->isAdmin() && !$user->isOwner()) { ?>
+                        <?php if ($promo->getStatus() === PromoStatus_enum::Vigente && $user && !$user->isAdmin() && !$user->isOwner()) { ?>
                             <form method="POST" action="<?php echo backendHTTPLayer . '/getPromoCode.http.php'; ?>" class="d-inline">
                                 <input type="hidden" name="promotion_id" value="<?= $promo->getId() ?>">
                                 <button type="submit" id="btn-orange" class="font-weight-bold">

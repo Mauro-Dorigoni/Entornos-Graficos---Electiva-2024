@@ -49,7 +49,7 @@ if ($user != null && $userType == UserType_enum::Owner) {
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-4" href="">Placeholder</a>
+                            <a class="nav-link px-4" href="<?php echo frontendURL . '/ownerReportPage.php'; ?>">Reporte</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-4" href="">Placeholder</a>
