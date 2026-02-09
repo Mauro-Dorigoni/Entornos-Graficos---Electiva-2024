@@ -2,6 +2,8 @@
 require_once __DIR__ . "/../structs/ownerReport.class.php";
 require_once __DIR__ . "/../data/promotion.data.php";
 require_once __DIR__ . "/../data/promoUse.data.php";
+require_once __DIR__ . "/../data/shop.data.php";
+require_once __DIR__ . "/../data/user.data.php";
 
 class ReportController {
 
@@ -35,7 +37,35 @@ class ReportController {
 
         } catch (Exception $e) {
             throw new Exception(
-                "Error al buscar las promociones activas del local. " . $e->getMessage()
+                "Error al generar el reporte. " . $e->getMessage()
+            );
+        }
+    }
+
+    public static function adminReport(){
+        $adminReport = new AdminReport();
+        try {
+            $shops = ShopData::findAll();
+
+            $adminReport -> setShops($shops);
+
+            $countPromotionUsageByShop = [];
+
+            foreach($shops as $s):
+                $countPromotionUsageByShop[] = PromoUseData::countUsedByShop($s);
+            endforeach; 
+
+            $topUsedPromo = PromotionData::topUsedPromo();
+            $adminReport -> setTopUsedPromotion($topUsedPromo);
+
+            $topUser = UserData::topUser();
+            $adminReport -> setTopUser($topUser);
+
+            return $adminReport;
+        }
+        catch(Exception $e) {
+            throw new Exception(
+                "Error al generar el reporte. " . $e->getMessage()
             );
         }
     }

@@ -744,4 +744,39 @@ class PromotionData
             }
         }
     }
+
+    public static function topUsedPromo()
+    {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $stmt = $conn->prepare("SELECT idPromo, COUNT(*) as uses_count 
+                FROM promouse 
+                where wasUsed = 1
+                GROUP BY idPromo 
+                ORDER BY uses_count DESC 
+                LIMIT 1;"); 
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            
+            $topUsedPromo = new Promotion();
+            $topUsedPromo -> setId($row['idPromo']);
+            $topUsedPromo = PromotionData::findById($topUsedPromo);
+
+            return $topUsedPromo;
+        }
+        catch (Exception $e) {
+            return "Error: " . $e->getMessage();
+        } finally {
+        if (isset($conn)) 
+            {
+            $conn->close();
+            }
+        }
+    }
+
 }

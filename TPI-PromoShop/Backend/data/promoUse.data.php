@@ -224,6 +224,25 @@ class PromoUseData
         }
     }
 
+    public static function countUsedByShop(Shop $shop): int
+    {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) throw new Exception("Error de conexión: " . $conn->connect_error);
+
+            $ownerId = $shop->getOwner()-> getId();
+            $stmt = $conn->prepare("SELECT COUNT(*) as total FROM promouse WHERE idOwner = ? AND wasUsed = 1");
+            $stmt->bind_param("i", $ownerId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            return (int)$row['total'];
+        } finally {
+            if (isset($conn)) $conn->close();
+        }
+    }
+
     public static function checkSingleUse(PromoUse $use): int
     {
         try {
@@ -245,44 +264,44 @@ class PromoUseData
     }
 
     public static function topWeekDay(Shop $shop): string
-{
-    try {
-        $conn = new mysqli(servername, username, password, dbName);
-        if ($conn->connect_error) {
-            throw new Exception("Error de conexión: " . $conn->connect_error);
-        }
+    {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
 
-        // 1. Configurar el idioma de las fechas a español para esta sesión
-        $conn->query("SET lc_time_names = 'es_ES'");
+            // 1. Configurar el idioma de las fechas a español para esta sesión
+            $conn->query("SET lc_time_names = 'es_ES'");
 
-        $shopId = $shop->getId();
-        
-        // 2. Preparar la consulta
-        $stmt = $conn->prepare("SELECT upper(DAYNAME(pu.useDate)) AS weeksDay, COUNT(*) AS cnt
-                                FROM promouse pu
-                                INNER JOIN promotion pr ON pr.id = pu.idPromo
-                                INNER JOIN shop sh ON sh.id = pr.idShop
-                                WHERE pu.wasUsed = TRUE
-                                AND sh.id = ?
-                                GROUP BY weeksDay
-                                ORDER BY cnt DESC
-                                LIMIT 1;");
-        
-        $stmt->bind_param("i", $shopId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+            $shopId = $shop->getId();
+            
+            // 2. Preparar la consulta
+            $stmt = $conn->prepare("SELECT upper(DAYNAME(pu.useDate)) AS weeksDay, COUNT(*) AS cnt
+                                    FROM promouse pu
+                                    INNER JOIN promotion pr ON pr.id = pu.idPromo
+                                    INNER JOIN shop sh ON sh.id = pr.idShop
+                                    WHERE pu.wasUsed = TRUE
+                                    AND sh.id = ?
+                                    GROUP BY weeksDay
+                                    ORDER BY cnt DESC
+                                    LIMIT 1;");
+            
+            $stmt->bind_param("i", $shopId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
 
-        // Validar si hay resultados para evitar errores de índice
-        return $row ? $row['weeksDay'] : "Sin datos";
+            // Validar si hay resultados para evitar errores de índice
+            return $row ? $row['weeksDay'] : "Sin datos";
 
-    } catch (Exception $e) {
-        // Es buena práctica capturar la excepción para que el flujo no se rompa
-        return "Error: " . $e->getMessage();
-    } finally {
-        if (isset($conn)) {
-            $conn->close();
+        } catch (Exception $e) {
+            // Es buena práctica capturar la excepción para que el flujo no se rompa
+            return "Error: " . $e->getMessage();
+        } finally {
+            if (isset($conn)) {
+                $conn->close();
+            }
         }
     }
-}
 }

@@ -52,8 +52,7 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-reportes">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/reportesPage.php'; ?>">Ver Reportes</a>
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/exportReportPage.php'; ?>">Exportar Reportes</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL.'/adminReportPage.php'; ?>">Ver Reportes</a>
                             </div>
                         </li>
 

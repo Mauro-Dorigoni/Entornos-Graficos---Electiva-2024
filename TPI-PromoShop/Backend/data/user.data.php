@@ -38,7 +38,7 @@ class UserData {
     }
 
     public static function findOne(User $user){
-        $userFound = null;
+        $userFound = new User();
         try {
             $conn = new mysqli(servername, username, password, dbName);
             if ($conn->connect_error) {
@@ -47,7 +47,7 @@ class UserData {
             $stmt = $conn->prepare("SELECT usu.id, usu.email, usu.pass, usu.isAdmin, usu.isOwner, usu.dateDeleted, usu.emailToken, usu.isEmailVerified, 
                                     usu.idUserCategory, cat.categoryType, cat.dateDeleted as catDateDeleted 
                                     FROM user usu inner join usercategory cat on usu.idUserCategory=cat.id 
-                                    WHERE usu.id = ? and usu.dateDeleted is null;");
+                                    WHERE usu.id = ?;");
             if (!$stmt) {
                 throw new Exception("Error al preparar consulta: " . $conn->error);
             };
@@ -72,6 +72,8 @@ class UserData {
 
             };
             
+            return $userFound;
+            
         } catch (Exception $e) {
             throw new Exception("Error al intentar buscar al ususario por mail en la BD. ".$e->getMessage());
         } finally {
@@ -82,7 +84,6 @@ class UserData {
                 $conn->close();
             }
         }
-        return $userFound;
     }
 
     public static function findByMail(User $user){
@@ -330,6 +331,41 @@ class UserData {
             }
             if (isset($conn)) {
                 $conn->close();
+            }
+        }
+    }
+
+    public static function topUser()
+    {
+        try {
+            $conn = new mysqli(servername, username, password, dbName);
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+            $stmt = $conn->prepare("SELECT idUser, COUNT(*) as uses_count 
+                FROM promouse 
+                where wasUsed = 1
+                GROUP BY idUser 
+                ORDER BY uses_count DESC 
+                LIMIT 1;"); 
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            
+            $topUser= new User();
+            $topUser -> setId($row['idUser']);
+            $topUser = UserData::findOne($topUser);
+
+            return $topUser;
+        }
+        catch (Exception $e) {
+            // Es buena práctica capturar la excepción para que el flujo no se rompa
+            return "Error: " . $e->getMessage();
+        } finally {
+        if (isset($conn)) 
+            {
+            $conn->close();
             }
         }
     }

@@ -7,7 +7,6 @@ try {
     $owner = $_SESSION['user'];
     $shop = ShopController::getOneByOwner($owner);
     
-    // Obtenemos el reporte usando el controlador
     $report = ReportController::ownerReport($shop);
     
     $promotions = $report->getPromotions();

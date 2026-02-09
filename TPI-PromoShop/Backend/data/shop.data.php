@@ -250,7 +250,7 @@ class ShopData {
             if ($conn->connect_error) {
                 throw new Exception("Error de conexión: " . $conn->connect_error);
             }
-            $query = "SELECT s.id AS shopId, name, description, openinghours, location, st.id AS stypeId, st.type AS stName, u.id AS userId, u.email AS userEmail 
+            $query = "SELECT s.id AS shopId, name, s.description, openinghours, location, st.id AS stypeId, st.type AS stName, u.id AS userId, u.email AS userEmail 
                     FROM shop AS s 
                     INNER JOIN shoptype AS st ON s.idShopType = st.id
                     INNER JOIN user AS u ON s.idOwner = u.id
