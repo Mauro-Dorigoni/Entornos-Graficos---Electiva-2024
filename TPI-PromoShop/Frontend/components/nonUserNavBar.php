@@ -27,6 +27,18 @@
                                 <a class="dropdown-item" href="<?php echo frontendURL . '/promocionesPage.php'; ?>">Detalles por Local</a>
                             </div>
                         </li>
+                        <li class="nav-item position-relative">
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
+                                href="#" data-target="#submenu-nosotros">
+                                Sobre nosotros 
+                                <span class="submenu-arrow ml-2">&#9662;</span>
+                            </a>
+                            <div class="custom-submenu" id="submenu-nosotros">
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/quienesSomosPage.php'; ?>">Quiénes Somos</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/infoGeneralPage.php'; ?>">Información General</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/MVVPage.php'; ?>">Misión, Visión, Valores</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
