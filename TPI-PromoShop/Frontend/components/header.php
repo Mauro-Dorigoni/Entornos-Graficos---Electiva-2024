@@ -52,7 +52,6 @@ switch ($userType) {
             <i class="fas fa-user" id="user-icon"></i>
             <div class="user-dropdown-menu" id="user-dropdown-menu" style="display: none;">
                 <a href=<?php echo frontendURL."/myProfilePage.php"?>>Mi Perfil</a>
-                <a href="">Placeholder</a>
                 <hr>
                 <a href="">Cambiar Contraseña</a>
                 <hr>
