@@ -24,6 +24,9 @@ if ($user != null && $userType == UserType_enum::Owner) {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link px-4" href="<?php echo frontendURL . '/index.php'; ?>">Inicio</a>
+                        </li>
                         <li class="nav-item position-relative">
                             <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
                                 href="#" data-target="#submenu-locales">

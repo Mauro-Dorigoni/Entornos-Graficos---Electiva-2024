@@ -22,38 +22,38 @@ include "../components/messageModal.php";
     justify-content: center;
     align-items: center;
   }
-  
 </style>
 
 <body>
   <?php include "../components/header.php"?>
   <?php include "../components/adminNavBar.php"?>
-  <div class="container-fluid center-container" id="center-container">
-  <div class="card card-custom" id="card-custom">
-    <div class="row no-gutters">
-      <div class="col-12 d-flex align-items-center">
-        <div class="card-body p-4 p-lg-5 text-black w-100">
-          <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Alta de Tipo Local</h5>
-          <hr>
-          <form method="post" action="<?php echo backendHTTPLayer . '/newShopType.http.php'; ?>">
-            <div class="form-outline mb-4">
-              <label for="form2Example17">Nombre del Tipo</label>
-              <input type="text" id="form2Example17" name="tipoLocal" class="form-control form-control-lg" required>
-            </div>
-            <div class="form-outline mb-4">
-              <label for="descTipoLocal">Breve descipcion</label>
-              <textarea id="descTipoLocal" name="descTipoLocal" class="form-control form-control-lg" rows="3" required></textarea>
-            </div>
+  
+  <div class="container-fluid my-5 center-container" id="center-container">
+    <div class="card card-custom" id="card-custom">
+      <div class="row no-gutters">
+        <div class="col-12 d-flex align-items-center">
+          <div class="card-body p-4 p-lg-5 text-black w-100">
+            <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Alta de Tipo Local</h5>
             <hr>
-            <div class="pt-1 mb-4">
-              <button type="submit" class="btn btn-lg btn-block btn-outline-orange" id="btn-outline-orange">Aceptar</button>
-            </div>
-          </form>
+            <form method="post" action="<?php echo backendHTTPLayer . '/newShopType.http.php'; ?>">
+              <div class="form-outline mb-4">
+                <label for="form2Example17">Nombre del Tipo</label>
+                <input type="text" id="form2Example17" name="tipoLocal" class="form-control form-control-lg" required>
+              </div>
+              <div class="form-outline mb-4">
+                <label for="descTipoLocal">Breve descipcion</label>
+                <textarea id="descTipoLocal" name="descTipoLocal" class="form-control form-control-lg" rows="3" required></textarea>
+              </div>
+              <hr>
+              <div class="pt-1 mb-4">
+                <button type="submit" class="btn btn-lg btn-block btn-outline-orange" id="btn-outline-orange">Aceptar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
   <?php include "../components/footer.php"?>
 </body>

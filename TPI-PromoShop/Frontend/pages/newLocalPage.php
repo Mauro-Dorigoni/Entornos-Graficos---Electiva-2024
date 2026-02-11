@@ -21,51 +21,52 @@ $shopTypes = ShopTypeController::getAll();
 <body>
   <?php include "../components/header.php"?>
   <?php include "../components/adminNavBar.php"?>
-  <div class="container-fluid center-container" id="center-container">
-  <div class="card card-custom" id="card-custom">
-    <div class="row no-gutters">
-      <div class="col-12 d-flex align-items-center">
-        <div class="card-body p-4 p-lg-5 text-black w-100">
-          <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Alta de Local</h5>
-          <hr>
-          <form method="post" action="<?php echo backendHTTPLayer . '/newLocal.http.php'; ?>">
-            <div class="form-outline mb-4">
-              <label for="form2Example17">Nombre Local</label>
-              <input type="text" id="form2Example17" name="local" class="form-control form-control-lg" required>
-            </div>
-            <div class="form-outline mb-4">
-              <label for="ubiLocal">Ubicación Relativa</label>
-              <input type="text" id="ubiLocal" name="ubiLocal" class="form-control form-control-lg" required>
-            </div>
+  
+  <div class="container-fluid my-5 center-container" id="center-container">
+    <div class="card card-custom" id="card-custom">
+      <div class="row no-gutters">
+        <div class="col-12 d-flex align-items-center">
+          <div class="card-body p-4 p-lg-5 text-black w-100">
+            <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Alta de Local</h5>
             <hr>
-            <div class="form-outline mb-4">
-              <label for="emailOwner">Email del dueño:</label>
-              <input type="email" id="emailOwner" name="emailOwner" class="form-control form-control-lg" required>
-            </div>
-            <div class="form-outline mb-4">
-              <label for="passwordOwner">Contraseña del dueño:</label>
-              <input type="password" id="passwordOwner" name="passwordOwner" class="form-control form-control-lg" required>
-            </div>
-            <hr>
-            <div class="form-outline mb-4">
-              <label for="opcion">Tipo de Local</label>
-              <select id="opcion" name="shopType" class="form-control">
-                <?php foreach ($shopTypes as $shopType): ?>
-                  <option value="<?= $shopType->getId(); ?>">
-                    <?= htmlspecialchars($shopType->getType()); ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-            <div class="pt-1 mb-4">
-              <button type="submit" class="btn btn-lg btn-block btn-outline-orange" id="btn-outline-orange">Aceptar</button>
-            </div>
-          </form>
+            <form method="post" action="<?php echo backendHTTPLayer . '/newLocal.http.php'; ?>">
+              <div class="form-outline mb-4">
+                <label for="form2Example17">Nombre Local</label>
+                <input type="text" id="form2Example17" name="local" class="form-control form-control-lg" required>
+              </div>
+              <div class="form-outline mb-4">
+                <label for="ubiLocal">Ubicación Relativa</label>
+                <input type="text" id="ubiLocal" name="ubiLocal" class="form-control form-control-lg" required>
+              </div>
+              <hr>
+              <div class="form-outline mb-4">
+                <label for="emailOwner">Email del dueño:</label>
+                <input type="email" id="emailOwner" name="emailOwner" class="form-control form-control-lg" required>
+              </div>
+              <div class="form-outline mb-4">
+                <label for="passwordOwner">Contraseña del dueño:</label>
+                <input type="password" id="passwordOwner" name="passwordOwner" class="form-control form-control-lg" required>
+              </div>
+              <hr>
+              <div class="form-outline mb-4">
+                <label for="opcion">Tipo de Local</label>
+                <select id="opcion" name="shopType" class="form-control">
+                  <?php foreach ($shopTypes as $shopType): ?>
+                    <option value="<?= $shopType->getId(); ?>">
+                      <?= htmlspecialchars($shopType->getType()); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="pt-1 mb-4">
+                <button type="submit" class="btn btn-lg btn-block btn-outline-orange" id="btn-outline-orange">Aceptar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
   <?php include "../components/footer.php"?>
 </body>

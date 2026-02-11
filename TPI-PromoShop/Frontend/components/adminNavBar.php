@@ -10,6 +10,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link px-4" href="<?php echo frontendURL . '/index.php'; ?>">Inicio</a>
+                        </li>
                         <li class="nav-item position-relative">
                             <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
                                href="#" data-target="#submenu-locales">
@@ -44,16 +47,8 @@
                             </div>
                         </li>
 
-                        <!-- REPORTES -->
-                        <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
-                               href="#" data-target="#submenu-reportes">
-                                Reportes
-                                <span class="submenu-arrow ml-2">&#9662;</span>
-                            </a>
-                            <div class="custom-submenu" id="submenu-reportes">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/adminReportPage.php'; ?>">Ver Reportes</a>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link px-4" href="<?php echo frontendURL . '/adminReportPage.php'; ?>">Reporte</a>
                         </li>
 
                     </ul>
