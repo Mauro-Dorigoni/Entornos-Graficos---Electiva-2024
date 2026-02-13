@@ -38,8 +38,8 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-nosotros">
-                                <a class="dropdown-item" href="<?php echo frontendURL . '/quienesSomosPage.php'; ?>">Quiénes Somos</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL . '/infoGeneralPage.php'; ?>">Información General</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/quienesSomosPage.php'; ?>">Quiénes Somos</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL . '/MVVPage.php'; ?>">Misión, Visión, Valores</a>
                             </div>
                         </li>
@@ -49,6 +49,11 @@
             </nav>
         </div>
     </div>
+</div>
+
+<!-- BREADCRUMBMANAGER -->
+<div>
+    <?php BreadcrumbManager::render(); ?>
 </div>
 
 <script>

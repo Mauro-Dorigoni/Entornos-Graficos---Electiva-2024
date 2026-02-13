@@ -133,7 +133,7 @@ try {
     <?php include "../components/ownerNavBar.php" ?>
 
     <main class="container py-5">
-        <h1 class="display-4 font-weight-bold mb-4">Promociones</h1>
+        <h1 class="display-4 font-weight-bold mb-4">Mis Promociones</h1>
 
         <?php if (empty($promotions)): ?>
             <div class="alert alert-info text-center">

@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="../assets/styles/navBar.css">
 <div class="container-fluid nav-menu" id="navBarContainer" style="background-color: #006633;">
     <div class="row">
@@ -15,35 +14,36 @@
                         </li>
                         <li class="nav-item position-relative">
                             <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
-                               href="#" data-target="#submenu-locales">
+                                href="#" data-target="#submenu-locales">
                                 Locales
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-locales">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/shopsCardsPage.php'; ?>">Listado Locales</a>
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/newLocalPage.php'; ?>">Alta de Local</a>
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/newShopTypePage.php'; ?>">Alta de Tipo</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/shopsCardsPage.php'; ?>">Listado Locales</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/newLocalPage.php'; ?>">Alta de Local</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/newShopTypePage.php'; ?>">Alta de Tipo</a>
                             </div>
                         </li>
                         <li class="nav-item position-relative">
                             <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
-                               href="#" data-target="#submenu-promociones">
+                                href="#" data-target="#submenu-promociones">
                                 Promociones
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/promoManagementPage.php'; ?>">Gestion Promociones</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/promoManagementPage.php'; ?>">Gestion Promociones</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/allPromotionsPage.php'; ?>">Todas las Promociones</a>
                             </div>
                         </li>
                         <li class="nav-item position-relative">
                             <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
-                               href="#" data-target="#submenu-novedades">
+                                href="#" data-target="#submenu-novedades">
                                 Novedades
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-novedades">
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/newsPage.php'; ?>">Listado Novedades</a>
-                                <a class="dropdown-item" href="<?php echo frontendURL.'/newNewsPage.php'; ?>">Alta de Novedad</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/newsPage.php'; ?>">Listado Novedades</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/newNewsPage.php'; ?>">Alta de Novedad</a>
                             </div>
                         </li>
 
@@ -57,33 +57,38 @@
         </div>
     </div>
 </div>
+<!-- BREADCRUMBMANAGER -->
+<div>
+    <?php BreadcrumbManager::render(); ?>
+</div>
+
 <script>
-document.querySelectorAll('.toggle-submenu').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-        e.preventDefault();
+    document.querySelectorAll('.toggle-submenu').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
 
-        const target = document.querySelector(this.getAttribute('data-target'));
+            const target = document.querySelector(this.getAttribute('data-target'));
 
-        document.querySelectorAll('.custom-submenu').forEach(menu => {
-            if (menu !== target) menu.classList.remove('show');
+            document.querySelectorAll('.custom-submenu').forEach(menu => {
+                if (menu !== target) menu.classList.remove('show');
+            });
+
+            document.querySelectorAll('.toggle-submenu').forEach(link => {
+                if (link !== this) link.classList.remove('active');
+            });
+
+            if (target) {
+                target.classList.toggle('show');
+                this.classList.toggle('active');
+            }
         });
+    });
 
-        document.querySelectorAll('.toggle-submenu').forEach(link => {
-            if (link !== this) link.classList.remove('active');
-        });
 
-        if (target) {
-            target.classList.toggle('show');
-            this.classList.toggle('active');
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-item')) {
+            document.querySelectorAll('.custom-submenu').forEach(menu => menu.classList.remove('show'));
+            document.querySelectorAll('.toggle-submenu').forEach(link => link.classList.remove('active'));
         }
     });
-});
-
-
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.nav-item')) {
-        document.querySelectorAll('.custom-submenu').forEach(menu => menu.classList.remove('show'));
-        document.querySelectorAll('.toggle-submenu').forEach(link => link.classList.remove('active'));
-    }
-});
 </script>

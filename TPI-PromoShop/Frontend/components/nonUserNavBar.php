@@ -46,6 +46,11 @@
         </div>
     </div>
 </div>
+<!-- BREADCRUMBMANAGER -->
+<div>
+    <?php BreadcrumbManager::render(); ?>
+</div>
+
 
 <script>
     // Lógica de submenús idéntica a ownerNavBar.php para mantener consistencia

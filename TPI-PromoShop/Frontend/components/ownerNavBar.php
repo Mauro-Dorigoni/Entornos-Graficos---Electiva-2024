@@ -62,6 +62,11 @@ if ($user != null && $userType == UserType_enum::Owner) {
         </div>
     </div>
 </div>
+<!-- BREADCRUMBMANAGER -->
+<div>
+    <?php BreadcrumbManager::render(); ?>
+</div>
+
 <script>
     document.querySelectorAll('.toggle-submenu').forEach(function(el) {
         el.addEventListener('click', function(e) {
