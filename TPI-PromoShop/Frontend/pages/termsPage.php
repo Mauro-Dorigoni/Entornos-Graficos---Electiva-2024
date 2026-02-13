@@ -1,4 +1,5 @@
 <?php
+require_once "../../Backend/structs/user.class.php";
 
 ?>
 <!DOCTYPE html>

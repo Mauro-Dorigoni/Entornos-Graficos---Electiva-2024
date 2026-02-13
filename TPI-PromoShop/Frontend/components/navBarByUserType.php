@@ -1,7 +1,6 @@
 <?php
 require_once "../../Backend/structs/user.class.php";
 require_once "../../Backend/structs/userCategory.class.php";
-require_once "../../Backend/structs/user.class.php";
 require_once "../shared/userType.enum.php";
 require_once "../shared/frontendRoutes.dev.php";
 

@@ -1,5 +1,5 @@
 <?php
-// Página pública
+require_once "../../Backend/structs/user.class.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
