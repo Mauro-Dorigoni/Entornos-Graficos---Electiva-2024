@@ -8,7 +8,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
-                        
+
                         <li class="nav-item">
                             <a class="nav-link px-4" href="<?php echo frontendURL . '/landingPageTest.php'; ?>">Inicio</a>
                         </li>
@@ -18,19 +18,20 @@
                         </li>
 
                         <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
                                 href="#" data-target="#submenu-promociones">
-                                Promociones 
+                                Promociones
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
                                 <a class="dropdown-item" href="<?php echo frontendURL . '/promocionesPage.php'; ?>">Detalles por Local</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/allPromotionsPage.php'; ?>">Todas las Promos</a>
                             </div>
                         </li>
                         <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
                                 href="#" data-target="#submenu-nosotros">
-                                Sobre nosotros 
+                                Sobre nosotros
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-nosotros">
@@ -47,18 +48,18 @@
 </div>
 
 <script>
-// Lógica de submenús idéntica a ownerNavBar.php para mantener consistencia
-document.querySelectorAll('.toggle-submenu').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('data-target'));
-        document.querySelectorAll('.custom-submenu').forEach(menu => {
-            if (menu !== target) menu.classList.remove('show');
+    // Lógica de submenús idéntica a ownerNavBar.php para mantener consistencia
+    document.querySelectorAll('.toggle-submenu').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('data-target'));
+            document.querySelectorAll('.custom-submenu').forEach(menu => {
+                if (menu !== target) menu.classList.remove('show');
+            });
+            if (target) {
+                target.classList.toggle('show');
+                this.classList.toggle('active');
+            }
         });
-        if (target) {
-            target.classList.toggle('show');
-            this.classList.toggle('active');
-        }
     });
-});
 </script>

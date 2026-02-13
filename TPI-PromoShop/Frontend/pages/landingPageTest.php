@@ -24,7 +24,7 @@ $tarjeta_2 = [
     "iconos" => ["fas fa-percentage", "fas fa-percentage", "fas fa-percentage", "fas fa-percentage"],
     "titulos" => ["Promociones", "Mis Promociones", "Promociones", "Mis Promociones"],
     "descripcion" => ["Todas las promociones de nuestro shopping.", "Gestiona tus promociones seleccionadas.", "Ingrese al panel de gestión de promociones", "Gestione las promociones del local."],
-    "url" => ["allShopPromotionsPage.php", "myPromotionsPage.php", "promoManagementPage.php", "allShopPromotionsPage.php"],
+    "url" => ["allPromotionsPage.php", "myPromotionsPage.php", "promoManagementPage.php", "allShopPromotionsPage.php"],
     "boton" => ["Ver Todas", "Ver Todas", "Ver Todas", "Ver Todas"]
 ];
 
@@ -352,7 +352,7 @@ if (!empty($allPromos)) {
     </div>
 
 
-    <!-- CARRUSEL DE NOVEDADES -->
+    <!-- CARRUSEL DE PROMOCIONES -->
     <!-- <div class="container py-5">
         <div class="text-center mb-5">
             <h2 class="font-weight-bold">Últimas <span style="color: #ff8c00;">Novedades</span></h2>
@@ -509,12 +509,13 @@ if (!empty($allPromos)) {
                         </div> <?php endforeach; ?>
 
                     <?php if ($needsExtraSlide): ?>
+                        <!-- ACA TE MANDA A NOVEDADES.   -->
                         <div class="carousel-item">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <div class="card card-novedad h-100 text-center"
                                         style="cursor: pointer; border: 1px solid #ff8c00;"
-                                        onclick="window.location.href='newsPage.php'">
+                                        onclick="window.location.href='allPromotionsPage.php'">
                                         <div class="d-flex justify-content-center align-items-center w-100"
                                             style="height: 180px; background-color: #fff3e0; border-top-left-radius: 12px; border-top-right-radius: 12px;">
                                             <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
@@ -522,7 +523,7 @@ if (!empty($allPromos)) {
                                         <div class="card-body d-flex flex-column justify-content-center">
                                             <h5 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h5>
                                             <p class="text-muted small">Explora todas las promociones.</p>
-                                            <a href="newsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
+                                            <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
                                         </div>
                                     </div>
                                 </div>
@@ -546,7 +547,7 @@ if (!empty($allPromos)) {
 
         <?php else: ?>
             <div class="alert alert-light text-center border">
-                No hay novedades para mostrar en este momento.
+                No hay promociones para mostrar en este momento.
             </div>
         <?php endif; ?>
     </div>

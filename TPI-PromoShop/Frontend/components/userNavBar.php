@@ -8,7 +8,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
-                        
+
                         <li class="nav-item">
                             <a class="nav-link px-4" href="<?php echo frontendURL . '/index.php'; ?>">Inicio</a>
                         </li>
@@ -18,22 +18,23 @@
                         </li>
 
                         <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
                                 href="#" data-target="#submenu-promociones">
-                                Promociones 
+                                Promociones
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
                                 <a class="dropdown-item" href="<?php echo frontendURL . '/myPromotionsPage.php'; ?>">Mis Promociones</a>
+                                <a class="dropdown-item" href="<?php echo frontendURL . '/allPromotionsPage.php'; ?>">Todas las Promos</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-4" href="<?php echo frontendURL . '/newsPage.php'; ?>">Novedades</a>
                         </li>
                         <li class="nav-item position-relative">
-                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center" 
+                            <a class="nav-link px-4 toggle-submenu d-flex justify-content-between align-items-center"
                                 href="#" data-target="#submenu-nosotros">
-                                Sobre nosotros 
+                                Sobre nosotros
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-nosotros">
@@ -50,36 +51,35 @@
     </div>
 </div>
 
-<script>    
-document.querySelectorAll('.toggle-submenu').forEach(function(el) {
-    el.addEventListener('click', function(e) {
-        e.preventDefault();
+<script>
+    document.querySelectorAll('.toggle-submenu').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
 
-        const target = document.querySelector(this.getAttribute('data-target'));
+            const target = document.querySelector(this.getAttribute('data-target'));
 
-        // Cierra otros menús abiertos
-        document.querySelectorAll('.custom-submenu').forEach(menu => {
-            if (menu !== target) menu.classList.remove('show');
+            // Cierra otros menús abiertos
+            document.querySelectorAll('.custom-submenu').forEach(menu => {
+                if (menu !== target) menu.classList.remove('show');
+            });
+
+            document.querySelectorAll('.toggle-submenu').forEach(link => {
+                if (link !== this) link.classList.remove('active');
+            });
+
+            // Alterna el menú actual
+            if (target) {
+                target.classList.toggle('show');
+                this.classList.toggle('active');
+            }
         });
+    });
 
-        document.querySelectorAll('.toggle-submenu').forEach(link => {
-            if (link !== this) link.classList.remove('active');
-        });
-
-        // Alterna el menú actual
-        if (target) {
-            target.classList.toggle('show');
-            this.classList.toggle('active');
+    // Cierra el menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-item')) {
+            document.querySelectorAll('.custom-submenu').forEach(menu => menu.classList.remove('show'));
+            document.querySelectorAll('.toggle-submenu').forEach(link => link.classList.remove('active'));
         }
     });
-});
-
-// Cierra el menú al hacer clic fuera
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.nav-item')) {
-        document.querySelectorAll('.custom-submenu').forEach(menu => menu.classList.remove('show'));
-        document.querySelectorAll('.toggle-submenu').forEach(link => link.classList.remove('active'));
-    }
-});
 </script>
-
