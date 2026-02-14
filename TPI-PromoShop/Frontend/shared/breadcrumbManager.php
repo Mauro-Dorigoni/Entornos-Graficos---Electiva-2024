@@ -173,6 +173,10 @@ class BreadcrumbManager
             'siteMapPage.php' => [
                 'title' => 'Mapa del Sitio',
                 'parent' => 'index.php'
+            ],
+            'faqPage.php' => [
+                'title' => 'Preguntas Frecuentes',
+                'parent' => 'index.php'
             ]
         ];
     }
