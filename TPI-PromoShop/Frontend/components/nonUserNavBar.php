@@ -24,7 +24,6 @@
                                 <span class="submenu-arrow ml-2">&#9662;</span>
                             </a>
                             <div class="custom-submenu" id="submenu-promociones">
-                                <a class="dropdown-item" href="<?php echo frontendURL . '/promocionesPage.php'; ?>">Detalles por Local</a>
                                 <a class="dropdown-item" href="<?php echo frontendURL . '/allPromotionsPage.php'; ?>">Todas las Promos</a>
                             </div>
                         </li>
