@@ -13,6 +13,9 @@
 
     <style>
         /* Estilos consistentes con landingPageTest.php */
+        body {
+            background-color: #eae8e0 !important;
+        }
         .btn-orange {
             background-color: #ff8c00 !important;
             color: white !important;
@@ -73,7 +76,7 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body>
 
     <?php include "../components/header.php" ?>
     <?php include "../components/navBarByUserType.php" ?>

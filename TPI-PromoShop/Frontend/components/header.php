@@ -62,8 +62,6 @@ switch ($userType) {
                 <div class="user-dropdown-menu" id="user-dropdown-menu" style="display: none;">
                     <a href=<?php echo frontendURL . "/myProfilePage.php" ?>>Mi Perfil</a>
                     <hr>
-                    <a href="">Cambiar Contraseña</a>
-                    <hr>
                     <a href=<?php echo backendHTTPLayer . "/logout.http.php" ?>>Cerrar Sesion</a>
                 </div>
             </div>

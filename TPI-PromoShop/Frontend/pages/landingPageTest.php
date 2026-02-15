@@ -96,7 +96,9 @@ if (!empty($allPromos)) {
 
     <style>
         /* Estilos Personalizados */
-
+        body {
+            background-color: #eae8e0 !important;
+        }
         /* BOTÓN NARANJA */
         .btn-orange {
             background-color: #ff8c00 !important;

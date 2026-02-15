@@ -58,8 +58,19 @@ $pendingPromotions = PromotionContoller::getAllPendingFilter($p, $t, $c);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
+        html, body {
+            height: 100%;
+        }
+
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             background-color: #eae8e0 !important;
+        }
+
+        main {
+            flex: 1;
         }
 
         .news-card {

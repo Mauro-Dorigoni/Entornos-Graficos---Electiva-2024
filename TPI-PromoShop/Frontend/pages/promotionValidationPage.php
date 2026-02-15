@@ -14,7 +14,7 @@ include "../components/messageModal.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Base inspirada en newsDetailPage.php */
-        body { background-color: #eae8e0; min-height: 100vh; }
+        body { background-color: #eae8e0 !important; min-height: 100vh; }
         .text-orange { color: #CC6600 !important; }
         
         /* Contenedor principal estilizado */
@@ -103,7 +103,7 @@ include "../components/messageModal.php";
                 </div>
 
                 <h2 class="font-weight-bold mb-2">Canje de Promoción</h2>
-                <p class="text-muted mb-5">Ingresa el código alfanumérico para validar tu beneficio.</p>
+                <p class="text-muted mb-5">Ingresa el código alfanumérico para validar el beneficio.</p>
 
                 <form action="<?php echo backendHTTPLayer . '/registerPromoUse.http.php'; ?>" method="POST">
                     

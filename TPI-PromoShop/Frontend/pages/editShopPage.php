@@ -56,20 +56,19 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
     <link rel="stylesheet" href="../assets/styles/editShopPage.css">
 
 </head>
-
 <body>
     <?php include "../components/header.php" ?>
 
     <?php include "../components/navBarByUserType.php" ?>
 
-    <div class="container py-5 ">
+    <div class="container py-5">
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="page-header d-flex align-items-center justify-content-between">
                     <div>
                         <h2 class="font-weight-bold text-dark mb-0">Editar Local</h2>
-                        <p class="text-muted mb-0 mt-1">Modificando datos de: <strong><?= htmlspecialchars($shop->getName()) ?></strong>- SoloLectura: <?= htmlspecialchars($soloLectura) ?></p>
+                        <p class="text-muted mb-0 mt-1">Modificando datos de: <strong><?= htmlspecialchars($shop->getName()) ?></p>
                     </div>
                     <i class="fas fa-store-alt fa-3x text-black-50 opacity-25"></i>
                 </div>

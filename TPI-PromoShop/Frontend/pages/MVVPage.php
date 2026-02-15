@@ -13,6 +13,9 @@
 
     <style>
         /* Reutilizamos los estilos de la Landing para mantener consistencia */
+        body {
+            background-color: #eae8e0 !important;
+        }
         .text-orange { color: #ff8c00 !important; }
         
         /* BANNER */
@@ -83,7 +86,7 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body>
 
     <?php include "../components/header.php" ?>
     <?php include "../components/navBarByUserType.php" ?>
