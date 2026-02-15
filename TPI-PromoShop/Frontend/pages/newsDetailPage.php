@@ -21,15 +21,22 @@ if (!$news) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Detalle de Novedad - Fisherton Plaza</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body { background-color: #eae8e0 !important; min-height: 100vh; }
-        .text-orange { color: #CC6600 !important; }
-        
+        body {
+            background-color: #eae8e0 !important;
+            min-height: 100vh;
+        }
+
+        .text-orange {
+            color: #CC6600 !important;
+        }
+
         #btn-outline-orange {
             color: white !important;
             background-color: #CC6600 !important;
@@ -39,22 +46,46 @@ if (!$news) {
             text-decoration: none;
             display: inline-block;
         }
+
         #btn-outline-orange:hover {
             background-color: #a35200 !important;
         }
-        .detail-card { background: white; border-radius: 15px; overflow: hidden; border: none; }
-        .img-container { height: 100%; min-height: 300px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; }
-        .news-img { width: 100%; height: 100%; object-fit: cover; }
-        .info-section { padding: 40px; }
+
+        .detail-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+        }
+
+        .img-container {
+            height: 100%;
+            min-height: 300px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-section {
+            padding: 40px;
+        }
     </style>
 </head>
+
 <body>
     <?php include "../components/header.php" ?>
-    <?php include "../components/adminNavBar.php" ?>
+    <?php include "../components/navBarByUserType.php" ?>
 
     <main class="container py-5">
         <div class="card detail-card shadow-lg">
-            <div class="row no-gutters"> 
+            <div class="row no-gutters">
                 <div class="col-md-5">
                     <div class="img-container">
                         <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) ?>" class="news-img" alt="Imagen de la novedad">
@@ -81,7 +112,7 @@ if (!$news) {
 
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="newsPage.php" class="btn btn-light btn-lg"><i class="fas fa-arrow-left"></i> Volver</a>
-                            
+
                             <?php if ($isAdmin): ?>
                                 <a href="editNewsPage.php?id=<?= $news->getId() ?>" id="btn-outline-orange" class="font-weight-bold">Editar Novedad</a>
                             <?php endif; ?>
@@ -98,4 +129,5 @@ if (!$news) {
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
