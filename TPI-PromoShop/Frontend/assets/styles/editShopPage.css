@@ -10,6 +10,12 @@ body {
     align-items: center;
 }
 
+  #card-custom {
+    width: 100%;
+        max-width: 800px;
+        background-color: #dddddda6;
+  }
+
   .page-header {
       border-bottom: 2px solid #f0f0f0;
       margin-bottom: 2rem;
