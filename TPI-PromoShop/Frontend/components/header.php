@@ -42,6 +42,33 @@ switch ($userType) {
         padding: 6px 12px;
         text-decoration: none;
     }
+
+    /* ESTILO GLOBAL DE FOCO (Navegación con Teclado) */
+
+    /* 1. Usamos *:focus-visible para que solo aparezca al usar TECLADO (TAB), no el mouse */
+    *:focus-visible {
+        /* Quitamos la sombra azul por defecto de Bootstrap */
+        box-shadow: none !important;
+
+        /* Definimos tu borde llamativo */
+        outline: 3px solid #e606ff !important;
+        background: 0.1 #e606ff;
+        /*  */
+        outline-offset: 2px !important;
+        /* Lo separa 2px del elemento para que se vea mejor */
+
+        /* Opcional: Una transición suave */
+        transition: outline-offset 0.1s ease;
+    }
+
+    /* 2. Corrección específica para Inputs y Botones de Bootstrap */
+    /* Bootstrap a veces es terco con el box-shadow en inputs */
+    .btn:focus,
+    .form-control:focus {
+        box-shadow: none !important;
+        /* Matamos la sombra azul difuminada */
+        outline: 3px solid #e606ff !important;
+    }
 </style>
 <div class="header">
     <a href=<?php echo frontendURL . $redirectTo ?> class="logo-container">

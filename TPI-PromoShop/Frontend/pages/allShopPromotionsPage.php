@@ -12,6 +12,7 @@ include "../components/confirmationModal.php";
 
 try {
 
+    //No valida que por url ingrese a una pagina que no existe, sin embargo no genera error. Lautaro.
     $paginaActual = isset($_GET['page']) ? htmlspecialchars($_GET['page'], FILTER_SANITIZE_NUMBER_INT) : '';
     if ($paginaActual === '') {
         $paginaActual = 1;
@@ -22,10 +23,13 @@ try {
     $shop = new Shop();
     $shop = ShopController::getOneByOwner($owner);
 
+    //CANTIDAD DE PROMOS QUE MUESTRO EN UNA PAGINA:
+    $amountPerPage = 4;
+
     $totalPromotions = PromotionContoller::getCountPromotionsByShop($shop);
-    $totalPaginas = ceil($totalPromotions / 3);
+    $totalPaginas = ceil($totalPromotions / $amountPerPage);
     //se le puede pasar como tercer parametro la cantidad de elemntos por pag, por defecto 4. 
-    $promotions = PromotionContoller::getAllByShopPagination($shop, $paginaActual, 4);
+    $promotions = PromotionContoller::getAllByShopPagination($shop, $paginaActual, $amountPerPage);
     
 } catch (Exception $e) {
     $promotions = [];
@@ -242,7 +246,7 @@ try {
 
             </ul>
             <div class="align-content-center justify-content-center">
-                <p>Resultado total de <?= htmlspecialchars($totalPromotions) ?> paginas.</p>
+                <p>Resultado total de <?= htmlspecialchars($totalPromotions) ?> elementos.</p>
                 <p> Pagina Actual: <?= htmlspecialchars($paginaActual) ?> </p>
                 <p> </p>
             </div>
