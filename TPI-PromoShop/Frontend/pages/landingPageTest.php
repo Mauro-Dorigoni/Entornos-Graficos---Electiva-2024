@@ -12,11 +12,12 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 //0:no log. - 1: user - 2:admin - 3: owner -
 //LOCALES
+//Despues se cambia tarjeta_1["url"][3] por la url de "Mi local"
 $tarjeta_1 = [
     "iconos" => ["fas fa-shopping-bag", "fas fa-shopping-bag", "fas fa-shopping-bag", "fas fa-shopping-bag"],
     "titulos" => ["Locales", "Locales", "Locales", "Mi Local"],
     "descripcion" => ["Descubre las mejores marcas y tiendas.", "Descubre las mejores marcas y tiendas.", "Gestione el listado de locales.", "Gestiona la información de tu marca."],
-    "url" => ["shopsCardsPage.php", "shopDetailPage.php", "shopsCardsPage.php", "shopsCardsPage.php"],
+    "url" => ["shopsCardsPage.php", "shopsCardsPage.php", "shopsCardsPage.php", "shopsCardsPage.php"],
     "boton" => ["Ver Todos", "Ver Todos", "Ver Todos", "Ver"]
 ];
 //PROMOCIONES
