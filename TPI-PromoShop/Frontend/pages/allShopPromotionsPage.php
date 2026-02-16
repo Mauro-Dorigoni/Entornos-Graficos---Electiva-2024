@@ -30,7 +30,6 @@ try {
     $totalPaginas = ceil($totalPromotions / $amountPerPage);
     //se le puede pasar como tercer parametro la cantidad de elemntos por pag, por defecto 4. 
     $promotions = PromotionContoller::getAllByShopPagination($shop, $paginaActual, $amountPerPage);
-    
 } catch (Exception $e) {
     $promotions = [];
 }
@@ -217,7 +216,7 @@ try {
 
                     <div class="col-md-1 d-flex justify-content-center action-icons">
                         <a class="text-danger"
-                            onclick="openDeleteModal(<?= $promo->getId() ?>)">
+                            onclick="event.stopPropagation(); openDeleteModal(<?= $promo->getId() ?>)">
                             <i class="fas fa-trash fa-2x"></i>
                         </a>
                     </div>
