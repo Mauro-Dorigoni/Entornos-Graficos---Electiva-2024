@@ -58,7 +58,8 @@ $pendingPromotions = PromotionContoller::getAllPendingFilter($p, $t, $c);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -296,7 +297,7 @@ $pendingPromotions = PromotionContoller::getAllPendingFilter($p, $t, $c);
                         <p style="font-size: 18px; color: #333; margin-bottom: 1.5rem;">Por favor indique el motivo del rechazo:</p>
                         <textarea name="motivoRechazo" class="form-control mb-4" rows="4" required style="border-radius: 8px; resize: none;"></textarea>
                         <div class="d-flex justify-content-center" style="gap: 15px;">
-                            <button type="button" class="btn px-4 py-2 font-weight-bold" data-bs-dismiss="modal" style="background-color: #6c757d; color: white; border: none; border-radius: 8px;">
+                            <button type="button" class="btn px-4 py-2 font-weight-bold"  data-dismiss="modal" style="background-color: #6c757d; color: white; border: none; border-radius: 8px;">
                                 Cancelar
                             </button>
                             <button type="submit" class="btn px-4 py-2 font-weight-bold" style="background-color: #CC6600; color: white; border: none; border-radius: 8px;">
