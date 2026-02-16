@@ -10,7 +10,7 @@
                     <ul class="navbar-nav mx-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link px-4" href="<?php echo frontendURL . '/landingPageTest.php'; ?>">Inicio</a>
+                            <a class="nav-link px-4" href="<?php echo frontendURL . '/index.php'; ?>">Inicio</a>
                         </li>
 
                         <li class="nav-item">
