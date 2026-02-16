@@ -252,7 +252,7 @@ class BreadcrumbManager
     private static function printHTML($steps)
     {
         echo '<nav  style="--bs-breadcrumb-divider: \' > \';"  aria-label="breadcrumb">';
-        echo '<ol class="breadcrumb bg-transparent pt-2 pl-5 mb-0">';
+        echo '<ol class="breadcrumb bg-transparent pt-2  mb-0 pl-md-5  pl-2">';
 
         foreach ($steps as $step) {
             if (empty($step['url'])) {
