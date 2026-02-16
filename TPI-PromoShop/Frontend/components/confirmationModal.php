@@ -8,17 +8,17 @@
 
       <div class="modal-body text-center" style="background-color: #eae8e0; padding: 2.5rem 2rem;">
         <div id="confirmModalBody" class="mb-4">
-            </div>
+        </div>
 
         <div class="d-flex justify-content-center" style="gap: 15px;">
-            <button type="button" class="btn px-4 py-2 font-weight-bold" data-bs-dismiss="modal" 
-                    style="background-color: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                Cancelar
-            </button>
-            <a id="confirmModalBtnAction" href="#" class="btn px-4 py-2 font-weight-bold" 
-               style="background-color: #CC6600; color: white; border: none; border-radius: 8px; text-decoration: none;">
-                Aceptar
-            </a>
+          <a href="#" class="btn px-4 py-2 font-weight-bold" data-bs-dismiss="modal" data-dismiss="modal"
+            style="background-color: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer;">
+          Cancelar
+          </a>
+          <a id="confirmModalBtnAction" href="#" class="btn px-4 py-2 font-weight-bold"
+            style="background-color: #CC6600; color: white; border: none; border-radius: 8px; text-decoration: none;">
+            Aceptar
+          </a>
         </div>
       </div>
     </div>
@@ -26,8 +26,7 @@
 </div>
 
 <script>
-
-function openConfirmModal(mensaje, url, titulo = "Confirmar Acción") {
+  function openConfirmModal(mensaje, url, titulo = "Confirmar Acción") {
     const modalElement = document.getElementById('confirmActionModal');
     if (!modalElement) return;
 
@@ -38,5 +37,9 @@ function openConfirmModal(mensaje, url, titulo = "Confirmar Acción") {
     // Usamos la instancia de Bootstrap 5 (que ya viene en el bundle)
     const bsConfirmModal = new bootstrap.Modal(modalElement);
     bsConfirmModal.show();
-}
+
+
+
+
+  }
 </script>
