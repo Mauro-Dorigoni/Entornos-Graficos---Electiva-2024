@@ -12,11 +12,32 @@ class PromotionContoller
     public static function registerPromotion(Promotion $promo)
     {
         try {
+            $dateFrom = $promo->getDateFrom();
+            $dateTo = $promo->getDateTo();
+
+            if ($dateTo === null) {
+                throw new Exception("La fecha de fin es obligatoria.");
+            }
+
+            if ($dateFrom === null) {
+                throw new Exception("La fecha de inicio es obligatoria.");
+            }
+
+            $now = new DateTime();
+
+            if ($dateTo < $now) {
+                throw new Exception("La fecha de fin no puede ser anterior a la fecha actual.");
+            }
+
+            if ($dateTo < $dateFrom) {
+                throw new Exception("La fecha de fin no puede ser anterior a la fecha de inicio.");
+            }
+
             PromotionData::add($promo);
+            return $promo;
         } catch (Exception $e) {
             throw new Exception("Error en el registro de la promocion. " . $e->getMessage());
         }
-        return $promo;
     }
 
     //Tiene dos filtros en capa logica no de datos. Se filtra por el tipo de comercio de la promoción y por si esta fue o no utilizado. Si alguno es null no se aplica. 
