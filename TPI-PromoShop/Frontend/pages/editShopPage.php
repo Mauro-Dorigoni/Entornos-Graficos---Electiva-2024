@@ -228,6 +228,14 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
 </body>
 
 <script>
+    //ARREGLAR BUG DE BREADCRUMB DINAMICO
+
+    const etiqueta = document.getElementById("Detalle del Local");
+    etiqueta.onclick = function(e) {
+        e.preventDefault(); // Evita que el "#" te suba arriba en la página
+        window.history.back();
+    };
+
     // ESTADO GLOBAL: ¿Estamos borrando o seleccionando?
     let isDeleteMode = false;
 
