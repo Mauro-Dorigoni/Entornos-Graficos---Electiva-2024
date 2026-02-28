@@ -157,7 +157,7 @@ $chunks = !empty($allPromos) ? array_chunk($allPromos, 3) : [];
 
     <header class="position-relative d-flex justify-content-center text-center" style="height: 75vh; overflow: hidden; padding-top: 15vh;">
         <img src="https://static.wixstatic.com/media/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png/v1/fill/w_1920,h_1080,al_c/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png"
-            alt="Fondo Shopping"
+            alt="Imagen de Fondo Shopping. Decorativa"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
                     background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.7) 100%);">
@@ -237,7 +237,7 @@ $chunks = !empty($allPromos) ? array_chunk($allPromos, 3) : [];
                                     ?>
                                         <div class="col-md-4 mb-4">
                                             <div class="card card-novedad h-100">
-                                                <img src="<?= $img ?>" class="card-img-top" alt="Promo <?= htmlspecialchars($shopName) ?>">
+                                                <img src="<?= $img ?>" class="card-img-top" alt="Imagen de Promo de <?= htmlspecialchars($shopName) ?>">
                                                 <div class="card-body d-flex flex-column">
                                                     <h3 class="h5 card-title font-weight-bold" style="color: #ff8c00;">
                                                         <?= htmlspecialchars($shopName) ?>
@@ -245,7 +245,7 @@ $chunks = !empty($allPromos) ? array_chunk($allPromos, 3) : [];
                                                     <p class="card-text text-muted small flex-grow-1">
                                                         <?= htmlspecialchars(substr($promo->getPromoText(), 0, 80)) ?>...
                                                     </p>
-                                                    <a href="promoDetailPage.php?id=<?= $promo->getId() ?>" class="btn btn-outline-warning btn-sm btn-block mt-3" style="border-color: #ff8c00; color: #ff8c00; font-weight: bold;">Ver Detalle</a>
+                                                    <a href="promoDetailPage.php?id=<?= $promo->getId() ?>" class="btn btn-outline-warning btn-sm btn-block mt-3" style="border-color: #ff8c00; color: #ff8c00; font-weight: bold;" aria-label="Ir al detalle de Promociones">Ver Detalle</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -258,9 +258,9 @@ $chunks = !empty($allPromos) ? array_chunk($allPromos, 3) : [];
                                                     <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                                 </div>
                                                 <div class="card-body d-flex flex-column justify-content-center">
-                                                    <h3 class="h5 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h3>
+                                                    <h3 class="h5 font-weight-bold mt-2" style="color: #ff8c00;" aria-label="Ver todas las promociones">Ver Todo</h3>
                                                     <p class="text-muted small">Explora todas las promociones.</p>
-                                                    <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
+                                                    <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4" aria-label="Ir al catalogo de promociones">Ir al Catálogo</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -278,9 +278,9 @@ $chunks = !empty($allPromos) ? array_chunk($allPromos, 3) : [];
                                                 <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                             </div>
                                             <div class="card-body d-flex flex-column justify-content-center">
-                                                <h3 class="h5 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h3>
+                                                <h3 class="h5 font-weight-bold mt-2" style="color: #ff8c00;" aria-label="Ver todas las promociones">Ver Todo</h3>
                                                 <p class="text-muted small">Explora todas las promociones.</p>
-                                                <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
+                                                <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4" aria-label="Ir al catalogo de promociones">Ir al Catálogo</a>
                                             </div>
                                         </div>
                                     </div>
@@ -321,7 +321,7 @@ $chunks = !empty($allPromos) ? array_chunk($allPromos, 3) : [];
                                     <div class="news-card-summary" onclick="window.location.href='newsDetailPage.php?id=<?= $news->getId() ?>'">
                                         <div class="row align-items-center">
                                             <div class="col-md-2 text-center mb-3 mb-md-0">
-                                                <img src="<?= $imgUrl ?>" class="img-fluid rounded" style="max-height: 80px;" alt="Imagen Novedad">
+                                                <img src="<?= $imgUrl ?>" class="img-fluid rounded" style="max-height: 80px;" alt="Imagen de Novedad de <?= $news->getNewsText() ?>">
                                             </div>
                                             <div class="col-md-4 mb-3 mb-md-0">
                                                 <h3 class="h5 font-weight-bold text-orange mb-1">Novedad #<?= $news->getId() ?></h3>
