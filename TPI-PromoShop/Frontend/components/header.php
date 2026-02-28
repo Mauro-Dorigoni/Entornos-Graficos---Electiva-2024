@@ -52,7 +52,7 @@ switch ($userType) {
         <?php endif ?>
     </div>
 </div>
-<script type="text/javascript">
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         var userIcon = document.getElementById('user-icon');
         var dropdownMenu = document.getElementById('user-dropdown-menu');
