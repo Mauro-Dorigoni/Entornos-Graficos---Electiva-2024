@@ -9,6 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $userType = isset($_SESSION['userType']) ? $_SESSION['userType'] : null;
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 switch ($userType) {
     case UserType_enum::Admin:
         $redirectTo = "/index.php";
@@ -69,6 +70,23 @@ switch ($userType) {
         /* Matamos la sombra azul difuminada */
         outline: 3px solid #e606ff !important;
     }
+    .user-icon {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .user-email {
+        margin: 0;
+        font-weight: 600;
+        color: white;
+    }
+
+    .user-icon i {
+        font-size: 15px;
+    }
 </style>
 <div class="header">
     <a href=<?php echo frontendURL . $redirectTo ?> class="logo-container">
@@ -84,7 +102,7 @@ switch ($userType) {
             <a class="nav-link" href=<?php echo frontendURL . "/registerPage.php" ?>>Registrarse</a>
         <?php else: ?>
             <div class="user-icon">
-                <p class="d-flex p-2 font-weight-bold text-white"><?= $userType->name ?></p>
+                <p class="user-email"><?= $user->getemail() ?></p>
                 <i class="fas fa-user" id="user-icon"></i>
                 <div class="user-dropdown-menu" id="user-dropdown-menu" style="display: none;">
                     <a href=<?php echo frontendURL . "/myProfilePage.php" ?>>Mi Perfil</a>

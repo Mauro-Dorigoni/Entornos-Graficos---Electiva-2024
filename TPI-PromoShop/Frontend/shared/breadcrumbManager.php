@@ -257,10 +257,10 @@ class BreadcrumbManager
         foreach ($steps as $step) {
             if (empty($step['url'])) {
                 // Página actual (Gris)
-                echo '<li class="breadcrumb-item active" aria-current="page">' . htmlspecialchars($step['label']) . '</li>';
+                echo '<li class="breadcrumb-item active" id="' . htmlspecialchars($step['label']) .'" aria-current="page">' . htmlspecialchars($step['label']) . '</li>';
             } else {
                 // Padre (Link Naranja)
-                echo '<li class="breadcrumb-item"><a href="' . $step['url'] . '" class="text-orange">' . htmlspecialchars($step['label']) . '</a></li>';
+                echo '<li class="breadcrumb-item"><a id="' . htmlspecialchars($step['label']) . '" href="' . htmlspecialchars($step['url']) . '" class="text-orange">' . htmlspecialchars($step['label']) . '</a></li>';
             }
         }
 
