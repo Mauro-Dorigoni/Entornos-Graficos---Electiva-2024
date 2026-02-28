@@ -101,6 +101,75 @@ class ShopController
         return $shops;
     }
 
+    public static function getByNameAndTypePagination(Shop $shopName, ShopType $filtroTipo, int|null $pagNumb = null, int $cantPag = 4)
+    {
+        $shops = [];
+        $typeFinded = null;
+        try {
+            $shopTypes = ShopTypeData::findAll();
+            //Valida que exista parametro filtro. Si es '' es porque campo fue enviado en blanco.
+            if ($filtroTipo->getId() != 0) {
+                $idFiltro = $numero = filter_var($filtroTipo->getId(), FILTER_VALIDATE_INT);
+                if ($numero === false) {
+                    throw new Error("El ID de Tipo no es un Integer valido.");
+                }
+
+                foreach ($shopTypes as $type) {
+                    if ($type->getId() === $idFiltro) {
+                        $typeFinded = $type;
+                        break;
+                    }
+                }
+                if (!$typeFinded) {
+                    throw new Exception("El Tipo de Local no existe.");
+                }
+            }
+
+
+
+            $shops = ShopData::findByNameAndTypePagination($typeFinded, $shopName, $pagNumb, $cantPag);
+            //Lautaro. No popula imagenes. Ver como lo manejamos. 
+            //$shops->setImagesUUIDS(ShopData::findShopImages($shopFound));
+        } catch (Exception $e) {
+            throw new Exception("Error al recuperar los locales paginando:  " . $e->getMessage());
+        }
+        return $shops;
+    }
+
+    public static function getCountByNameAndType(Shop $shopName, ShopType $filtroTipo)
+    {
+        $cantidad = 0;
+        $typeFinded = null;
+
+        try {
+            $shopTypes = ShopTypeData::findAll();
+            //Valida que exista parametro filtro. Si es '' es porque campo fue enviado en blanco.
+            if ($filtroTipo->getId() != 0) {
+                $idFiltro = $numero = filter_var($filtroTipo->getId(), FILTER_VALIDATE_INT);
+                if ($numero === false) {
+                    throw new Error("El ID de Tipo no es un Integer valido.");
+                }
+
+                foreach ($shopTypes as $type) {
+                    if ($type->getId() === $idFiltro) {
+                        $typeFinded = $type;
+                        break;
+                    }
+                }
+                if (!$typeFinded) {
+                    throw new Exception("El Tipo de Local no existe.");
+                }
+            }
+            $cantidad = ShopData::findCountByNameAndType($typeFinded, $shopName);
+            //Lautaro. No popula imagenes. Ver como lo manejamos. 
+            //$shops->setImagesUUIDS(ShopData::findShopImages($shopFound));
+        } catch (Exception $e) {
+            throw new Exception("Error al recuperar la cantidad de los locales. " . $e->getMessage());
+        }
+        return $cantidad;
+    }
+
+
     /* Recibe un array de UUIDs para eliminar */
     public static function deleteImages($images)
     {

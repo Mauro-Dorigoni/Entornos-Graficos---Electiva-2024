@@ -20,9 +20,11 @@ $uses = UserController::getPromoCount($user);
     <meta charset="UTF-8">
     <title>Mi Perfil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/styles/passwordChangePage.css">
     <style>
         body {
             background-color: #eae8e0 !important;
@@ -215,21 +217,76 @@ $uses = UserController::getPromoCount($user);
                 </div>
 
                 <div class="modal-body" style="background-color:#eae8e0;">
-                    <form method="POST" action="<?= backendHTTPLayer ?>/changePasswordProfile.http.php">
-
-                        <div class="mb-3">
-                            <label>Contraseña actual</label>
-                            <input type="password" name="current_pass" class="form-control" required>
+                    <form method="POST" action="<?= backendHTTPLayer ?>/changePasswordProfile.http.php" onsubmit="return validatePasswords();">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    id="current_pass"
+                                    name="current_pass"
+                                    class="form-control form-control-lg"
+                                    required
+                                />
+                                <div class="input-group-append">
+                                    <button 
+                                        class="btn btn-outline-secondary toggle-password"
+                                        type="button"
+                                        data-target="current_pass">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <label for="current_pass">Contraseña Actual</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    id="new_pass"
+                                    name="new_pass"
+                                    class="form-control form-control-lg"
+                                    pattern="^(?=.*[!@#$%^&*(),.?&quot;:{}|<>]).{8,}$"
+                                    title="La contraseña debe tener al menos 8 caracteres y un carácter especial."
+                                    required
+                                />
+                                <div class="input-group-append">
+                                    <button 
+                                        class="btn btn-outline-secondary toggle-password"
+                                        type="button"
+                                        data-target="new_pass">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <label for="new_pass">Nueva Contraseña</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label>Nueva contraseña</label>
-                            <input type="password" name="new_pass" class="form-control" required>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    id="new_pass2"
+                                    name="new_pass2"
+                                    class="form-control form-control-lg"
+                                    pattern="^(?=.*[!@#$%^&*(),.?&quot;:{}|<>]).{8,}$"
+                                    title="La contraseña debe tener al menos 8 caracteres y un carácter especial."
+                                    required
+                                />
+                                <div class="input-group-append">
+                                    <button 
+                                        class="btn btn-outline-secondary toggle-password"
+                                        type="button"
+                                        data-target="new_pass2">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <label for="pass">Repita su Nueva Contraseña</label>
                         </div>
-
-                        <div class="mb-3">
-                            <label>Confirmar nueva contraseña</label>
-                            <input type="password" name="new_pass2" class="form-control" required>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p id="error-message" class="error-message">Las contraseñas no coinciden.</p>
+                            </div>
                         </div>
 
                         <div class="text-center">
@@ -251,6 +308,54 @@ $uses = UserController::getPromoCount($user);
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function validatePasswords() {
+        const password = document.getElementById("new_pass").value;
+        const confirmPassword = document.getElementById("new_pass2").value;
+        const errorMessage = document.getElementById("error-message");
+
+        // mínimo 8 caracteres + al menos 1 carácter especial
+        const regex = /^(?=.*[!@#$%^&*(),.?{}|<>]).{8,}$/;
+
+        if (!regex.test(password)) {
+            errorMessage.innerText = "La contraseña debe tener al menos 8 caracteres y un carácter especial.";
+            errorMessage.style.display = "block";
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            errorMessage.innerText = "Las contraseñas no coinciden.";
+            errorMessage.style.display = "block";
+            return false;
+        }
+
+        errorMessage.style.display = "none";
+        return true;
+    }
+
+        
+        document.addEventListener("DOMContentLoaded", function () {
+        const toggles = document.querySelectorAll(".toggle-password");
+
+        toggles.forEach(toggle => {
+            toggle.addEventListener("click", function () {
+                const targetId = this.getAttribute("data-target");
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector("i");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                }
+            });
+        });
+    });
+    </script>
 
 </body>
 

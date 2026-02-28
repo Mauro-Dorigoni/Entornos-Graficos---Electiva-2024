@@ -13,6 +13,31 @@ include "../components/messageModal.php";
 $busquedaNombre = isset($_GET['localName']) ? htmlspecialchars($_GET['localName'], ENT_QUOTES, 'UTF-8') : '';
 $filtroTipo = isset($_GET['localType']) ? filter_var($_GET['localType'], FILTER_SANITIZE_NUMBER_INT) : '';
 
+//FILTROS PARA SIGUIENTE Y ANTERIOR:
+//En caso de que existan filtros se agregan a la variable
+$hrefUrl = '';
+if ($busquedaNombre != '' || $filtroTipo != '') {
+    //Si hay algún filtro...
+    $hrefUrl .= ('localName=' . $busquedaNombre);
+    $hrefUrl .= '&';
+    $hrefUrl .= ('localType=' . $filtroTipo);
+    $hrefUrl .= '&';
+    //queda listo para agregar otro parametro.
+}
+
+
+//PAGINACIÓN
+//No valida que por url ingrese a una pagina que no existe, sin embargo no genera error. Lautaro.
+$paginaActual = isset($_GET['page']) ? htmlspecialchars($_GET['page'], FILTER_SANITIZE_NUMBER_INT) : '';
+if ($paginaActual === '') {
+    $paginaActual = 1;
+} else {
+    $paginaActual = (int) $paginaActual;
+}
+
+
+
+
 // 2. Obtención de datos
 $shopTypes = ShopTypeController::getAll();
 
@@ -26,8 +51,13 @@ if ($filtroTipo === '') {
 } else {
     $t->setId((int) $filtroTipo);
 };
-$shops = ShopController::getByNameAndType($s, $t);
+//CANTIDAD DE PROMOS QUE MUESTRO EN UNA PAGINA:
+$amountPerPage = 3;
+$shops = ShopController::getByNameAndTypePagination($s, $t, $paginaActual, $amountPerPage);
 
+$totalLocales = ShopController::getCountByNameAndType($s, $t);
+$totalPaginas = ceil($totalLocales / $amountPerPage);
+//se le puede pasar como tercer parametro la cantidad de elemntos por pag, por defecto 4.
 ?>
 
 <!DOCTYPE html>
@@ -161,6 +191,33 @@ $shops = ShopController::getByNameAndType($s, $t);
                     </div>
                 <?php endif; ?>
             </div>
+
+            <nav aria-label="Navegación de páginas">
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item <?= ($paginaActual <= 1) ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?= $hrefUrl ?>page=<?= htmlspecialchars($paginaActual - 1) ?>">Anterior</a>
+                    </li>
+
+                    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                        <li class="page-item <?= ($i == $paginaActual) ? 'active' : '' ?>">
+                            <a class="page-link" href="?<?= $hrefUrl ?>page=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <li class="page-item <?= ($paginaActual >= $totalPaginas) ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?= $hrefUrl ?>page=<?= $paginaActual + 1 ?>">Siguiente</a>
+                    </li>
+
+                </ul>
+                <div class="align-content-center justify-content-center">
+                    <p>Resultado total de <?= htmlspecialchars($totalLocales) ?> elementos.</p>
+                    <p> Pagina Actual: <?= htmlspecialchars($paginaActual) ?> </p>
+               
+                    <p> </p>
+                </div>
+
+            </nav>
         </section>
 
     </main>
