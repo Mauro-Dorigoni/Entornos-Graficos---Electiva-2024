@@ -392,6 +392,180 @@ class ShopData {
         return $shops;
     }
 
+    public static function findByNameAndTypePagination(?ShopType $type, Shop $name, int|null $pagNumb = null, int $cantPag = 4)
+    {
+        $shops = [];
+        $conn = null;
+        $stmt = null;
+
+        try {
+
+            $conn = new mysqli(servername, username, password, dbName);
+
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT s.id AS shopId, s.name, s.location, s.description, s.openinghours,
+                        st.id AS stypeId, st.type AS stName, 
+                        u.id AS userId, u.email AS userEmail
+                    FROM shop AS s 
+                    INNER JOIN shoptype AS st ON s.idShopType = st.id
+                    INNER JOIN user AS u ON s.idOwner = u.id
+                  
+                    WHERE s.dateDeleted IS NULL";
+
+            //Construcción Dinámica según los parametros enviados.
+            $params = [];    // Array para los valores
+            $types = "";     // String para los tipos ("s", "i", etc.)
+
+            // Condición Nombre. Si hay nombre, entonces se incluye a la consulta.
+            if (!empty($name->getName())) {
+                $sql .= " AND s.name LIKE ?";
+                $types .= "s"; // 's' de String
+                $params[] = "%" . $name->getName() . "%";
+            }
+
+            // Condición Tipo (si no es null y tiene ID válido). Si hay ID se incluye a la consulta
+            if ($type !== null && $type->getId() > 0) {
+                $sql .= " AND st.id = ?";
+                $types .= "i"; // 'i' de Integer
+                $params[] = $type->getId();
+            }
+
+            //si tengo un numero de pagina
+            if ($pagNumb != null && $pagNumb > 0) {
+                $offset = ($pagNumb - 1) * $cantPag;
+                $sql .= " LIMIT ? OFFSET ?";
+                $params[] = $cantPag;
+                $params[] = $offset;
+                $types .= "ii";
+            }
+
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            }
+
+            // Solo hacemos bind si hay parámetros
+            if (!empty($params)) {
+                // bind_param requiere que los parámetros se pasen individualmente, no como array.
+                // Usamos la desestructuración (...) que es nativa de PHP moderno (8.2)
+                $stmt->bind_param($types, ...$params);
+            }
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+
+                $owner = new User();
+                $owner->setId($row["userId"]);
+                $owner->setEmail($row["userEmail"]);
+
+                $shopTypeObj = new ShopType();
+                $shopTypeObj->setId($row["stypeId"]);
+                $shopTypeObj->setType($row["stName"]);
+
+                $shopFound = new Shop();
+                $shopFound->setId($row["shopId"]);
+                $shopFound->setName($row["name"]);
+                $shopFound->setLocation($row["location"]);
+                $shopFound->setOwner($owner);
+                $shopFound->setShopType($shopTypeObj);
+                $shopFound->setDescription($row["description"]);
+                $shopFound->setOpeningHours($row["openinghours"]);
+
+
+                $shops[] = $shopFound;
+
+                foreach ($shops as $s) {
+                    $images = ShopData::findShopImages($s);
+                    $s->setImages($images);
+                }
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error al buscar locales: " . $e->getMessage());
+        } finally {
+            // Cerrar recursos si existen
+            if ($stmt) $stmt->close();
+            if ($conn) $conn->close();
+        }
+
+        return $shops;
+    }
+
+    //Solo popula con Owner y Tipo. No todos los atributos. Puede recibir nombre: '' y tipo: 0, lo cual genera un return equivalente a un getAll. 
+    public static function findCountByNameAndType(?ShopType $type, Shop $name)
+    {
+        $cantidad = 0;
+        $conn = null;
+        $stmt = null;
+
+        try {
+
+            $conn = new mysqli(servername, username, password, dbName);
+
+            if ($conn->connect_error) {
+                throw new Exception("Error de conexión: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT COUNT(s.id) AS cant
+                    FROM shop AS s 
+                    INNER JOIN shoptype AS st ON s.idShopType = st.id
+                    INNER JOIN user AS u ON s.idOwner = u.id
+                  
+                    WHERE s.dateDeleted IS NULL";
+
+            //Construcción Dinámica según los parametros enviados.
+            $params = [];    // Array para los valores
+            $types = "";     // String para los tipos ("s", "i", etc.)
+
+            // Condición Nombre. Si hay nombre, entonces se incluye a la consulta.
+            if (!empty($name->getName())) {
+                $sql .= " AND s.name LIKE ?";
+                $types .= "s"; // 's' de String
+                $params[] = "%" . $name->getName() . "%";
+            }
+
+            // Condición Tipo (si no es null y tiene ID válido). Si hay ID se incluye a la consulta
+            if ($type !== null && $type->getId() > 0) {
+                $sql .= " AND st.id = ?";
+                $types .= "i"; // 'i' de Integer
+                $params[] = $type->getId();
+            }
+
+            $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Error al preparar consulta: " . $conn->error);
+            }
+
+            // Solo hacemos bind si hay parámetros
+            if (!empty($params)) {
+                // bind_param requiere que los parámetros se pasen individualmente, no como array.
+                // Usamos la desestructuración (...) que es nativa de PHP moderno (8.2)
+                $stmt->bind_param($types, ...$params);
+            }
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $cantidad = $row['cant'];
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error al buscar la cantidad de locales: " . $e->getMessage());
+        } finally {
+            // Cerrar recursos si existen
+            if ($stmt) $stmt->close();
+            if ($conn) $conn->close();
+        }
+
+        return $cantidad;
+    }
+
     public static function deleteImages($imagesUUIDs) {
         try{
             $conn = new mysqli(servername, username, password, dbName);
