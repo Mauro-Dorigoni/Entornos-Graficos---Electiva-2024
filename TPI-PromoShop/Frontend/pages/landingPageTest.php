@@ -1,4 +1,3 @@
---- landing page test (viejo)
 <?php
 require_once "../../Backend/structs/user.class.php";
 require_once "../../Backend/logic/shop.controller.php";
