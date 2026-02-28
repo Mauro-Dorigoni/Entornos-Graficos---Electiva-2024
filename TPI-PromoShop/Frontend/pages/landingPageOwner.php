@@ -6,7 +6,7 @@ require_once "../../Backend/logic/shop.controller.php";
 
 //Esta solucion (para mi) viola las capas y no considera un dueño con mas de un local
 
-$shop = ShopController::getOneByOwner($user);
+//$shop = ShopController::getOneByOwner($user);
 $imagenes = $shop->getImagesUUIDS();
 
 ?>
@@ -29,7 +29,6 @@ $imagenes = $shop->getImagesUUIDS();
 
   <div class="content">
     <h1>Landing Page Owner</h1>
-    <h2>Bienvenido <?php echo $user->getEmail() ?></h2>
     <h2>Su local <?php echo $shop->getName() ?></h2>
 
   </div>

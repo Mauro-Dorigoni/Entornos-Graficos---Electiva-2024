@@ -20,7 +20,6 @@ require_once "../../Backend/structs/user.class.php";
 
     <div class="content">
         <h1>Landing Page Admin</h1>
-        <h2>Bienvenido <?php echo $user->getEmail()?></h2>
         
     </div>
 
