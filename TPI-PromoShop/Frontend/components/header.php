@@ -26,68 +26,7 @@ switch ($userType) {
 }
 ?>
 <link rel="stylesheet" href="../assets/styles/header.css">
-<style>
-    .logo-container:hover {
-        text-decoration: none;
-    }
-
-    .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        /* separación entre Ingresar y Registrarse */
-    }
-
-    .nav-links .nav-link {
-        display: inline-block;
-        padding: 6px 12px;
-        text-decoration: none;
-    }
-
-    /* ESTILO GLOBAL DE FOCO (Navegación con Teclado) */
-
-    /* 1. Usamos *:focus-visible para que solo aparezca al usar TECLADO (TAB), no el mouse */
-    *:focus-visible {
-        /* Quitamos la sombra azul por defecto de Bootstrap */
-        box-shadow: none !important;
-
-        /* Definimos tu borde llamativo */
-        outline: 3px solid #e606ff !important;
-        background: 0.1 #e606ff;
-        /*  */
-        outline-offset: 2px !important;
-        /* Lo separa 2px del elemento para que se vea mejor */
-
-        /* Opcional: Una transición suave */
-        transition: outline-offset 0.1s ease;
-    }
-
-    /* 2. Corrección específica para Inputs y Botones de Bootstrap */
-    /* Bootstrap a veces es terco con el box-shadow en inputs */
-    .btn:focus,
-    .form-control:focus {
-        box-shadow: none !important;
-        /* Matamos la sombra azul difuminada */
-        outline: 3px solid #e606ff !important;
-    }
-    .user-icon {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        position: relative;
-        cursor: pointer;
-    }
-
-    .user-email {
-        margin: 0;
-        font-weight: 600;
-        color: white;
-    }
-
-    .user-icon i {
-        font-size: 15px;
-    }
-</style>
+<link rel="stylesheet" href="../assets/styles/headerComponent.css">
 <div class="header">
     <a href=<?php echo frontendURL . $redirectTo ?> class="logo-container">
         <img src="../assets/LogoPromoShopFondoVerde.png" alt="Logo de PromoShop">
