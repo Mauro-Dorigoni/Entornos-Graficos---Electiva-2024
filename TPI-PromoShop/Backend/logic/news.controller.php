@@ -8,6 +8,11 @@ class NewsController {
             if (strtotime($news->getDateTo()) < strtotime($news->getDateFrom())) {
                 throw new Exception("La fecha de finalización no puede ser anterior a la de inicio.");
             }
+            $currentDate = date('Y-m-d');
+
+            if (strtotime($news->getDateFrom()) < strtotime($currentDate)) {
+                throw new Exception("La fecha de inicio no puede ser anterior a la fecha actual.");
+            }
             
             $news->setDateDeleted(null);
             NewsData::add($news);

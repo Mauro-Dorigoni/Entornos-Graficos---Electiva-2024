@@ -16,6 +16,7 @@ if (!isset($_SESSION['token']) || !isset($_SESSION['action']) || $_SESSION["acti
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../assets/styles/passwordChangePage.css">
 </head>
 <body>
@@ -33,15 +34,55 @@ if (!isset($_SESSION['token']) || !isset($_SESSION['action']) || $_SESSION["acti
                         <div class="card-body p-4 p-lg-5 text-black">
                             <form action=<?php echo backendHTTPLayer."/passChange.http.php"?> method="post" onsubmit="return validatePasswords()">
                                 <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Cambio de Contraseñas</h5>
-                                <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" id="form2Example27" class="form-control form-control-lg" name="pass" required/>
-                                    <label class="form-label" for="form2Example27" >Nueva contraseña</label>
-                                </div>
+                                <div class="form-group">
 
-                                <div data-mdb-input-init class="form-outline mb-4">
-                                    <input type="password" class="form-control form-control-lg" id="pass2" name="pass2" required/>
-                                    <label class="form-label" for="pass2" >Repita su nueva Contraseña</label>
-                                </div>
+                                            <div class="input-group">
+                                                <input
+                                                    type="password"
+                                                    id="pass"
+                                                    name="pass"
+                                                    class="form-control form-control-lg"
+                                                    pattern="^(?=.*[!@#$%^&*(),.?&quot;:{}|<>]).{8,}$"
+                                                    title="La contraseña debe tener al menos 8 caracteres y un carácter especial."
+                                                    required
+                                                />
+
+                                                <div class="input-group-append">
+                                                    <button 
+                                                        class="btn btn-outline-secondary toggle-password"
+                                                        type="button"
+                                                        data-target="pass">
+                                                        <i class="fas fa-eye-slash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <label for="pass">Nueva Contraseña</label>
+                                        </div>
+
+                               <div class="form-group">
+
+                                            <div class="input-group">
+                                                <input
+                                                    type="password"
+                                                    id="pass2"
+                                                    name="pass2"
+                                                    class="form-control form-control-lg"
+                                                    pattern="^(?=.*[!@#$%^&*(),.?&quot;:{}|<>]).{8,}$"
+                                                    title="La contraseña debe tener al menos 8 caracteres y un carácter especial."
+                                                    required
+                                                />
+
+                                                <div class="input-group-append">
+                                                    <button 
+                                                        class="btn btn-outline-secondary toggle-password"
+                                                        type="button"
+                                                        data-target="pass2">
+                                                        <i class="fas fa-eye-slash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <label for="pass2">Repita su Nueva Contraseña</label>
+                                        </div>
                                 <input type="hidden" name="token" value=<?php echo $_SESSION["token"]?>>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -63,18 +104,51 @@ if (!isset($_SESSION['token']) || !isset($_SESSION['action']) || $_SESSION["acti
     </section>
     <script>
         function validatePasswords() {
-            var password = document.getElementById("form2Example27").value;
-            var confirmPassword = document.getElementById("pass2").value;
-            var errorMessage = document.getElementById("error-message");
+        const password = document.getElementById("pass").value;
+        const confirmPassword = document.getElementById("pass2").value;
+        const errorMessage = document.getElementById("error-message");
 
-            if (password !== confirmPassword) {
-                errorMessage.style.display = "block";  // Muestra el mensaje de error
-                return false;  // Previene el envío del formulario
-            } else {
-                errorMessage.style.display = "none";  // Oculta el mensaje de error
-                return true;  // Permite el envío del formulario
-            }
+        // mínimo 8 caracteres + al menos 1 carácter especial
+        const regex = /^(?=.*[!@#$%^&*(),.?{}|<>]).{8,}$/;
+
+        // Validar formato
+        if (!regex.test(password)) {
+            errorMessage.innerText = "La contraseña debe tener al menos 8 caracteres y un carácter especial.";
+            errorMessage.style.display = "block";
+            return false;
         }
+
+        // Validar coincidencia
+        if (password !== confirmPassword) {
+            errorMessage.innerText = "Las contraseñas no coinciden.";
+            errorMessage.style.display = "block";
+            return false;
+        }
+
+        errorMessage.style.display = "none";
+        return true;
+    }
+        document.addEventListener("DOMContentLoaded", function () {
+        const toggles = document.querySelectorAll(".toggle-password");
+
+        toggles.forEach(toggle => {
+            toggle.addEventListener("click", function () {
+                const targetId = this.getAttribute("data-target");
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector("i");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                }
+            });
+        });
+    });
     </script>
 </body>
 </html>
