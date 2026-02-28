@@ -37,10 +37,27 @@ include "../components/messageModal.php";
                                             <input type="email" id="form2Example17" class="form-control form-control-lg" id="email" name="email" required />
                                             <label class="form-label" for="form2Example17">Direccion de email</label>
                                         </div>
+                                        <div class="form-group">
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <input type="password" id="form2Example27" class="form-control form-control-lg" id="pass" name="pass" required />
-                                            <label class="form-label" for="form2Example27">Contraseña</label>
+                                            <div class="input-group">
+                                                <input
+                                                    type="password"
+                                                    id="pass"
+                                                    name="pass"
+                                                    class="form-control form-control-lg"
+                                                    required
+                                                />
+
+                                                <div class="input-group-append">
+                                                    <button 
+                                                        class="btn btn-outline-secondary toggle-password"
+                                                        type="button"
+                                                        data-target="pass">
+                                                        <i class="fas fa-eye-slash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <label for="pass">Contraseña</label>
                                         </div>
 
                                         <div class="pt-1 mb-1">
@@ -64,5 +81,27 @@ include "../components/messageModal.php";
         </div>
     </section>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const toggles = document.querySelectorAll(".toggle-password");
 
+    toggles.forEach(toggle => {
+        toggle.addEventListener("click", function () {
+            const targetId = this.getAttribute("data-target");
+            const input = document.getElementById(targetId);
+            const icon = this.querySelector("i");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        });
+    });
+});
+</script>
 </html>

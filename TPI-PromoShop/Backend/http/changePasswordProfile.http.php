@@ -29,7 +29,7 @@ $newPass2    = $_POST["new_pass2"];
 
 if ($newPass !== $newPass2) {
     $_SESSION['error_message'] = "Las nuevas contraseñas no coinciden.";
-    header("Location: ".frontendURL."/myProfile.php");
+    header("Location: ".frontendURL."/myProfilePage.php");
     exit;
         //throw new Exception("contraeeñas no coinciden");
 
@@ -46,7 +46,7 @@ try {
 
     if (!password_verify($currentPass, $dbUser->getPass())) {
         $_SESSION['error_message'] = "La contraseña actual es incorrecta.";
-        header("Location: ".frontendURL."/myProfile.php");
+        header("Location: ".frontendURL."/myProfilePage.php");
         exit;
             //throw new Exception("contra inicial mal");
 
@@ -64,7 +64,7 @@ try {
 
 } catch (Exception $e) {
     $_SESSION['error_message'] = $e->getMessage();
-    header("Location: ".frontendURL."/myProfile.php");
+    header("Location: ".frontendURL."/myProfilePage.php");
     exit;
    //die("ERROR CRÍTICO: " . $e->getMessage());
 }
