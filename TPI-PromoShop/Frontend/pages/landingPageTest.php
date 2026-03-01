@@ -510,7 +510,7 @@ if (!empty($allPromos)) {
                                                 <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                             </div>
                                             <div class="card-body d-flex flex-column justify-content-center">
-                                                <h4 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h4>
+                                                <h2 class="h4 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h2>
                                                 <p class="text-muted small">Explora todas las promociones.</p>
                                                 <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
                                             </div>
@@ -534,7 +534,7 @@ if (!empty($allPromos)) {
                                             <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                         </div>
                                         <div class="card-body d-flex flex-column justify-content-center">
-                                            <h4 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h4>
+                                            <h2 class="h4 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h2>
                                             <p class="text-muted small">Explora todas las promociones.</p>
                                             <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
                                         </div>
@@ -600,9 +600,9 @@ if (!empty($allPromos)) {
                                         </div>
 
                                         <div class="col-md-4 mb-3 mb-md-0">
-                                            <h4 class="font-weight-bold text-orange mb-1">
+                                            <h2 class="h4 font-weight-bold text-orange mb-1">
                                                 Novedad #<?= $news->getId() ?>
-                                            </h4>
+                                            </h2>
                                             <p class="text-muted mb-0">
                                                 <?= htmlspecialchars(substr($news->getNewsText(), 0, 110)) ?>...
                                             </p>
