@@ -2,8 +2,6 @@
 require_once "../shared/frontendRoutes.dev.php";
 require_once "../shared/backendRoutes.dev.php";
 ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="../assets/styles/footer.css">
 <!-- Footer con todas sus opciones -->
 <footer>
