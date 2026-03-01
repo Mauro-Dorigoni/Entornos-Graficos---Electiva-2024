@@ -260,9 +260,10 @@ if (!empty($allPromos)) {
             margin-top: 10px;
         }
 
-        h3.font-weight-bold {
-            font-size: 1.25rem; 
-        }  
+        .cat-card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
         
         h4.card-title,
         h4.font-weight-bold {
@@ -331,7 +332,7 @@ if (!empty($allPromos)) {
                         <div class="icon-circle">
                             <i class="<?= $tarjeta_1["iconos"][$indice] ?>"></i>
                         </div>
-                        <h3 class="font-weight-bold"><?= $tarjeta_1["titulos"][$indice] ?></h3>
+                        <h2 class="cat-card-title"><?= $tarjeta_1["titulos"][$indice] ?></h2>
                         <p class="text-muted small"><?= $tarjeta_1["descripcion"][$indice] ?></p>
                         <a href="<?= $tarjeta_1["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_1["boton"][$indice] ?></a>
                     </div>
@@ -342,7 +343,7 @@ if (!empty($allPromos)) {
                         <div class="icon-circle">
                             <i class="<?= $tarjeta_2["iconos"][$indice] ?>"></i>
                         </div>
-                        <h3 class="font-weight-bold"><?= $tarjeta_2["titulos"][$indice] ?></h3>
+                        <h2 class="cat-card-title"><?= $tarjeta_2["titulos"][$indice] ?></h2>
                         <p class="text-muted small"><?= $tarjeta_2["descripcion"][$indice] ?></p>
                         <a href="<?= $tarjeta_2["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_2["boton"][$indice] ?></a>
                     </div>
@@ -353,7 +354,7 @@ if (!empty($allPromos)) {
                         <div class="icon-circle">
                             <i class="<?= $tarjeta_3["iconos"][$indice] ?>"></i>
                         </div>
-                        <h3 class="font-weight-bold"><?= $tarjeta_3["titulos"][$indice] ?></h3>
+                        <h2 class="cat-card-title"><?= $tarjeta_3["titulos"][$indice] ?></h2>
                         <p class="text-muted small"><?= $tarjeta_3["descripcion"][$indice] ?></p>
                         <a href="<?= $tarjeta_3["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_3["boton"][$indice] ?></a>
                     </div>
