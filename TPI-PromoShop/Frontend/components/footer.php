@@ -60,6 +60,7 @@ require_once "../shared/backendRoutes.dev.php";
 
 <!-- Modal de contacto. No creo que lo usemos en ninguna otra parte, entonces por ahora lo dejo aca. Sino, va en componente aparte -->
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
