@@ -1,6 +1,3 @@
-<!-- La logica de este componente tiene que ser retrabajada. Si bien hace lo que se supone, 
- impide navegar hacia atras en la pagina, ya que cierra la session, por lo cual tira error
- al intenta recuperar los mensajes -->
 <?php
 require_once "../shared/userType.enum.php";
 if (session_status() == PHP_SESSION_NONE) {
@@ -8,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 if (isset($_SESSION['error_message']) || isset($_SESSION['success_message']) || isset($_SESSION['info_message'])):
 ?>
-<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 

@@ -5,47 +5,6 @@ require_once "../shared/backendRoutes.dev.php";
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="../assets/styles/footer.css">
-<!-- NO ME PREGUNTEN PQ SI PONGO ESTE CSS EN EL ARCHIVO SEPARADO NO ANDA, NO SUPE RESOLVERLO EN JAVA, NO PUEDO RESOVERLO ACA -->
-<style>
-    @media (max-width: 840px) {
-        .footer-container {
-            margin-left: 0px;
-        }
-    }
-
-    #contactModal #contactModalLabel {
-        color: #CC6600;
-        font-weight: bolder;
-    }
-
-    #contactModal .modal-header {
-        background-color: #006633;
-    }
-
-    #contactModal .modal-content {
-        background-color: #eae8e0;
-    }
-
-    #contactModal #submitContactFormButton {
-        background-color: #CC6600;
-        border-color: #CC6600;
-    }
-
-    #contactModal .btn-close.custom-close {
-        background-color: #CC6600;
-        border-radius: 10%;
-        opacity: 1;
-    }
-
-    p,
-    a {
-        text-decoration: none;
-    }
-
-    span a {
-        text-decoration: none;
-    }
-</style>
 <!-- Footer con todas sus opciones -->
 <footer>
     <div class="footer-container">
@@ -102,11 +61,11 @@ require_once "../shared/backendRoutes.dev.php";
 </footer>
 
 <!-- Modal de contacto. No creo que lo usemos en ninguna otra parte, entonces por ahora lo dejo aca. Sino, va en componente aparte -->
-<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="contactModalLabel">Formulario de Contacto</h5>
+                <h4 class="modal-title" id="contactModalLabel">Formulario de Contacto</h4>
                 <button type="button" class="btn-close custom-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action=<?php echo backendHTTPLayer . '/contact.http.php'; ?>>

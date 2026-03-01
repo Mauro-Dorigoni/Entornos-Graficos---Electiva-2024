@@ -259,6 +259,15 @@ if (!empty($allPromos)) {
             display: inline-block;
             margin-top: 10px;
         }
+
+        h3.font-weight-bold {
+            font-size: 1.25rem; 
+        }  
+        
+        h4.card-title,
+        h4.font-weight-bold {
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 
@@ -322,7 +331,7 @@ if (!empty($allPromos)) {
                         <div class="icon-circle">
                             <i class="<?= $tarjeta_1["iconos"][$indice] ?>"></i>
                         </div>
-                        <h4 class="font-weight-bold"><?= $tarjeta_1["titulos"][$indice] ?></h4>
+                        <h3 class="font-weight-bold"><?= $tarjeta_1["titulos"][$indice] ?></h3>
                         <p class="text-muted small"><?= $tarjeta_1["descripcion"][$indice] ?></p>
                         <a href="<?= $tarjeta_1["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_1["boton"][$indice] ?></a>
                     </div>
@@ -333,7 +342,7 @@ if (!empty($allPromos)) {
                         <div class="icon-circle">
                             <i class="<?= $tarjeta_2["iconos"][$indice] ?>"></i>
                         </div>
-                        <h4 class="font-weight-bold"><?= $tarjeta_2["titulos"][$indice] ?></h4>
+                        <h3 class="font-weight-bold"><?= $tarjeta_2["titulos"][$indice] ?></h3>
                         <p class="text-muted small"><?= $tarjeta_2["descripcion"][$indice] ?></p>
                         <a href="<?= $tarjeta_2["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_2["boton"][$indice] ?></a>
                     </div>
@@ -344,7 +353,7 @@ if (!empty($allPromos)) {
                         <div class="icon-circle">
                             <i class="<?= $tarjeta_3["iconos"][$indice] ?>"></i>
                         </div>
-                        <h4 class="font-weight-bold"><?= $tarjeta_3["titulos"][$indice] ?></h4>
+                        <h3 class="font-weight-bold"><?= $tarjeta_3["titulos"][$indice] ?></h3>
                         <p class="text-muted small"><?= $tarjeta_3["descripcion"][$indice] ?></p>
                         <a href="<?= $tarjeta_3["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_3["boton"][$indice] ?></a>
                     </div>
@@ -471,9 +480,9 @@ if (!empty($allPromos)) {
                                         <div class="card card-novedad h-100">
                                             <img src="<?= $img ?>" class="card-img-top" alt="Promo">
                                             <div class="card-body d-flex flex-column">
-                                                <h5 class="card-title font-weight-bold" style="color: #ff8c00;">
+                                                <h4 class="card-title font-weight-bold" style="color: #ff8c00;">
                                                     <?= htmlspecialchars($shopName) ?>
-                                                </h5>
+                                                </h4>
                                                 <p class="card-text text-muted small flex-grow-1">
                                                     <?= htmlspecialchars(substr($desc, 0, 80)) ?>...
                                                 </p>
@@ -500,7 +509,7 @@ if (!empty($allPromos)) {
                                                 <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                             </div>
                                             <div class="card-body d-flex flex-column justify-content-center">
-                                                <h5 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h5>
+                                                <h4 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h4>
                                                 <p class="text-muted small">Explora todas las promociones.</p>
                                                 <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
                                             </div>
@@ -524,7 +533,7 @@ if (!empty($allPromos)) {
                                             <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                         </div>
                                         <div class="card-body d-flex flex-column justify-content-center">
-                                            <h5 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h5>
+                                            <h4 class="font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h4>
                                             <p class="text-muted small">Explora todas las promociones.</p>
                                             <a href="allPromotionsPage.php" class="btn btn-orange btn-sm rounded-pill mt-auto px-4">Ir al Catálogo</a>
                                         </div>
@@ -590,9 +599,9 @@ if (!empty($allPromos)) {
                                         </div>
 
                                         <div class="col-md-4 mb-3 mb-md-0">
-                                            <h5 class="font-weight-bold text-orange mb-1">
+                                            <h4 class="font-weight-bold text-orange mb-1">
                                                 Novedad #<?= $news->getId() ?>
-                                            </h5>
+                                            </h4>
                                             <p class="text-muted mb-0">
                                                 <?= htmlspecialchars(substr($news->getNewsText(), 0, 110)) ?>...
                                             </p>
