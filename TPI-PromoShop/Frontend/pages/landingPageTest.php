@@ -100,6 +100,7 @@ if (!empty($allPromos)) {
         body {
             background-color: #eae8e0 !important;
         }
+
         /* BOTÓN NARANJA */
         .btn-orange {
             background-color: #ff8c00 !important;
@@ -264,7 +265,7 @@ if (!empty($allPromos)) {
             font-size: 1.25rem;
             font-weight: bold;
         }
-        
+
         h4.card-title,
         h4.font-weight-bold {
             font-size: 1.25rem;
@@ -393,7 +394,7 @@ if (!empty($allPromos)) {
                                     ?>
                                     <div class="col-md-4 mb-4">
                                         <div class="card card-novedad h-100">
-                                            <img src="<?= $img ?>" class="card-img-top" alt="Promo">
+                                            <img src="<?= $img ?>" class="card-img-top" alt="Imagen de Promoción - <?= $desc ?>">
                                             <div class="card-body d-flex flex-column">
                                                 <h5 class="card-title font-weight-bold" style="color: #ff8c00;">
                                                     <?= htmlspecialchars($shopName) ?>
