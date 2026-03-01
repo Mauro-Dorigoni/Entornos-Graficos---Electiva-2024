@@ -93,3 +93,35 @@
     }
 }
 
+/* ESTILO GLOBAL DE FOCO (Navegación con Teclado) */
+*:focus-visible {
+    box-shadow: none !important;
+    outline: 3px solid #e606ff !important;
+    background-color: rgba(230, 6, 255, 0.1);
+    outline-offset: 2px !important;
+    transition: outline-offset 0.1s ease;
+}
+
+.btn:focus,
+.form-control:focus {
+    box-shadow: none !important;
+    outline: 3px solid #e606ff !important;
+}
+
+.user-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    cursor: pointer;
+}
+
+.user-email {
+    margin: 0;
+    font-weight: 600;
+    color: white;
+}
+
+.user-icon i {
+    font-size: 15px;
+}
