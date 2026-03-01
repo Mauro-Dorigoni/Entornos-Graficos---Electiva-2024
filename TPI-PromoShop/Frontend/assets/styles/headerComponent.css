@@ -25,7 +25,7 @@
 
         /* Definimos tu borde llamativo */
         outline: 3px solid #e606ff !important;
-        background: 0.1 #e606ff;
+        background: 10% #e606ff;
         /*  */
         outline-offset: 2px !important;
         /* Lo separa 2px del elemento para que se vea mejor */
