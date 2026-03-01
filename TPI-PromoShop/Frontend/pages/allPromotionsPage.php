@@ -227,7 +227,7 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
                 <h1 class="font-weight-bold display-4">Todas las Promociones</h1>
             </div>
             <div class="col-md-8">
-                <form action="" method="GET">
+                <form method="GET">
                     <div class="search-wrapper">
                         <input type="text" name="search" class="form-control" placeholder="Buscar promo..." value="<?= htmlspecialchars($search ?? '') ?>">
 
@@ -244,8 +244,8 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
                             <div class="row">
 
                                 <div class="col-md-4">
-                                    <label for="type-select" class="font-weight-bold">Categoría Cliente</label>
-                                    <select id="type-select" name="userCategory" class="form-control">
+                                    <label for="user-category-select" class="font-weight-bold">Categoría Cliente</label>
+                                    <select id="user-category-select" name="userCategory" class="form-control">
                                         <option value="">Todas las categorías</option>
                                         <!-- Lista todos los shopType -->
                                         <?php foreach ($userCategories as $uc): ?>
@@ -295,9 +295,9 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
                     </div>
 
                     <div class="col-md-5 promo-content-center">
-                        <h4 class="h5 font-weight-bold text-orange mb-1">
+                        <h2 class="h5 font-weight-bold text-orange mb-1">
                             <?= htmlspecialchars($promo->getShop()->getName()) ?> #<?= $promo->getId() ?>
-                        </h4>
+                        </h2>
 
                         <div class="mb-2">
                             <span class="badge <?= $statusClasses[$promo->getStatus()->value] ?? 'badge-secondary' ?>">

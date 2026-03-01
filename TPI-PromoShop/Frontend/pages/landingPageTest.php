@@ -481,9 +481,9 @@ if (!empty($allPromos)) {
                                         <div class="card card-novedad h-100">
                                             <img src="<?= $img ?>" class="card-img-top" alt="Promo">
                                             <div class="card-body d-flex flex-column">
-                                                <h4 class="card-title font-weight-bold" style="color: #ff8c00;">
+                                                <h2 class="h4 card-title font-weight-bold" style="color: #ff8c00;">
                                                     <?= htmlspecialchars($shopName) ?>
-                                                </h4>
+                                                </h2>
                                                 <p class="card-text text-muted small flex-grow-1">
                                                     <?= htmlspecialchars(substr($desc, 0, 80)) ?>...
                                                 </p>
