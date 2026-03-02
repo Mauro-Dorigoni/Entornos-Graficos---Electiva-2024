@@ -46,6 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("El local ingresado no existe");
         }
 
+        //VERIFICAMOS QUE EL USUARIO QUE ESTA INTENTANDO EDITAR SEA EL DUEÑO DEL LOCAL
+        //Si lo intenta editar un Owner
+        if ($isOwner) {
+            //quiere decir que esta seteado un user en la seción
+            if ($_SESSION['user']->getId() !== $shop->getOwner()->getId()) {
+                throw new Exception("Usted no es dueño del local que intenta editar.");
+            }
+        }
+
 
         
         //RECUPERO LOS DATOS ENVIADOS
