@@ -117,14 +117,14 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h4 class="h6 font-weight-bold">Horarios de Atención</h5>
+                        <h4 class="h6 font-weight-bold">Horarios de Atención</h4>
                         <p class="small mb-0"><?= htmlspecialchars($shop->getOpeningHours()) ?></p>
                     </div>
                 </div>
 
                 <div class="card shadow-sm mt-3">
                     <div class="card-body">
-                        <h4 class="h6 font-weight-bold">Tipo de Local</h5>
+                        <h4 class="h6 font-weight-bold">Tipo de Local</h4>
                         <p class="small mb-0"><?= htmlspecialchars($shop->getShopType()?->getType()) ?></p>
                     </div>
                 </div>
