@@ -53,7 +53,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
     <main id="main-content" class="container py-4">
 
         <div class="row mb-5">
-            <div class="d-flex align-items-center p-3">
+            <div class="col-12 d-flex align-items-center p-3">
                 <div>
                     <h2 id="promo-heading" class="mb-3">
                         <?= $shop->getName(); ?>
