@@ -55,7 +55,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
         <div class="row mb-5">
             <div class="col-12 d-flex align-items-center p-3">
                 <div>
-                    <h2 id="promo-heading" class="mb-3">
+                    <h2 id="shop-heading" class="mb-3">
                         <?= $shop->getName(); ?>
                     </h2>
                 </div>
@@ -117,14 +117,14 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="h6 font-weight-bold">Horarios de Atención</h5>
+                        <h4 class="h6 font-weight-bold">Horarios de Atención</h4>
                         <p class="small mb-0"><?= htmlspecialchars($shop->getOpeningHours()) ?></p>
                     </div>
                 </div>
 
                 <div class="card shadow-sm mt-3">
                     <div class="card-body">
-                        <h5 class="h6 font-weight-bold">Tipo de Local</h5>
+                        <h4 class="h6 font-weight-bold">Tipo de Local</h4>
                         <p class="small mb-0"><?= htmlspecialchars($shop->getShopType()?->getType()) ?></p>
                     </div>
                 </div>
@@ -226,15 +226,13 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
 
     <!-- MODAL TO DELETE -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header" style="background-color: #006633; color: white; display: flex; align-items: center; justify-content: flex-start;">
                     <img src="../assets/LogoPromoShopFondoVerde.png" alt="PromoShop Logo" style="width: 60px; margin-right: 10px;">
-                    <strong>
-                        <h2 class="modal-title" id="deleteLabel" style="margin: 0; color:#CC6600">PromoShop</h2>
-                    </strong>
+                        <h2 class="modal-title" id="deleteLabel" style="margin: 0; color:#CC6600"><strong>PromoShop</strong></h2>
                 </div>
 
                 <div class="modal-body text-center" style="background-color: #eae8e0; padding: 2rem;">
@@ -258,11 +256,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
             </div>
         </div>
     </div>
-
-
-</body>
-
-<script>
+    <script>
     // Variable para guardar qué formulario quiere borrar
     let formToDelete = null;
     // Instancia del modal (Bootstrap 5)
@@ -299,6 +293,8 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
         }
     }
 </script>
+
+</body>
 
 
 </html>

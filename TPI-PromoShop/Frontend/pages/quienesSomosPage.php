@@ -85,6 +85,7 @@
                 <div class="col-md-7">
                     <div class="info-section">
                         <h1 class="text-orange font-weight-bold display-4">Quiénes Somos</h1>
+                        <h2 style="display:none">Tu shopping de confianza</h2>
                         <hr class="mb-4" style="border-top: 2px solid #CC6600; opacity: 0.3;">
 
                         <div class="description-box mb-4">
