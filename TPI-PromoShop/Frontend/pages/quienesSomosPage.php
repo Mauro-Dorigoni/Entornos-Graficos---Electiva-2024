@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Quiénes Somos - Tu Shopping</title>
@@ -7,30 +8,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Estilos heredados de newsDetailPage.php */
-        body { background-color: #eae8e0 !important; min-height: 100vh; }
-        .text-orange { color: #CC6600 !important; }
-        
-        .detail-card { 
-            background: white; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            border: none; 
+        body {
+            background-color: #eae8e0 !important;
+            min-height: 100vh;
+        }
+
+        .text-orange {
+            color: #CC6600 !important;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
             margin-top: 50px;
         }
-        
-        .img-container { 
-            height: 100%; 
-            min-height: 500px; 
-            background-color: #f8f9fa; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+
+        .img-container {
+            height: 100%;
+            min-height: 500px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+
         /* Imagen optimizada para el contenedor lateral */
-        .about-img { width: 100%; height: 100%; object-fit: cover; }
-        .info-section { padding: 40px; }
-        
+        .about-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-section {
+            padding: 40px;
+        }
+
         #btn-orange {
             color: white !important;
             background-color: #CC6600 !important;
@@ -42,7 +56,7 @@
             font-weight: bold;
             transition: background 0.3s;
         }
-        
+
         #btn-orange:hover {
             background-color: #a35200 !important;
         }
@@ -53,17 +67,18 @@
         }
     </style>
 </head>
+
 <body>
     <?php include "../components/header.php" ?>
     <?php include "../components/navBarByUserType.php" ?>
 
     <main class="container py-5">
         <div class="card detail-card shadow-lg">
-            <div class="row no-gutters"> 
+            <div class="row no-gutters">
                 <div class="col-md-5">
                     <div class="img-container">
-                        <img src="https://static.wixstatic.com/media/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png/v1/fill/w_1920,h_1080,al_c/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png" 
-                             class="about-img" alt="Pasillos del Shopping Center">
+                        <img src="https://static.wixstatic.com/media/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png/v1/fill/w_1920,h_1080,al_c/290684_bee75ee23dd9460c9e87f6a2286eeab6~mv2.png"
+                            class="about-img" alt="Pasillos del Shopping Center">
                     </div>
                 </div>
 
@@ -82,7 +97,7 @@
                         </div>
 
                         <div class="mt-5">
-                            <h5 class="text-dark font-weight-bold"></i> Nuestra Trayectoria</h5>
+                            <p class="text-dark font-weight-bold" style="font-size:1.8rem;"> Nuestra Trayectoria</p>
                             <p class="text-secondary">
                                 Más de una década brindando los mejores servicios, marcas internacionales y eventos culturales para toda la comunidad.
                             </p>
@@ -98,4 +113,5 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>

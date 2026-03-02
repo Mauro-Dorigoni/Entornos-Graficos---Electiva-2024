@@ -89,7 +89,7 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
                 <div class="card-body">
                     <h1 id="filter-heading" class="h4 mb-4">Buscar Locales</h1>
 
-                    <form method="GET" action="" role="search">
+                    <form method="GET"  role="search">
                         <div class="form-row align-items-end">
 
                             <div class="col-md-5 col-sm-12 mb-3">

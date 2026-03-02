@@ -86,9 +86,9 @@
             <h1 class="display-4 font-weight-bold" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">
                 Información General
             </h1>
-            <p class="lead" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">
+            <h2 class="lead" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">
                 Todo lo que necesitas saber para tu visita.
-            </p>
+            </h2>
         </div>
     </div>
 
@@ -100,7 +100,7 @@
                     <div class="icon-circle">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <h4 class="font-weight-bold">Horarios</h4>
+                    <h3 class="font-weight-bold">Horarios</h3>
                     <div class="text-muted small mt-2">
                         <p class="mb-1"><strong class="text-dark">Locales:</strong><br> Lunes a Domingos, 10:00 - 22:00 hs.</p>
                         <p class="mb-0"><strong class="text-dark">Gastronomía:</strong><br> Hasta las 00:00 hs.</p>
@@ -113,7 +113,7 @@
                     <div class="icon-circle">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <h4 class="font-weight-bold">Ubicación</h4>
+                    <h3 class="font-weight-bold">Ubicación</h3>
                     <div class="text-muted small mt-2">
                         <p class="mb-1">Av. Principal 1234, Rosario, Santa Fe.</p>
                         <p class="mb-0 font-italic text-orange">Estacionamiento gratuito para clientes.</p>
@@ -126,7 +126,7 @@
                     <div class="icon-circle">
                         <i class="fas fa-phone-alt"></i>
                     </div>
-                    <h4 class="font-weight-bold">Contacto</h4>
+                    <h3 class="font-weight-bold">Contacto</h3>
                     <div class="text-muted small mt-2">
                         <p class="mb-1"><i class="fas fa-phone mr-1"></i> (0341) 455-XXXX</p>
                         <p class="mb-0"><i class="fas fa-envelope mr-1"></i> info@shopping.com</p>

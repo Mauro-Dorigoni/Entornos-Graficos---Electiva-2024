@@ -121,7 +121,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
 
                 <div class="text-center mb-5">
                     <h1 class="display-4 font-weight-bold">Preguntas Frecuentes</h1>
-                    <p class="lead text-muted">Resolvemos tus dudas sobre cómo aprovechar al máximo PromoShop.</p>
+                    <h2 class="lead text-muted">Resolvemos tus dudas sobre cómo aprovechar al máximo PromoShop.</h2>
                 </div>
 
                 <h3 class="text-orange mb-3"><i class="fas fa-user-circle mr-2"></i> Para Usuarios</h3>

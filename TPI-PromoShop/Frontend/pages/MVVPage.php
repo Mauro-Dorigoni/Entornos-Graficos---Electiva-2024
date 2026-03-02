@@ -96,9 +96,9 @@
             <h1 class="display-4 font-weight-bold" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">
                 Nuestra Identidad
             </h1>
-            <p class="lead" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">
+            <h2 class="lead" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">
                 Conoce el compromiso que nos impulsa cada día.
-            </p>
+            </h2>
         </div>
     </div>
 
