@@ -42,6 +42,7 @@ $shopTypes = ShopTypeController::getAll();
               </div>
               <hr>
               <div class="form-outline mb-4">
+                <h6 class="fw-normal mb-3" style="letter-spacing: 1px;">Alta del Dueño</h6>
                 <label for="emailOwner">Email del dueño:</label>
                 <input type="email" id="emailOwner" name="emailOwner" class="form-control form-control-lg" required>
               </div>
