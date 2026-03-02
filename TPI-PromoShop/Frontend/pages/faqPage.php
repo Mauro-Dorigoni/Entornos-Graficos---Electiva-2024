@@ -135,7 +135,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionUsers">
+                        <div id="collapseOne" class="collapse show" role="region" aria-labelledby="headingOne" data-parent="#accordionUsers">
                             <div class="card-body">
                                 Es muy sencillo. Solo tienes que buscar la promoción que te guste, hacer clic en ella y presionar el botón <strong>"Obtener Código"</strong>. Recibirás un código único alfanumérico. Preséntalo en el local correspondiente (mostrando la pantalla de tu celular) para que te apliquen el descuento.
                             </div>
@@ -149,7 +149,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionUsers">
+                        <div id="collapseTwo" class="collapse" role="region" aria-labelledby="headingTwo" data-parent="#accordionUsers">
                             <div class="card-body">
                                 ¡No! Para los usuarios, PromoShop es <strong>totalmente gratuito</strong>. Puedes buscar, descargar y utilizar todos los cupones que quieras sin pagar ninguna comisión.
                             </div>
@@ -163,7 +163,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionUsers">
+                        <div id="collapseThree" class="collapse" role="region" aria-labelledby="headingThree" data-parent="#accordionUsers">
                             <div class="card-body">
                                 Todos los comercios adheridos tienen la obligación de aceptar los cupones vigentes. Si tienes un problema, verifica que la fecha de la promoción sea válida y que cumplas las condiciones (días de la semana). Si el problema persiste, por favor contáctanos mediante el formulario de soporte reportando el local.
                             </div>
@@ -177,7 +177,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionUsers">
+                        <div id="collapseFour" class="collapse" role="region" aria-labelledby="headingFour" data-parent="#accordionUsers">
                             <div class="card-body">
                                 Los cupones no se "cancelan", simplemente caducan si no los usas. Si descargaste un código y decides no ir al local, no pasa nada, el código vencerá automáticamente en la fecha estipulada.
                             </div>
@@ -198,7 +198,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionOwners">
+                        <div id="collapseFive" class="collapse" role="region" aria-labelledby="headingFive" data-parent="#accordionOwners">
                             <div class="card-body">
                                 Debes tener una cuenta de tipo "Dueño". Ingresa a tu panel, ve a la sección <strong>"Mis Promociones"</strong> y haz clic en "Nueva Promoción". Completa los datos (título, descuento, días válidos, imagen) y envíala. Un administrador revisará la publicación y la aprobará a la brevedad.
                             </div>
@@ -212,7 +212,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionOwners">
+                        <div id="collapseSix" class="collapse" role="region" aria-labelledby="headingSix" data-parent="#accordionOwners">
                             <div class="card-body">
                                 Cuando un cliente llegue a tu local, te mostrará un código. Ingresa a tu panel en la sección <strong>"Validar Cupón"</strong>, escribe el código y el sistema te dirá si es válido y a qué descuento corresponde. Al validarlo, quedará marcado como "Usado" para evitar fraudes.
                             </div>
@@ -226,7 +226,7 @@ require_once __DIR__ . "/../shared/backendRoutes.dev.php";
                                 <i class="fas fa-chevron-down faq-icon"></i>
                             </button>
                         </div>
-                        <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionOwners">
+                        <div id="collapseSeven" class="collapse" role="region" aria-labelledby="headingSeven" data-parent="#accordionOwners">
                             <div class="card-body">
                                 Por seguridad y transparencia hacia los usuarios, las promociones activas no se pueden modificar sustancialmente (como el porcentaje de descuento). Si cometiste un error, te recomendamos eliminar la promoción y crear una nueva.
                             </div>
