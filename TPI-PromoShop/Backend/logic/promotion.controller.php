@@ -5,6 +5,8 @@ require_once __DIR__ . "/../structs/promotion.class.php";
 require_once __DIR__ . "/../structs/shopType.class.php";
 require_once __DIR__ . "/../data/promotion.data.php";
 require_once __DIR__ . "/../data/user.data.php";
+require_once __DIR__ . "/../data/shop.data.php";
+
 require_once __DIR__ . "/../data/promoUse.data.php";
 
 class PromotionContoller
@@ -245,6 +247,18 @@ class PromotionContoller
             throw new Exception("Error al buscar todas las promociones Vigentes. " . $e->getMessage());
         }
         return $activePromotions;
+    }
+
+    public static function getShopByPromotionCode(string $code) {
+        try {
+        $promoUse = PromoUseData::findByCode($code);
+        $shop = $promoUse ?-> getPromo() -> getShop();
+        $shop = ShopData::findOne($shop);
+        } catch (Exception $e) {
+            throw new Exception("Error al buscar el Comercio con codigo de promoción " . $e->getMessage());
+        }
+        return $shop;
+        
     }
 
     public static function usePromotionCode(string $code)

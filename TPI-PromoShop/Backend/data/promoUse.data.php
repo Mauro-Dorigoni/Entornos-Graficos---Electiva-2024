@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../shared/BD.data.dev.php";
 require_once __DIR__ . "/../structs/promoUse.class.php";
 require_once __DIR__ . "/../structs/promotion.class.php";
+require_once __DIR__ . "/../structs/Shop.class.php";
 require_once __DIR__ . "/../shared/promoStatus.enum.php";
 
 class PromoUseData
@@ -12,7 +13,7 @@ class PromoUseData
             $conn = new mysqli(servername, username, password, dbName);
             if ($conn->connect_error) throw new Exception("Error de conexión: " . $conn->connect_error);
 
-            $stmt = $conn->prepare("SELECT pu.id, pu.uniqueCode, pu.wasUsed, pu.idUser, p.id as promo_id, p.promoText, p.dateFrom, p.dateTo, p.status, vpd.monday, vpd.tuesday, vpd.wednesday, vpd.thursday, vpd.friday, vpd.saturday, vpd.sunday
+            $stmt = $conn->prepare("SELECT pu.id, pu.uniqueCode, pu.wasUsed, pu.idUser, p.id as promo_id, p.promoText, p.dateFrom, p.dateTo, p.status, p.idShop,vpd.monday, vpd.tuesday, vpd.wednesday, vpd.thursday, vpd.friday, vpd.saturday, vpd.sunday
                                     FROM promouse pu 
                                     INNER JOIN promotion p ON pu.idPromo = p.id 
                                     INNER JOIN validpromoday vpd ON p.id = vpd.idPromotion
@@ -37,6 +38,10 @@ class PromoUseData
                     'saturday'  => (bool)$row['saturday'],
                     'sunday'    => (bool)$row['sunday'],
                 ]);
+                //Solo popula con el ID del Shop. 
+                $shop = new Shop();
+                $shop->setId((int)$row['idShop']);
+                $promo->setShop($shop);
 
                 $use = new PromoUse();
                 $use->setId((int)$row['id']);
