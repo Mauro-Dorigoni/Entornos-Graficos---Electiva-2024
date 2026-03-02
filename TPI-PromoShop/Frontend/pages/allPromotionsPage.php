@@ -24,12 +24,6 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 try {
     //solo trae 30, limitamos el no ver todas
     $promotions = PromotionContoller::getAll();
-
-    $totalPromotions = count($promotions);
-
-    // Cantidad por página
-    $limit = 10;
-    $totalPaginas = ceil($totalPromotions / $limit);
 } catch (Exception $e) {
     $promotions = [];
     $totalPaginas = 0;
@@ -84,6 +78,13 @@ $promocionesFiltradas = array_filter(
 // 3. Reordenar índices (Opcional pero recomendado para JSON o bucles simples)
 $promocionesFiltradas = array_values($promocionesFiltradas);
 
+$totalPromotions = count($promocionesFiltradas);
+
+// Cantidad por página
+$limit = 5;
+$totalPaginas = ceil($totalPromotions / $limit);
+
+$grupos = array_chunk($promocionesFiltradas, $totalPaginas);
 
 ?>
 
@@ -286,7 +287,10 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
             </div>
         <?php endif; ?>
 
-        <?php foreach ($promocionesFiltradas as $promo): ?>
+        <?php
+        $indice = ($paginaActual - 1); ?>
+
+        <?php foreach ($grupos[$indice] as $promo): ?>
             <div class="news-card" onclick="window.location.href='promoDetailPage.php?id=<?= $promo->getId() ?>'">
                 <div class="row align-items-center">
 
@@ -351,10 +355,10 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
 
                     <?php
                     $queryParams = "&search=" . urlencode($search) .
-                        "&f_desde=" . urlencode($dateFrom) .
-                        "&f_hasta=" . urlencode($dateTo) .
-                        "&f_status=" . urlencode($filterStatus);
+                        "&shopType=" . urlencode($f_shopType) .
+                        "&userCategory=" . urlencode($f_userCat);
                     ?>
+
 
                     <li class="page-item <?= ($paginaActual <= 1) ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $paginaActual - 1 . $queryParams ?>">Anterior</a>
@@ -374,6 +378,9 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
                 <div class="text-center text-muted small mt-2">
                     Página <?= $paginaActual ?> de <?= $totalPaginas ?>
                 </div>
+                <div class="text-center text-muted small mt-2">
+                    Total Elementos:  <?= $totalPromotions ?> 
+                </div>
             </nav>
         <?php endif; ?>
 
@@ -383,8 +390,8 @@ $promocionesFiltradas = array_values($promocionesFiltradas);
 
     <?php include "../components/footer.php" ?>
 
-    <?php include "../components/messageModal.php"?>
-    <?php include "../components/confirmationModal.php"?>
+    <?php include "../components/messageModal.php" ?>
+    <?php include "../components/confirmationModal.php" ?>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
