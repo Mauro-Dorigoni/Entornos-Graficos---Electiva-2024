@@ -225,116 +225,115 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
 
 
     <?php include "../components/footer.php" ?>
-</body>
 
-<script>
-    //ARREGLAR BUG DE BREADCRUMB DINAMICO
+    <script>
+        //ARREGLAR BUG DE BREADCRUMB DINAMICO
 
-    const etiqueta = document.getElementById("Detalle del Local");
-    etiqueta.onclick = function(e) {
-        e.preventDefault(); // Evita que el "#" te suba arriba en la página
-        window.history.back();
-    };
+        const etiqueta = document.getElementById("Detalle del Local");
+        etiqueta.onclick = function(e) {
+            e.preventDefault(); // Evita que el "#" te suba arriba en la página
+            window.history.back();
+        };
 
-    // ESTADO GLOBAL: ¿Estamos borrando o seleccionando?
-    let isDeleteMode = false;
+        // ESTADO GLOBAL: ¿Estamos borrando o seleccionando?
+        let isDeleteMode = false;
 
-    // 1. FUNCIÓN PARA CAMBIAR DE MODO (Toggle)
-    function toggleDeleteMode() {
-        isDeleteMode = !isDeleteMode; // Invertir estado
+        // 1. FUNCIÓN PARA CAMBIAR DE MODO (Toggle)
+        function toggleDeleteMode() {
+            isDeleteMode = !isDeleteMode; // Invertir estado
 
-        const btn = document.getElementById('btnToggleDelete');
-        const grid = document.getElementById('galleryGrid');
-        const text = document.getElementById('instructionText');
-        const span = btn.querySelector('span');
+            const btn = document.getElementById('btnToggleDelete');
+            const grid = document.getElementById('galleryGrid');
+            const text = document.getElementById('instructionText');
+            const span = btn.querySelector('span');
 
-        if (isDeleteMode) {
-            // MODO BORRAR ACTIVO
-            btn.classList.remove('btn-outline-secondary');
-            btn.classList.add('btn-danger'); // Botón rojo
-            span.innerText = "Terminar Selección";
+            if (isDeleteMode) {
+                // MODO BORRAR ACTIVO
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-danger'); // Botón rojo
+                span.innerText = "Terminar Selección";
 
-            grid.classList.add('mode-delete-active'); // CSS para cambiar hover
-            text.innerHTML = "Haz clic en las fotos que quieras <strong class='text-danger'>BORRAR</strong>.";
-        } else {
-            // MODO NORMAL (PORTADA)
-            btn.classList.remove('btn-danger');
-            btn.classList.add('btn-outline-secondary');
-            span.innerText = "Eliminar Imágenes";
+                grid.classList.add('mode-delete-active'); // CSS para cambiar hover
+                text.innerHTML = "Haz clic en las fotos que quieras <strong class='text-danger'>BORRAR</strong>.";
+            } else {
+                // MODO NORMAL (PORTADA)
+                btn.classList.remove('btn-danger');
+                btn.classList.add('btn-outline-secondary');
+                span.innerText = "Eliminar Imágenes";
 
-            grid.classList.remove('mode-delete-active');
-            text.innerHTML = "Haz clic en una foto para seleccionarla como <strong>Portada</strong>.";
+                grid.classList.remove('mode-delete-active');
+                text.innerHTML = "Haz clic en una foto para seleccionarla como <strong>Portada</strong>.";
+            }
         }
-    }
 
-    // 2. FUNCIÓN MAESTRA DEL CLICK
-    function handleCardClick(card) {
+        // 2. FUNCIÓN MAESTRA DEL CLICK
+        function handleCardClick(card) {
 
-        if (isDeleteMode) {
-            // --- ESTAMOS EN MODO BORRAR ---
+            if (isDeleteMode) {
+                // --- ESTAMOS EN MODO BORRAR ---
 
-            // Protección: No dejar borrar la que es portada actualmente
-            // (Si quieres permitirlo, borra este if)
-            if (card.classList.contains('is-main') && !card.classList.contains('is-deleted')) {
-                alert("Esta imagen es la portada actual. Elige otra portada antes de borrarla.");
-                return;
+                // Protección: No dejar borrar la que es portada actualmente
+                // (Si quieres permitirlo, borra este if)
+                if (card.classList.contains('is-main') && !card.classList.contains('is-deleted')) {
+                    alert("Esta imagen es la portada actual. Elige otra portada antes de borrarla.");
+                    return;
+                }
+
+                // Toggle visual (Gris + Icono Basura)
+                card.classList.toggle('is-deleted');
+
+                // Toggle lógico (Checkbox oculto)
+                const checkbox = card.querySelector('input[type="checkbox"]');
+                if (checkbox) checkbox.checked = !checkbox.checked;
+
+            } else {
+                // --- ESTAMOS EN MODO SELECCIÓN DE PORTADA ---
+
+                // Si la imagen está marcada para borrar, no hacemos nada
+                if (card.classList.contains('is-deleted')) return;
+
+                // 1. Limpiar todas las otras portadas
+                document.querySelectorAll('.gallery-item').forEach(el => el.classList.remove('is-main'));
+
+                // 2. Marcar esta visualmente
+                card.classList.add('is-main');
+
+                // 3. Marcar el Radio Button oculto
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            }
+        }
+
+        // 3. PREVISUALIZAR IMÁGENES NUEVAS
+        function previewFiles(input) {
+            const grid = document.getElementById('galleryGrid');
+            const files = input.files;
+            const label = input.nextElementSibling;
+
+            // Actualizar texto input
+            if (files.length > 0) {
+                label.classList.add("selected");
+                label.innerHTML = files.length + " archivos seleccionados";
+            } else {
+                label.innerHTML = "Seleccionar archivos...";
             }
 
-            // Toggle visual (Gris + Icono Basura)
-            card.classList.toggle('is-deleted');
+            // Limpiar previsualizaciones viejas
+            document.querySelectorAll('.is-new-preview').forEach(el => el.remove());
 
-            // Toggle lógico (Checkbox oculto)
-            const checkbox = card.querySelector('input[type="checkbox"]');
-            if (checkbox) checkbox.checked = !checkbox.checked;
+            // Ocultar mensaje de "vacio" si existe
+            const emptyMsg = document.getElementById('emptyMessage');
+            if (emptyMsg) emptyMsg.style.display = 'none';
 
-        } else {
-            // --- ESTAMOS EN MODO SELECCIÓN DE PORTADA ---
+            Array.from(files).forEach((file, index) => {
+                if (!file.type.startsWith('image/')) return;
 
-            // Si la imagen está marcada para borrar, no hacemos nada
-            if (card.classList.contains('is-deleted')) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const tempId = 'new_' + index;
 
-            // 1. Limpiar todas las otras portadas
-            document.querySelectorAll('.gallery-item').forEach(el => el.classList.remove('is-main'));
-
-            // 2. Marcar esta visualmente
-            card.classList.add('is-main');
-
-            // 3. Marcar el Radio Button oculto
-            const radio = card.querySelector('input[type="radio"]');
-            if (radio) radio.checked = true;
-        }
-    }
-
-    // 3. PREVISUALIZAR IMÁGENES NUEVAS
-    function previewFiles(input) {
-        const grid = document.getElementById('galleryGrid');
-        const files = input.files;
-        const label = input.nextElementSibling;
-
-        // Actualizar texto input
-        if (files.length > 0) {
-            label.classList.add("selected");
-            label.innerHTML = files.length + " archivos seleccionados";
-        } else {
-            label.innerHTML = "Seleccionar archivos...";
-        }
-
-        // Limpiar previsualizaciones viejas
-        document.querySelectorAll('.is-new-preview').forEach(el => el.remove());
-
-        // Ocultar mensaje de "vacio" si existe
-        const emptyMsg = document.getElementById('emptyMessage');
-        if (emptyMsg) emptyMsg.style.display = 'none';
-
-        Array.from(files).forEach((file, index) => {
-            if (!file.type.startsWith('image/')) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const tempId = 'new_' + index;
-
-                // GENERAMOS EL MISMO HTML QUE EN PHP
-                const html = `
+                    // GENERAMOS EL MISMO HTML QUE EN PHP
+                    const html = `
                 <div class="col-6 col-md-4 col-lg-3 mb-4 fade-in is-new-preview">
                     <div class="gallery-item w-100 h-100 bg-light shadow-sm" onclick="handleCardClick(this)">
                         
@@ -349,15 +348,17 @@ if (isset($_SESSION['user']) && $_SESSION['userType'] === UserType_enum::Admin) 
                         </div>
                 </div>
                 `;
-                grid.insertAdjacentHTML('beforeend', html);
-            }
-            reader.readAsDataURL(file);
-        });
-    }
+                    grid.insertAdjacentHTML('beforeend', html);
+                }
+                reader.readAsDataURL(file);
+            });
+        }
 
-    // Animación de entrada
-    document.write('<style>.fade-in { animation: fadeIn 0.5s; } @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }</style>');
-</script>
+        // Animación de entrada
+        document.write('<style>.fade-in { animation: fadeIn 0.5s; } @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }</style>');
+    </script>
+
+</body>
 
 
 </html>

@@ -21,11 +21,6 @@ $s->setId($id);
 $shop = ShopController::getOne($s);
 $promotions = [];
 $promotions = PromotionContoller::getAllActiveByShop($s);
-// $promotions = [
-//     (object) ['id' => 1, 'title' => '2x1 en Calzado Running', 'validTo' => '2025-12-31', 'description' => 'Llevando dos pares de la línea Air Zoom, pagas solo uno.', 'image' => null],
-//     (object) ['id' => 2, 'title' => '30% OFF con Tarjeta Santander', 'validTo' => '2025-11-20', 'description' => 'Tope de reintegro $5000. Solo miércoles.', 'image' => null],
-//     (object) ['id' => 3, 'title' => 'Camiseta de Regalo', 'validTo' => '2025-10-15', 'description' => 'Con compras superiores a $100.000.', 'image' => null],
-// ];
 
 $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bedf2d66b/adjuntos/203/imagenes/027/732/0027732077/1200x675/smart/galeriasjpg.jpg"
 ?>
@@ -150,7 +145,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                 <?php if (!empty($promotions)): ?>
                     <?php foreach ($promotions as $promo): ?>
                         <div class="col-md-6 col-lg-4 mb-4" onclick="window.location.href='promoDetailPage.php?id=<?= $promo->getId() ?>'">
-                            <article class="card h-100 shadow-sm promo-card" >
+                            <article class="card h-100 shadow-sm promo-card">
                                 <div class="card-body d-flex flex-column">
                                     <div class="mb-2">
                                         <small class="text-uppercase text-orange font-weight-bold">Oferta</small>
@@ -229,43 +224,43 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <?php include "../components/footer.php" ?>
 
-</body>
 
-<!-- MODAL TO DELETE -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <!-- MODAL TO DELETE -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-            <div class="modal-header" style="background-color: #006633; color: white; display: flex; align-items: center; justify-content: flex-start;">
-                <img src="../assets/LogoPromoShopFondoVerde.png" alt="PromoShop Logo" style="width: 60px; margin-right: 10px;">
-                <strong>
-                    <h2 class="modal-title" id="deleteLabel" style="margin: 0; color:#CC6600">PromoShop</h2>
-                </strong>
-            </div>
-
-            <div class="modal-body text-center" style="background-color: #eae8e0; padding: 2rem;">
-
-                <p style="font-size: 18px; color: #333; margin-bottom: 20px;">
-                    ¿Estás seguro de que deseas eliminar este elemento?
-                </p>
-                <p class="text-muted small mb-4">Esta acción no se puede deshacer.</p>
-
-                <div class="d-flex justify-content-center gap-3">
-                    <button type="button" class="btn btn-secondary mr-2" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button type="button" class="btn" id="btnConfirmDeleteAction" style="background-color: #CC6600; color: white; font-weight: bold;">
-                        Eliminar
-                    </button>
+                <div class="modal-header" style="background-color: #006633; color: white; display: flex; align-items: center; justify-content: flex-start;">
+                    <img src="../assets/LogoPromoShopFondoVerde.png" alt="PromoShop Logo" style="width: 60px; margin-right: 10px;">
+                    <strong>
+                        <h2 class="modal-title" id="deleteLabel" style="margin: 0; color:#CC6600">PromoShop</h2>
+                    </strong>
                 </div>
 
+                <div class="modal-body text-center" style="background-color: #eae8e0; padding: 2rem;">
+
+                    <p style="font-size: 18px; color: #333; margin-bottom: 20px;">
+                        ¿Estás seguro de que deseas eliminar este elemento?
+                    </p>
+                    <p class="text-muted small mb-4">Esta acción no se puede deshacer.</p>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-secondary mr-2" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="button" class="btn" id="btnConfirmDeleteAction" style="background-color: #CC6600; color: white; font-weight: bold;">
+                            Eliminar
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-</html>
+
+</body>
 
 <script>
     // Variable para guardar qué formulario quiere borrar
@@ -304,3 +299,6 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
         }
     }
 </script>
+
+
+</html>

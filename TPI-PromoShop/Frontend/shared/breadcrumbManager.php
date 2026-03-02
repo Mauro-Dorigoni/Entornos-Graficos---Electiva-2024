@@ -55,7 +55,7 @@ class BreadcrumbManager
                 // Lista blanca: Si viene de aquí, respetamos ese camino
                 'allowed_parents' => [
                     'index.php',
-                    'shopsCardsPage.php'
+                    'shopsCardsPage.php',
                 ]
             ],
             'newLocalPage.php' => [
