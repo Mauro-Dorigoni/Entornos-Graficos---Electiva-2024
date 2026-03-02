@@ -306,7 +306,8 @@ if (!empty($allPromos)) {
                             <input type="text" name="q" class="form-control border-0 pl-4" placeholder="Buscar local, comida o servicio...">
                             <div class="input-group-append">
                                 <button class="btn btn-orange px-4" type="submit">
-                                    <i alt="Icono de Buscar" class="fas fa-search mr-2"></i> BUSCAR
+                                    <i  class="fas fa-search mr-2"></i> BUSCAR
+                                    
                                 </button>
                             </div>
                         </div>
@@ -331,7 +332,7 @@ if (!empty($allPromos)) {
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="<?= $tarjeta_1["iconos"][$indice] ?>" alt=" Icono de Locales"></i>
+                            <i class="<?= $tarjeta_1["iconos"][$indice] ?>" ></i>
                         </div>
                         <h2 class="cat-card-title"><?= $tarjeta_1["titulos"][$indice] ?></h2>
                         <p class="text-muted small"><?= $tarjeta_1["descripcion"][$indice] ?></p>
@@ -342,7 +343,7 @@ if (!empty($allPromos)) {
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="<?= $tarjeta_2["iconos"][$indice] ?>" alt="Icono de Promociones"></i>
+                            <i class="<?= $tarjeta_2["iconos"][$indice] ?>" ></i>
                         </div>
                         <h2 class="cat-card-title"><?= $tarjeta_2["titulos"][$indice] ?></h2>
                         <p class="text-muted small"><?= $tarjeta_2["descripcion"][$indice] ?></p>
@@ -353,7 +354,7 @@ if (!empty($allPromos)) {
                 <div class="col-md-4 mb-4">
                     <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
                         <div class="icon-circle">
-                            <i class="<?= $tarjeta_3["iconos"][$indice] ?>" alt="Icono de Utilidades"></i>
+                            <i class="<?= $tarjeta_3["iconos"][$indice] ?>" ></i>
                         </div>
                         <h2 class="cat-card-title"><?= $tarjeta_3["titulos"][$indice] ?></h2>
                         <p class="text-muted small"><?= $tarjeta_3["descripcion"][$indice] ?></p>
@@ -508,7 +509,7 @@ if (!empty($allPromos)) {
                                             onclick="window.location.href='allPromotionsPage.php'">
                                             <div class="d-flex justify-content-center align-items-center w-100"
                                                 style="height: 180px; background-color: #fff3e0; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                                                <i class="fas fa-plus fa-4x" style="color: #ff8c00;" alt="Icono de ver mas promociones"></i>
+                                                <i class="fas fa-plus fa-4x" style="color: #ff8c00;" ></i>
                                             </div>
                                             <div class="card-body d-flex flex-column justify-content-center">
                                                 <h2 class="h4 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h2>
@@ -532,7 +533,7 @@ if (!empty($allPromos)) {
                                         onclick="window.location.href='allPromotionsPage.php'">
                                         <div class="d-flex justify-content-center align-items-center w-100"
                                             style="height: 180px; background-color: #fff3e0; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                                            <i class="fas fa-plus fa-4x" style="color: #ff8c00;" alt="Icono de Todas las Promociones"></i>
+                                            <i class="fas fa-plus fa-4x" style="color: #ff8c00;" ></i>
                                         </div>
                                         <div class="card-body d-flex flex-column justify-content-center">
                                             <h2 class="h4 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h2>
@@ -575,7 +576,7 @@ if (!empty($allPromos)) {
                     <p class="text-muted">Mantente informado de las últimas novedades publicadas.</p>
                     <?php if ($user): ?>
                         <div class="user-info-badge">
-                            <i class="fas fa-user-circle mr-2" alt="Icono de Usuario"></i>
+                            <i class="fas fa-user-circle mr-2" ></i>
                             <strong><?= htmlspecialchars($user->getEmail()) ?></strong>
                             <span class="mx-2">|</span>
                             Categoría: <strong><?= htmlspecialchars($user->getUserCategory()?->getCategoryType()) ?></strong>
@@ -634,7 +635,7 @@ if (!empty($allPromos)) {
                 <div class="row mt-4 pb-5">
                     <div class="col-12 text-center">
                         <a href="newsPage.php" class="btn btn-orange btn-lg rounded-pill px-5">
-                            Ver más Novedades <i class="fas fa-arrow-right ml-2" alt="Icono de Ver Mas Novedades"></i>
+                            Ver más Novedades <i class="fas fa-arrow-right ml-2" ></i>
                         </a>
                     </div>
                 </div>
