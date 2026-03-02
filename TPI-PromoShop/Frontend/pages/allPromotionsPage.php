@@ -354,9 +354,14 @@ $grupos = array_chunk($promocionesFiltradas, $totalPaginas);
                 <ul class="pagination justify-content-center">
 
                     <?php
-                    $queryParams = "&search=" . urlencode($search) .
-                        "&shopType=" . urlencode($f_shopType) .
-                        "&userCategory=" . urlencode($f_userCat);
+                    $queryParams = '';
+                    if ($search != '' ) {
+                    $queryParams .= "&search=" . urlencode($search) ;
+                    }
+                    if ($f_shopType != '') {
+                    $queryParams .= "&shopType=" . urlencode($f_shopType) ; }
+                    if ($f_userCat != '') {
+                    $queryParams .= "&userCategory=" . urlencode($f_userCat); }
                     ?>
 
 
