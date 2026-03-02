@@ -268,7 +268,8 @@ try {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        const etiqueta = document.getElementById("Detalle del Local");
+        //ARREGLAR BUG DE BREADCRUMB DINAMICO
+        const etiqueta = document.getElementById("Detalle-del-Local");
         etiqueta.onclick = function(e) {
             e.preventDefault(); // Evita que el "#" te suba arriba en la página
             window.history.back();

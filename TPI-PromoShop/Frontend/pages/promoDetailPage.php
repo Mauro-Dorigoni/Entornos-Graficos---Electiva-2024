@@ -204,7 +204,7 @@ if (!$promo) {
     <script>
     //ARREGLAR BUG DE BREADCRUMB DINAMICO
 
-    const etiqueta = document.getElementById("Detalle del Local");
+    const etiqueta = document.getElementById("Detalle-del-Local");
     etiqueta.onclick = function(e) {
     e.preventDefault(); // Evita que el "#" te suba arriba en la página
     window.history.back();
