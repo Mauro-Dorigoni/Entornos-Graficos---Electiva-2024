@@ -107,54 +107,94 @@ if (!$news) {
     <?php include "../components/header.php" ?>
     <?php include "../components/navBarByUserType.php" ?>
 
-    <main class="container py-5">
-        <div class="card detail-card shadow-lg">
+    <main id="main-content" class="container py-5">
+        <article class="card detail-card shadow-lg" aria-labelledby="news-title">
             <div class="row no-gutters">
 
                 <div class="col-12 col-md-5">
-                    <div class="img-container">
-                        <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) ?>" class="news-img" alt="Imagen Novedad">
+                    <div class="img-container h-100 bg-light d-flex align-items-center justify-content-center">
+                        <?php
+                        // Asignamos fallback por si no hay UUID
+                        $imgUrl = $news->getImageUUID() ? NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) : 'https://via.placeholder.com/600x400?text=Novedad';
+                        ?>
+                        <img src="<?= $imgUrl ?>"
+                            class="news-img img-fluid w-100"
+                            style="object-fit: cover; min-height: 100%;"
+                            alt="Imagen ilustrativa de la Novedad número <?= $news->getId() ?>">
                     </div>
                 </div>
 
                 <div class="col-12 col-md-7">
-                    <div class="info-section">
-                        <h1 class="text-orange font-weight-bold" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">
+                    <div class="info-section p-4 p-md-5">
+
+                        <h1 id="news-title" class="text-orange font-weight-bold" style="font-size: clamp(1.5rem, 4vw, 2.5rem);" tabindex="0">
                             Novedad #<?= $news->getId() ?>
                         </h1>
 
                         <hr class="mb-4" style="border-top: 2px solid #CC6600; opacity: 0.3;">
 
-                        <div class="mb-4">
-                            <h5 class="text-dark font-weight-bold"><i class="fas fa-list-alt text-orange mr-2"></i>Detalles</h5>
-                            <p class="text-secondary mb-1"><strong>Vigencia desde:</strong> <?= date("d/m/Y", strtotime($news->getDateFrom())) ?></p>
-                            <p class="text-secondary"><strong>Vigencia hasta:</strong> <?= $news->getDateTo() ? date("d/m/Y", strtotime($news->getDateTo())) : '-' ?></p>
-                        </div>
+                        <section aria-labelledby="details-heading" class="mb-4">
+                            <h2 id="details-heading" class="h5 text-dark font-weight-bold mb-3">
+                                <i class="fas fa-list-alt text-orange mr-2" aria-hidden="true"></i>Detalles
+                            </h2>
 
-                        <div class="description-box mb-5">
-                            <h5 class="font-weight-bold"><i class="fas fa-info-circle text-orange"></i> Descripción:</h5>
+                            <?php
+                            // 4. Preparación de fechas seguras (Fix del 1970 y formato humano)
+                            $visualDesde = is_object($news->getDateFrom()) ? $news->getDateFrom()->format('d/m/Y') : date("d/m/Y", strtotime($news->getDateFrom()));
+                            $visualHasta = $news->getDateTo()
+                                ? (is_object($news->getDateTo()) ? $news->getDateTo()->format('d/m/Y') : date("d/m/Y", strtotime($news->getDateTo())))
+                                : 'Sin límite';
+
+                            $meses = ['01' => 'enero', '02' => 'febrero', '03' => 'marzo', '04' => 'abril', '05' => 'mayo', '06' => 'junio', '07' => 'julio', '08' => 'agosto', '09' => 'septiembre', '10' => 'octubre', '11' => 'noviembre', '12' => 'diciembre'];
+
+                            $timestampDesde = is_object($news->getDateFrom()) ? $news->getDateFrom()->getTimestamp() : strtotime($news->getDateFrom());
+                            $lectorDesde = date('d', $timestampDesde) . " de " . $meses[date('m', $timestampDesde)] . " de " . date('Y', $timestampDesde);
+
+                            $lectorHasta = 'sin límite de tiempo';
+                            if ($news->getDateTo() !== null) {
+                                $timestampHasta = is_object($news->getDateTo()) ? $news->getDateTo()->getTimestamp() : strtotime($news->getDateTo());
+                                $lectorHasta = date('d', $timestampHasta) . " de " . $meses[date('m', $timestampHasta)] . " de " . date('Y', $timestampHasta);
+                            }
+                            ?>
+
+                            <div aria-label="Período de vigencia: del <?= $lectorDesde ?> al <?= $lectorHasta ?>">
+                                <dl class="row text-secondary mb-0" aria-hidden="true">
+                                    <dt class="col-sm-4 mb-1 mb-sm-0">Vigencia desde:</dt>
+                                    <dd class="col-sm-8 text-dark"><?= $visualDesde ?></dd>
+
+                                    <dt class="col-sm-4 mb-1 mb-sm-0">Vigencia hasta:</dt>
+                                    <dd class="col-sm-8 text-dark mb-0"><?= $visualHasta ?></dd>
+                                </dl>
+                            </div>
+                        </section>
+
+                        <section aria-labelledby="desc-heading" class="description-box mb-5">
+                            <h2 id="desc-heading" class="h5 font-weight-bold mb-3">
+                                <i class="fas fa-info-circle text-orange mr-2" aria-hidden="true"></i>Descripción
+                            </h2>
                             <p class="text-secondary text-justify" style="line-height: 1.6;">
                                 <?= nl2br(htmlspecialchars($news->getNewsText())) ?>
                             </p>
-                        </div>
+                        </section>
 
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                            <a href="newsPage.php" class="btn btn-light btn-lg mb-3 mb-md-0">
-                                <i class="fas fa-arrow-left"></i> Volver
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-auto pt-3 border-top">
+                            <a href="newsPage.php" class="btn btn-light btn-lg mb-3 mb-md-0 w-100 w-md-auto" aria-label="Volver al listado de novedades">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver
                             </a>
 
                             <?php if ($isAdmin): ?>
-                                <a href="editNewsPage.php?id=<?= $news->getId() ?>" id="btn-outline-orange" class="font-weight-bold text-center">
-                                    <i class="fas fa-edit mr-1"></i> Editar Novedad
+                                <a href="editNewsPage.php?id=<?= $news->getId() ?>"
+                                    class="btn btn-outline-orange btn-lg font-weight-bold text-center w-100 w-md-auto"
+                                    aria-label="Editar esta novedad">
+                                    <i class="fas fa-edit mr-2" aria-hidden="true"></i> Editar Novedad
                                 </a>
                             <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
     </main>
-
     <?php include "../components/footer.php" ?>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
