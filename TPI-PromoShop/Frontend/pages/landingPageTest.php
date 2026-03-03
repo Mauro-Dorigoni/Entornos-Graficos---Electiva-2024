@@ -545,7 +545,7 @@ if (!empty($allPromos)) {
                     </p>
 
                     <?php if ($user): ?>
-                        <div class="user-info-badge">
+                        <div class="user-info-badge" role="group" aria-label="Detalles del Usuario">
                             <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>
                             <strong><?= htmlspecialchars($user->getEmail()) ?></strong>
                             <span class="mx-2" aria-hidden="true">|</span>
@@ -562,6 +562,22 @@ if (!empty($allPromos)) {
                             </div>
                         <?php else: ?>
                             <?php foreach ($novedadesResumen as $news): ?>
+                                <?php
+                                // --- PREPARAMOS LAS FECHAS LEGIBLES ---
+                                $meses = ['01' => 'enero', '02' => 'febrero', '03' => 'marzo', '04' => 'abril', '05' => 'mayo', '06' => 'junio', '07' => 'julio', '08' => 'agosto', '09' => 'septiembre', '10' => 'octubre', '11' => 'noviembre', '12' => 'diciembre'];
+
+                                $fechaDesdeLector = 'fecha no definida';
+                                if ($news->getDateFrom() !== null) {
+                                    $timestampDesde = is_object($news->getDateFrom()) ? $news->getDateFrom()->getTimestamp() : strtotime($news->getDateFrom());
+                                    $fechaDesdeLector = date('d', $timestampDesde) . " de " . $meses[date('m', $timestampDesde)] . " de " . date('Y', $timestampDesde);
+                                }
+
+                                $fechaHastaLector = 'sin límite de tiempo';
+                                if ($news->getDateTo() !== null) {
+                                    $timestampHasta = is_object($news->getDateTo()) ? $news->getDateTo()->getTimestamp() : strtotime($news->getDateTo());
+                                    $fechaHastaLector = date('d', $timestampHasta) . " de " . $meses[date('m', $timestampHasta)] . " de " . date('Y', $timestampHasta);
+                                }
+                                ?>
 
                                 <article class="news-card-summary position-relative">
                                     <div class="row align-items-center">
@@ -577,34 +593,38 @@ if (!empty($allPromos)) {
                                             <h3 class="h4 font-weight-bold mb-1">
                                                 <a href="newsDetailPage.php?id=<?= $news->getId() ?>"
                                                     class="text-orange stretched-link"
-                                                    style="text-decoration: none;"
-                                                    aria-label="Ver detalles de la Novedad número <?= $news->getId() ?>"
-                                                    aria-describedby="resumen-novedad-<?= $news->getId() ?>">
+                                                    style="text-decoration: none;">
                                                     Novedad #<?= $news->getId() ?>
+                                                    <span class="sr-only">. Entrar para ver los detalles completos.</span>
                                                 </a>
                                             </h3>
-                                            <p id="resumen-novedad-<?= $news->getId() ?>" class="text-muted mb-0" >
+                                            <p class="text-muted mb-0">
                                                 <?= htmlspecialchars(substr($news->getNewsText(), 0, 110)) ?>...
                                             </p>
                                         </div>
 
-                                        <div class="col-md-3 text-center mb-3 mb-md-0" tabindex="0">
-                                            <div class="bg-light rounded p-2 border"
-                                                aria-label="Válido desde el <?= date("d/m/y", strtotime($news->getDateFrom())) ?> hasta el <?= $news->getDateTo() ? date("d/m/y", strtotime($news->getDateTo())) : 'sin límite de tiempo' ?>">
+                                        <div class="col-md-3 text-center mb-3 mb-md-0">
+                                            <div class="bg-light rounded p-2 border">
+                                                <span class="sr-only">Vigencia: del <?= $fechaDesdeLector ?> al <?= $fechaHastaLector ?>.</span>
 
                                                 <span aria-hidden="true">
                                                     <small class="d-block text-muted">Vigencia:</small>
-                                                    <strong><?= date("d/m/y", strtotime($news->getDateFrom())) ?></strong>
-                                                    al
-                                                    <strong><?= $news->getDateTo() ? date("d/m/y", strtotime($news->getDateTo())) : '∞' ?></strong>
+                                                    <?php
+                                                    $visualDesde = is_object($news->getDateFrom()) ? $news->getDateFrom()->format('d/m/y') : date("d/m/y", strtotime($news->getDateFrom()));
+                                                    $visualHasta = $news->getDateTo()
+                                                        ? (is_object($news->getDateTo()) ? $news->getDateTo()->format('d/m/y') : date("d/m/y", strtotime($news->getDateTo())))
+                                                        : '∞';
+                                                    ?>
+                                                    <strong><?= $visualDesde ?></strong> al <strong><?= $visualHasta ?></strong>
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3 text-center">
+                                            <span class="sr-only">Categoría de la novedad: <?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?></span>
+
                                             <span class="badge badge-warning text-white p-2"
-                                                style="background-color: #CC6600; font-size: 0.9rem;"
-                                                aria-label="Categoría requerida: <?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?>">
+                                                style="background-color: #CC6600; font-size: 0.9rem;" aria-hidden="true">
                                                 <?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?>
                                             </span>
                                         </div>
