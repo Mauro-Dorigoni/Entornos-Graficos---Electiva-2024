@@ -114,7 +114,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
             <aside class="col-lg-4 col-md-12" aria-label="Información útil del local">
                 <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-white font-weight-bold">
+                    <div class="card-header bg-white font-weight-bold" tabindex="0">
                         <i class="fas fa-map text-orange" aria-hidden="true"></i> Ubicación en el Shopping
                     </div>
                     <div class="card-body text-center p-2">
@@ -122,7 +122,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
                             <img class="img-fluid rounded border" src="<?= htmlspecialchars($direccionEjemplo) ?>" alt="Plano del shopping destacando la ubicación del local <?= htmlspecialchars($shop->getName()) ?>">
                         </div>
-                        <p class="card-text small text-muted">
+                        <p class="card-text small text-muted" tabindex="0">
                             <span class="sr-only">Nivel y sector:</span>
                             <?= htmlspecialchars($shop->getLocation()) ?>
                         </p>
@@ -134,15 +134,15 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h2 class="h6 font-weight-bold mb-2">Horarios de Atención</h2>
-                        <p class="small mb-0"><?= htmlspecialchars($shop->getOpeningHours()) ?></p>
+                        <h2 class="h6 font-weight-bold mb-2" tabindex="0">Horarios de Atención</h2>
+                        <p class="small mb-0" tabindex="0"><?= htmlspecialchars($shop->getOpeningHours()) ?></p>
                     </div>
                 </div>
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h2 class="h6 font-weight-bold mb-2">Categoría</h2>
-                        <p class="small mb-0"><?= htmlspecialchars($shop->getShopType()?->getType()) ?></p>
+                        <h2 class="h6 font-weight-bold mb-2" tabindex="0">Categoría</h2>
+                        <p class="small mb-0" tabindex="0"><?= htmlspecialchars($shop->getShopType()?->getType()) ?></p>
                     </div>
                 </div>
             </aside>
@@ -152,10 +152,10 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
         <section aria-labelledby="promo-heading">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h2 id="promo-heading" class="mb-0">
+                <h2 id="promo-heading" class="mb-0" tabindex="0">
                     <i class="fas fa-percentage text-orange" aria-hidden="true"></i> Promociones Activas
                 </h2>
-                <span class="badge badge-secondary" aria-label="<?= count($promotions) ?> promociones disponibles">
+                <span class="badge badge-secondary" tabindex="0" aria-label="<?= count($promotions) ?> promociones disponibles">
                     <?= count($promotions) ?> Disponibles
                 </span>
             </div>
@@ -172,7 +172,7 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                                         <small class="text-uppercase text-orange font-weight-bold">Oferta</small>
                                     </div>
 
-                                    <h3 class="card-title h5 font-weight-bold">
+                                    <h3 class="card-title h5 font-weight-bold" tabindex="0">
                                         <?= htmlspecialchars($promo->getPromoText()) ?>
                                     </h3>
 
@@ -191,13 +191,13 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
                                     <div class="mb-3">
                                         <?php if ($promo->getUserCategory() !== null): ?>
-                                            <small class="text-muted d-block mb-2">
+                                            <small class="text-muted d-block mb-2" tabindex="0">
                                                 <strong>Categoría:</strong>
                                                 <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
                                             </small>
                                         <?php endif; ?>
-                                        <small class="text-muted font-weight-bold">Días válidos:</small>
-                                        <span class="text-muted">
+                                        <small class="text-muted font-weight-bold" tabindex="0">Días válidos:</small>
+                                        <span class="text-muted" tabindex="0">
                                             <?php
                                             $activeDays = [];
                                             foreach ($dayLabels as $key => $label) {
@@ -214,8 +214,8 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
 
                                     <div class="mt-auto pt-3 border-top">
 
-                                        <div class="mb-3" aria-label="Válido desde el <?= $promo->getDateFrom()?->format('d/m/Y') ?> hasta el <?= $promo->getDateTo()?->format('d/m/Y') ?>">
-                                            <span aria-hidden="true">
+                                        <div class="mb-3">
+                                            <span aria-label="Válido desde el <?= $promo->getDateFrom()?->format('d/m/Y') ?> hasta el <?= $promo->getDateTo()?->format('d/m/Y') ?>" tabindex="0">
                                                 <small class="text-muted d-block mb-1">
                                                     <i class="far fa-calendar-alt"></i> Desde: <?= $promo->getDateFrom()?->format('d/m/Y') ?>
                                                 </small>
@@ -238,10 +238,11 @@ $direccionEjemplo = "https://media.lacapital.com.ar/p/65432e5860da904722add77bed
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="col-12">
-                        <div class="alert alert-info text-center shadow-sm border-0" role="alert">
-                            No hay promociones activas para este local en este momento.
-                        </div>
-                    </div>
+                        <p class="alert alert-info text-center shadow-sm border-0" 
+                        tabindex="0">
+                        No hay promociones activas para este local en este momento.
+                        </p> 
+                    </div>          
                 <?php endif; ?>
             </div>
         </section>

@@ -26,7 +26,7 @@ include "../components/messageModal.php";
                         <div class="row g-0">
                             <div class="col-md-6 col-lg-5 d-none d-md-flex justify-content-center align-items-center" style="background-color: white; border-radius: 1rem 0 0 1rem;">
                                 <img src="../assets/LogoPromoShopFondoBlanco.png"
-                                    alt="login form" class="img-fluid" style="max-width: 80%; height: auto;" />
+                                    alt="Formulario inicio sesion" class="img-fluid" style="max-width: 80%; height: auto;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
@@ -52,7 +52,9 @@ include "../components/messageModal.php";
                                                     <button 
                                                         class="btn btn-outline-secondary toggle-password"
                                                         type="button"
-                                                        data-target="pass">
+                                                        data-target="pass"
+                                                        aria-label="Mostrar contraseña"
+                                                        aria-pressed="false">
                                                         <i class="fas fa-eye-slash"></i>
                                                     </button>
                                                 </div>
@@ -95,10 +97,14 @@ include "../components/messageModal.php";
                 input.type = "text";
                 icon.classList.remove("fa-eye-slash");
                 icon.classList.add("fa-eye");
+                this.setAttribute("aria-label", "Mostrar contraseña");
+                this.setAttribute("aria-pressed", "true");
             } else {
                 input.type = "password";
                 icon.classList.remove("fa-eye");
                 icon.classList.add("fa-eye-slash");
+                this.setAttribute("aria-label", "Mostrar contraseña");
+                this.setAttribute("aria-pressed", "false");
             }
         });
     });

@@ -13,7 +13,7 @@ if (isset($_SESSION['error_message']) || isset($_SESSION['success_message']) || 
         <img src="../assets/LogoPromoShopFondoVerde.png" alt="PromoShop Logo" style="width: 60px; margin-right: 10px;">
         <strong><h2 class="modal-title" id="messageModalLabel" style="margin: 0; color:#CC6600">PromoShop</h2></strong>
     </div>
-      <div class="modal-body text-center" style="background-color: #eae8e0;">
+      <div class="modal-body text-center" style="background-color: #eae8e0;" tabindex="0">
         <?php 
           if (isset($_SESSION['error_message'])) {
               echo "<p style='color: red; font-size: 16px;'>"

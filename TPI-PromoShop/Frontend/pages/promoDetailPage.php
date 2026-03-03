@@ -109,40 +109,40 @@ if (!$promo) {
                         <hr class="mb-4" style="border-top: 2px solid #CC6600; opacity: 0.3;">
 
                         <section aria-labelledby="details-heading">
-                            <h2 id="details-heading" class="h5 font-weight-bold mb-3">
+                            <h2 id="details-heading" class="h5 font-weight-bold mb-3" tabindex="0">
                                 <i class="fas fa-tag text-orange mr-2" aria-hidden="true"></i>
                                 Detalles de la promoción
                             </h2>
 
                             <dl class="row text-secondary mb-4">
-                                <dt class="col-sm-4 mb-2 mb-sm-0">Estado:</dt>
-                                <dd class="col-sm-8 text-dark font-weight-bold">
+                                <dt class="col-sm-4 mb-2 mb-sm-0" tabindex="0">Estado:</dt>
+                                <dd class="col-sm-8 text-dark font-weight-bold" tabindex="0">
                                     <?= htmlspecialchars($promo->getStatus()->value) ?>
                                 </dd>
 
-                                <dt class="col-sm-4 mb-2 mb-sm-0">Categoría:</dt>
-                                <dd class="col-sm-8 text-dark">
+                                <dt class="col-sm-4 mb-2 mb-sm-0" tabindex="0">Categoría:</dt>
+                                <dd class="col-sm-8 text-dark" tabindex="0">
                                     <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
                                 </dd>
 
-                                <div class="col-12" aria-label="Vigencia: del <?= $promo->getDateFrom()->format('d/m/Y') ?> al <?= $promo->getDateTo()->format('d/m/Y') ?>">
-                                    <div class="row" aria-hidden="true">
+                                <div class="col-12">
+                                    <dl class="row" tabindex="0" aria-label="Válido desde el <?= $promo->getDateFrom()?->format('d/m/Y') ?> hasta el <?= $promo->getDateTo()?->format('d/m/Y') ?>">
                                         <dt class="col-sm-4 mb-2 mb-sm-0">Desde:</dt>
                                         <dd class="col-sm-8 text-dark"><?= $promo->getDateFrom()->format("d/m/Y") ?></dd>
 
                                         <dt class="col-sm-4 mb-2 mb-sm-0">Hasta:</dt>
                                         <dd class="col-sm-8 text-dark"><?= $promo->getDateTo()->format("d/m/Y") ?></dd>
-                                    </div>
+                                    </dl>
                                 </div>
                             </dl>
                         </section>
 
                         <section class="mb-4" aria-labelledby="days-heading">
-                            <h2 id="days-heading" class="h5 font-weight-bold mb-2">
+                            <h2 id="days-heading" class="h5 font-weight-bold mb-2" tabindex="0">
                                 <i class="fas fa-calendar-day text-orange mr-2" aria-hidden="true"></i>
                                 Días de validez
                             </h2>
-                            <p class="text-secondary mb-0">
+                            <p class="text-secondary mb-0" tabindex="0">
                                 <?php
                                 $activeDays = [];
                                 foreach ($dayLabels as $key => $label) {
@@ -168,11 +168,11 @@ if (!$promo) {
                         <?php endif; ?>
 
                         <section class="description-box mb-5" aria-labelledby="desc-heading">
-                            <h2 id="desc-heading" class="h5 font-weight-bold mb-2">
+                            <h2 id="desc-heading" class="h5 font-weight-bold mb-2" tabindex="0">
                                 <i class="fas fa-info-circle text-orange mr-2" aria-hidden="true"></i>
                                 Descripción
                             </h2>
-                            <p class="text-secondary" style="line-height: 1.6;">
+                            <p class="text-secondary" style="line-height: 1.6;" tabindex="0"> 
                                 <?= nl2br(htmlspecialchars($promo->getPromoText())) ?>
                             </p>
                         </section>
