@@ -300,26 +300,6 @@ if (!empty($allPromos)) {
                         Encuentra locales, gastronomía y entretenimiento en un solo lugar.
                     </p>
 
-                    <!-- BARRA DE BUSQUEDA. No la implementamos aca. LAUTARO -->
-                    <!-- <form action="shopsCardsPage.php" method="GET">
-                        <div class="input-group input-group-lg shadow-lg" style="border-radius: 50px; overflow: hidden;">
-                            <input type="text" name="q" class="form-control border-0 pl-4" placeholder="Buscar local, comida o servicio...">
-                            <div class="input-group-append">
-                                <button class="btn btn-orange px-4" type="submit">
-                                    <i  class="fas fa-search mr-2"></i> BUSCAR
-                                    
-                                </button>
-                            </div>
-                        </div>
-                    </form> -->
-
-                    <!-- <div class="mt-4">
-                        <small class="mr-2">Sugerencias:</small>
-                        <a href="shopsCardsPage.php?cat=Ropa" class="badge badge-light text-dark p-2 mx-1">Ropa</a>
-                        <a href="shopsCardsPage.php?cat=Comida" class="badge badge-light text-dark p-2 mx-1">Comida</a>
-                        <a href="shopsCardsPage.php?cat=Cine" class="badge badge-light text-dark p-2 mx-1">Cine</a>
-                    </div> -->
-
                 </div>
             </div>
         </div>
@@ -329,38 +309,39 @@ if (!empty($allPromos)) {
         <div class="container overlap-container">
             <div class="row">
 
-                <div class="col-md-4 mb-4">
-                    <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
-                        <div class="icon-circle">
-                            <i class="<?= $tarjeta_1["iconos"][$indice] ?>" ></i>
-                        </div>
-                        <h2 class="cat-card-title"><?= $tarjeta_1["titulos"][$indice] ?></h2>
-                        <p class="text-muted small"><?= $tarjeta_1["descripcion"][$indice] ?></p>
-                        <a href="<?= $tarjeta_1["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_1["boton"][$indice] ?></a>
-                    </div>
-                </div>
+                <?php
+                // Agrupamos tus tres tarjetas en un solo array para iterarlas
+                $tarjetas = [$tarjeta_1, $tarjeta_2, $tarjeta_3];
 
-                <div class="col-md-4 mb-4">
-                    <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
-                        <div class="icon-circle">
-                            <i class="<?= $tarjeta_2["iconos"][$indice] ?>" ></i>
-                        </div>
-                        <h2 class="cat-card-title"><?= $tarjeta_2["titulos"][$indice] ?></h2>
-                        <p class="text-muted small"><?= $tarjeta_2["descripcion"][$indice] ?></p>
-                        <a href="<?= $tarjeta_2["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_2["boton"][$indice] ?></a>
-                    </div>
-                </div>
+                foreach ($tarjetas as $tarjeta):
+                ?>
+                    <div class="col-md-4 mb-4">
+                        <article class="cat-card p-4 text-center shadow-sm d-flex flex-column position-relative h-100">
 
-                <div class="col-md-4 mb-4">
-                    <div class="cat-card p-4 text-center shadow-sm d-flex flex-column">
-                        <div class="icon-circle">
-                            <i class="<?= $tarjeta_3["iconos"][$indice] ?>" ></i>
-                        </div>
-                        <h2 class="cat-card-title"><?= $tarjeta_3["titulos"][$indice] ?></h2>
-                        <p class="text-muted small"><?= $tarjeta_3["descripcion"][$indice] ?></p>
-                        <a href="<?= $tarjeta_3["url"][$indice] ?>" class="btn  btn-orange btn-sm rounded-pill mt-auto mx-auto px-4"><?= $tarjeta_3["boton"][$indice] ?></a>
+                            <div class="icon-circle" aria-hidden="true">
+                                <i class="<?= $tarjeta["iconos"][$indice] ?>"></i>
+                            </div>
+
+                            <h3 class="cat-card-title h2">
+                                <?= $tarjeta["titulos"][$indice] ?>
+                            </h3>
+
+                            <p class="text-muted small">
+                                <?= $tarjeta["descripcion"][$indice] ?>
+                            </p>
+
+                            <div class="mt-auto pt-3">
+                                <a href="<?= $tarjeta["url"][$indice] ?>"
+                                    class="btn btn-orange btn-sm rounded-pill mx-auto px-4 stretched-link"
+                                    aria-label="<?= $tarjeta["boton"][$indice] ?> en la sección de <?= htmlspecialchars($tarjeta["titulos"][$indice]) ?>">
+                                    <?= $tarjeta["boton"][$indice] ?>
+                                </a>
+                            </div>
+
+                        </article>
                     </div>
-                </div>
+                <?php endforeach; ?>
+                
             </div>
 
         </div>
@@ -368,73 +349,6 @@ if (!empty($allPromos)) {
 
 
     <!-- CARRUSEL DE PROMOCIONES -->
-    <!-- <div class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="font-weight-bold">Últimas <span style="color: #ff8c00;">Novedades</span></h2>
-            <p class="text-muted">Descubre las promociones destacadas</p>
-        </div>
-
-        <?php if (!empty($chunks)): ?>
-            <div id="carouselNews" class="carousel slide carousel-fade" data-ride="carousel">
-                <ol class="carousel-indicators" style="bottom: -40px;"> <?php foreach ($chunks as $index => $group): ?>
-                        <li data-target="#carouselNews"
-                            data-slide-to="<?= $index ?>"
-                            class="<?= $index === 0 ? 'active' : '' ?>">
-                        </li>
-                    <?php endforeach; ?>
-                </ol>
-                <div class="carousel-inner px-4"> <?php foreach ($chunks as $index => $group): ?>
-                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                            <div class="row">
-                                <?php foreach ($group as $promo): ?>
-                                    <?php
-                                                            // Validación segura de datos
-                                                            $img = NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID());
-                                                            $shopName = $promo->getShop() ? $promo->getShop()->getName() : 'Promo';
-                                                            $desc = $promo->getPromoText();
-                                    ?>
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card card-novedad h-100">
-                                            <img src="<?= $img ?>" class="card-img-top" alt="Imagen de Promoción - <?= $desc ?>">
-                                            <div class="card-body d-flex flex-column">
-                                                <h5 class="card-title font-weight-bold" style="color: #ff8c00;">
-                                                    <?= htmlspecialchars($shopName) ?>
-                                                </h5>
-                                                <p class="card-text text-muted small flex-grow-1">
-                                                    <?= htmlspecialchars(substr($desc, 0, 80)) ?>...
-                                                </p>
-                                                <a href="promoDetailPage.php?id=<?= $promo->getId() ?>" class="btn btn-outline-warning btn-sm btn-block mt-3" style="border-color: #ff8c00; color: #ff8c00; font-weight: bold;">
-                                                    Ver Detalle
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-
-
-                </div>
-
-                <?php if (count($chunks) > 1): ?>
-                    <a class="carousel-control-prev" href="#carouselNews" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Anterior</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselNews" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Siguiente</span>
-                    </a>
-                <?php endif; ?>
-            </div>
-
-        <?php else: ?>
-            <div class="alert alert-light text-center border">
-                No hay novedades para mostrar en este momento.
-            </div>
-        <?php endif; ?>
-    </div> -->
 
     <div class="container py-5 px-5">
         <div class="text-center mb-5">
@@ -509,7 +423,7 @@ if (!empty($allPromos)) {
                                             onclick="window.location.href='allPromotionsPage.php'">
                                             <div class="d-flex justify-content-center align-items-center w-100"
                                                 style="height: 180px; background-color: #fff3e0; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                                                <i class="fas fa-plus fa-4x" style="color: #ff8c00;" ></i>
+                                                <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                             </div>
                                             <div class="card-body d-flex flex-column justify-content-center">
                                                 <h2 class="h4 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h2>
@@ -524,7 +438,9 @@ if (!empty($allPromos)) {
                         </div> <?php endforeach; ?>
 
                     <?php if ($needsExtraSlide): ?>
-                        <!-- ACA TE MANDA A NOVEDADES.   -->
+
+
+                        <!-- TARJETA TODAS LAS NOVEDADES.   -->
                         <div class="carousel-item">
                             <div class="row">
                                 <div class="col-md-4 mb-4">
@@ -533,7 +449,7 @@ if (!empty($allPromos)) {
                                         onclick="window.location.href='allPromotionsPage.php'">
                                         <div class="d-flex justify-content-center align-items-center w-100"
                                             style="height: 180px; background-color: #fff3e0; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                                            <i class="fas fa-plus fa-4x" style="color: #ff8c00;" ></i>
+                                            <i class="fas fa-plus fa-4x" style="color: #ff8c00;"></i>
                                         </div>
                                         <div class="card-body d-flex flex-column justify-content-center">
                                             <h2 class="h4 font-weight-bold mt-2" style="color: #ff8c00;">Ver Todo</h2>
@@ -576,7 +492,7 @@ if (!empty($allPromos)) {
                     <p class="text-muted">Mantente informado de las últimas novedades publicadas.</p>
                     <?php if ($user): ?>
                         <div class="user-info-badge">
-                            <i class="fas fa-user-circle mr-2" ></i>
+                            <i class="fas fa-user-circle mr-2"></i>
                             <strong><?= htmlspecialchars($user->getEmail()) ?></strong>
                             <span class="mx-2">|</span>
                             Categoría: <strong><?= htmlspecialchars($user->getUserCategory()?->getCategoryType()) ?></strong>
@@ -635,7 +551,7 @@ if (!empty($allPromos)) {
                 <div class="row mt-4 pb-5">
                     <div class="col-12 text-center">
                         <a href="newsPage.php" class="btn btn-orange btn-lg rounded-pill px-5">
-                            Ver más Novedades <i class="fas fa-arrow-right ml-2" ></i>
+                            Ver más Novedades <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
                 </div>
