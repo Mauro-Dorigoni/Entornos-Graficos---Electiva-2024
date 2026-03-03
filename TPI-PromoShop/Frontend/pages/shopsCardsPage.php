@@ -260,14 +260,14 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
         document.addEventListener("DOMContentLoaded", function() {
             // Verificamos si la URL termina en #resultados
             const urlActual = window.location.href;
-            if (urlActual.includes("?page=")) {
+            if (urlActual.includes("page=") || urlActual.includes("localName=")) {
                 // Buscamos la sección de resultados
                 const seccionResultados = document.getElementById("titulo-resultados");
                 if (seccionResultados) {
                     seccionResultados.focus({
                         preventScroll: true
                     });
-                    
+
                 }
             }
         });

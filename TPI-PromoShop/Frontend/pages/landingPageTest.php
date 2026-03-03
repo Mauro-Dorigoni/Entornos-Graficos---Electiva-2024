@@ -426,7 +426,7 @@ if (!empty($allPromos)) {
                     <?php foreach ($chunks as $index => $group): ?>
                         <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" role="group"
                             aria-roledescription="slide"
-                            aria-label="Diapositiva de Carrusel <?= $index + 1 ?> de <?= $totalSlides ?>">>
+                            aria-label="Diapositiva de Carrusel <?= $index + 1 ?> de <?= $totalSlides ?>">
                             <div class="row">
 
                                 <?php foreach ($group as $promo): ?>
@@ -579,7 +579,7 @@ if (!empty($allPromos)) {
                                 }
                                 ?>
 
-                                <article class="news-card-summary position-relative">
+                                <article class="news-card-summary position-relative" style="cursor: pointer;">
                                     <div class="row align-items-center">
 
                                         <div class="col-md-2 text-center mb-3 mb-md-0" aria-hidden="true">
@@ -589,7 +589,7 @@ if (!empty($allPromos)) {
                                             <img src="<?= $imgUrl ?>" class="img-fluid rounded" style="max-height: 100px; width: auto;" alt="">
                                         </div>
 
-                                        <div class="col-md-4 mb-3 mb-md-0">
+                                        <div class="col-md-4 mb-3 mb-md-0" style="z-index: 2;">
                                             <h3 class="h4 font-weight-bold mb-1">
                                                 <a href="newsDetailPage.php?id=<?= $news->getId() ?>"
                                                     class="text-orange stretched-link"
