@@ -333,9 +333,9 @@ if (!empty($allPromos)) {
                         <h1 class="display-4 font-weight-bold mb-3" id="titulo-principal-pagina" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);" tabindex="0">
                             Tu Shopping Favorito
                         </h1>
-                        <p id="desc-pagina-principal" class="lead mb-5" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);" tabindex="0">
+                        <h2 id="desc-pagina-principal" class="lead mb-5" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);" tabindex="0">
                             Encuentra locales, gastronomía y entretenimiento en un solo lugar.
-                        </p>
+                        </h2>
 
                     </section>
 
@@ -533,64 +533,84 @@ if (!empty($allPromos)) {
 
     <!-- NOVEDADES - Solo las mostramos si es un cliente logueado -->
     <?php if ($indice === 1): ?>
-        <div class="bg-light">
+        <section class="bg-light" aria-labelledby="titulo-seccion-novedades" aria-describedby="desc-seccion-novedades">
             <div class="container px-5">
                 <div class="text-center mb-5 pt-5">
-                    <h2 class="font-weight-bold">Mis <span style="color: #ff8c00;">Novedades</span></h2>
-                    <p class="text-muted">Mantente informado de las últimas novedades publicadas.</p>
+
+                    <h2 id="titulo-seccion-novedades" class="font-weight-bold" tabindex="0">
+                        Mis <span style="color: #ff8c00;">Novedades</span>
+                    </h2>
+                    <p id="desc-seccion-novedades" class="text-muted">
+                        Mantente informado de las últimas novedades publicadas.
+                    </p>
+
                     <?php if ($user): ?>
                         <div class="user-info-badge">
-                            <i class="fas fa-user-circle mr-2"></i>
+                            <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>
                             <strong><?= htmlspecialchars($user->getEmail()) ?></strong>
-                            <span class="mx-2">|</span>
+                            <span class="mx-2" aria-hidden="true">|</span>
                             Categoría: <strong><?= htmlspecialchars($user->getUserCategory()?->getCategoryType()) ?></strong>
                         </div>
                     <?php endif; ?>
                 </div>
+
                 <div class="row">
                     <div class="col-12">
                         <?php if (empty($novedadesResumen)): ?>
-                            <div class="alert alert-light text-center border shadow-sm">
+                            <div class="alert alert-light text-center border shadow-sm" role="alert">
                                 No hay novedades recientes para mostrar en tu categoría.
                             </div>
                         <?php else: ?>
                             <?php foreach ($novedadesResumen as $news): ?>
-                                <div class="news-card-summary" onclick="window.location.href='newsDetailPage.php?id=<?= $news->getId() ?>'">
+
+                                <article class="news-card-summary position-relative">
                                     <div class="row align-items-center">
 
-                                        <div class="col-md-2 text-center mb-3 mb-md-0">
+                                        <div class="col-md-2 text-center mb-3 mb-md-0" aria-hidden="true">
                                             <?php
                                             $imgUrl = defined('NEXTCLOUD_PUBLIC_BASE') ? NEXTCLOUD_PUBLIC_BASE . urlencode($news->getImageUUID()) : 'https://via.placeholder.com/150';
                                             ?>
-                                            <img src="<?= $imgUrl ?>" class="img-fluid rounded" style="max-height: 100px; width: auto;" alt="Imagen Novedad">
+                                            <img src="<?= $imgUrl ?>" class="img-fluid rounded" style="max-height: 100px; width: auto;" alt="">
                                         </div>
 
                                         <div class="col-md-4 mb-3 mb-md-0">
-                                            <h2 class="h4 font-weight-bold text-orange mb-1">
-                                                Novedad #<?= $news->getId() ?>
-                                            </h2>
-                                            <p class="text-muted mb-0">
+                                            <h3 class="h4 font-weight-bold mb-1">
+                                                <a href="newsDetailPage.php?id=<?= $news->getId() ?>"
+                                                    class="text-orange stretched-link"
+                                                    style="text-decoration: none;"
+                                                    aria-label="Ver detalles de la Novedad número <?= $news->getId() ?>"
+                                                    aria-describedby="resumen-novedad-<?= $news->getId() ?>">
+                                                    Novedad #<?= $news->getId() ?>
+                                                </a>
+                                            </h3>
+                                            <p id="resumen-novedad-<?= $news->getId() ?>" class="text-muted mb-0" >
                                                 <?= htmlspecialchars(substr($news->getNewsText(), 0, 110)) ?>...
                                             </p>
                                         </div>
 
-                                        <div class="col-md-3 text-center mb-3 mb-md-0">
-                                            <div class="bg-light rounded p-2 border">
-                                                <small class="d-block text-muted">Vigencia:</small>
-                                                <strong><?= date("d/m/y", strtotime($news->getDateFrom())) ?></strong>
-                                                al
-                                                <strong><?= $news->getDateTo() ? date("d/m/y", strtotime($news->getDateTo())) : '∞' ?></strong>
+                                        <div class="col-md-3 text-center mb-3 mb-md-0" tabindex="0">
+                                            <div class="bg-light rounded p-2 border"
+                                                aria-label="Válido desde el <?= date("d/m/y", strtotime($news->getDateFrom())) ?> hasta el <?= $news->getDateTo() ? date("d/m/y", strtotime($news->getDateTo())) : 'sin límite de tiempo' ?>">
+
+                                                <span aria-hidden="true">
+                                                    <small class="d-block text-muted">Vigencia:</small>
+                                                    <strong><?= date("d/m/y", strtotime($news->getDateFrom())) ?></strong>
+                                                    al
+                                                    <strong><?= $news->getDateTo() ? date("d/m/y", strtotime($news->getDateTo())) : '∞' ?></strong>
+                                                </span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3 text-center">
-                                            <span class="badge badge-warning text-white p-2" style="background-color: #CC6600; font-size: 0.9rem;">
+                                            <span class="badge badge-warning text-white p-2"
+                                                style="background-color: #CC6600; font-size: 0.9rem;"
+                                                aria-label="Categoría requerida: <?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?>">
                                                 <?= htmlspecialchars($news->getUserCategory()->getCategoryType()) ?>
                                             </span>
                                         </div>
 
                                     </div>
-                                </div>
+                                </article>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
@@ -598,13 +618,13 @@ if (!empty($allPromos)) {
 
                 <div class="row mt-4 pb-5">
                     <div class="col-12 text-center">
-                        <a href="newsPage.php" class="btn btn-orange btn-lg rounded-pill px-5">
-                            Ver más Novedades <i class="fas fa-arrow-right ml-2"></i>
+                        <a href="newsPage.php" class="btn btn-orange btn-lg rounded-pill px-5" aria-label="Ir al listado completo de novedades">
+                            Ver más Novedades <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     <?php endif; ?>
 
 
