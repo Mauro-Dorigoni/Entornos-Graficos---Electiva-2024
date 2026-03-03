@@ -88,113 +88,117 @@ if (!$promo) {
     <?php include "../components/header.php" ?>
     <?php include "../components/navBarByUserType.php" ?>
 
-    <main class="container py-5">
-        <div class="card detail-card shadow-lg">
+    <main id="main-content" class="container py-5">
+        <article class="card detail-card shadow-lg" aria-labelledby="promo-title">
             <div class="row no-gutters">
                 <div class="col-md-5">
-                    <div class="img-container">
-                        <img
-                            src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>"
-                            class="promo-img"
-                            alt="Imagen de la promoción">
+                    <div class="img-container h-100 bg-light d-flex align-items-center justify-content-center">
+                        <img src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($promo->getImageUUID()) ?>"
+                            class="promo-img img-fluid w-100"
+                            style="object-fit: cover; min-height: 100%;"
+                            alt="Folleto de la promoción de <?= htmlspecialchars($promo->getShop()->getName()) ?>">
                     </div>
                 </div>
 
                 <div class="col-md-7">
-                    <div class="info-section">
-                        <h1 class="text-orange font-weight-bold display-4">
-                            <?= $promo->getShop()->getName() ?> Promoción #<?= $promo->getId() ?>
+                    <div class="info-section p-4 p-md-5">
+                        <h1 id="promo-title" class="text-orange font-weight-bold display-4 mb-3" tabindex="0">
+                            <?= htmlspecialchars($promo->getShop()->getName()) ?> Promoción #<?= $promo->getId() ?>
                         </h1>
 
                         <hr class="mb-4" style="border-top: 2px solid #CC6600; opacity: 0.3;">
 
-                        <div class="mb-4">
-                            <h5 class="font-weight-bold">
-                                <i class="fas fa-tag text-orange mr-2"></i>
+                        <section aria-labelledby="details-heading">
+                            <h2 id="details-heading" class="h5 font-weight-bold mb-3">
+                                <i class="fas fa-tag text-orange mr-2" aria-hidden="true"></i>
                                 Detalles de la promoción
-                            </h5>
+                            </h2>
 
-                            <p class="text-secondary mb-1">
-                                <strong>Estado:</strong>
-                                <?= htmlspecialchars($promo->getStatus()->value) ?>
-                            </p>
+                            <dl class="row text-secondary mb-4">
+                                <dt class="col-sm-4 mb-2 mb-sm-0">Estado:</dt>
+                                <dd class="col-sm-8 text-dark font-weight-bold">
+                                    <?= htmlspecialchars($promo->getStatus()->value) ?>
+                                </dd>
 
-                            <p class="text-secondary mb-1">
-                                <strong>Categoria:</strong>
-                                <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
-                            </p>
+                                <dt class="col-sm-4 mb-2 mb-sm-0">Categoría:</dt>
+                                <dd class="col-sm-8 text-dark">
+                                    <?= htmlspecialchars($promo->getUserCategory()->getCategoryType()) ?>
+                                </dd>
 
-                            <p class="text-secondary mb-1">
-                                <strong>Vigencia desde:</strong>
-                                <?= $promo->getDateFrom()->format("d/m/Y") ?>
-                            </p>
+                                <div class="col-12" aria-label="Vigencia: del <?= $promo->getDateFrom()->format('d/m/Y') ?> al <?= $promo->getDateTo()->format('d/m/Y') ?>">
+                                    <div class="row" aria-hidden="true">
+                                        <dt class="col-sm-4 mb-2 mb-sm-0">Desde:</dt>
+                                        <dd class="col-sm-8 text-dark"><?= $promo->getDateFrom()->format("d/m/Y") ?></dd>
 
-                            <p class="text-secondary">
-                                <strong>Vigencia hasta:</strong>
-                                <?= $promo->getDateTo()->format("d/m/Y") ?>
-                            </p>
-                            <div class="mb-4">
-                                <h5 class="font-weight-bold">
-                                    <i class="fas fa-calendar-day text-orange"></i>
-                                    Días de validez
-                                </h5>
+                                        <dt class="col-sm-4 mb-2 mb-sm-0">Hasta:</dt>
+                                        <dd class="col-sm-8 text-dark"><?= $promo->getDateTo()->format("d/m/Y") ?></dd>
+                                    </div>
+                                </div>
+                            </dl>
+                        </section>
 
-                                <p class="text-secondary mb-0">
-                                    <?php
-                                    $activeDays = [];
-
-                                    foreach ($dayLabels as $key => $label) {
-                                        if (!empty($promo->getValidDays()[$key])) {
-                                            $activeDays[] = $label;
-                                        }
+                        <section class="mb-4" aria-labelledby="days-heading">
+                            <h2 id="days-heading" class="h5 font-weight-bold mb-2">
+                                <i class="fas fa-calendar-day text-orange mr-2" aria-hidden="true"></i>
+                                Días de validez
+                            </h2>
+                            <p class="text-secondary mb-0">
+                                <?php
+                                $activeDays = [];
+                                foreach ($dayLabels as $key => $label) {
+                                    if (!empty($promo->getValidDays()[$key])) {
+                                        $activeDays[] = $label;
                                     }
-
-                                    echo !empty($activeDays)
-                                        ? implode(' · ', $activeDays)
-                                        : 'No especificados';
-                                    ?>
-                                </p>
-                            </div>
-
-                        </div>
+                                }
+                                echo !empty($activeDays)
+                                    ? implode(' · ', $activeDays)
+                                    : 'No especificados';
+                                ?>
+                            </p>
+                        </section>
 
                         <?php if (
                             $promo->getStatus() === PromoStatus_enum::Rechazada &&
                             $promo->getMotivoRechazo() !== null
                         ): ?>
-                            <div class="alert alert-danger">
-                                <strong>Motivo de rechazo:</strong><br>
+                            <div class="alert alert-danger" role="alert">
+                                <strong><i class="fas fa-exclamation-triangle mr-2" aria-hidden="true"></i>Motivo de rechazo:</strong><br>
                                 <?= nl2br(htmlspecialchars($promo->getMotivoRechazo())) ?>
                             </div>
                         <?php endif; ?>
 
-                        <div class="description-box mb-5">
-                            <h5 class="font-weight-bold">
-                                <i class="fas fa-info-circle text-orange"></i>
+                        <section class="description-box mb-5" aria-labelledby="desc-heading">
+                            <h2 id="desc-heading" class="h5 font-weight-bold mb-2">
+                                <i class="fas fa-info-circle text-orange mr-2" aria-hidden="true"></i>
                                 Descripción
-                            </h5>
+                            </h2>
                             <p class="text-secondary" style="line-height: 1.6;">
                                 <?= nl2br(htmlspecialchars($promo->getPromoText())) ?>
                             </p>
-                        </div>
+                        </section>
 
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="javascript:history.back()" class="btn btn-light btn-lg">
-                                <i class="fas fa-arrow-left"></i> Volver
+                        <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
+                            <a href="javascript:history.back()"
+                                class="btn btn-light btn-lg"
+                                aria-label="Volver a la página anterior">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver
                             </a>
+
                             <?php if ($promo->getStatus() === PromoStatus_enum::Vigente && $user && !$user->isAdmin() && !$user->isOwner()) { ?>
                                 <form method="POST" action="<?php echo backendHTTPLayer . '/getPromoCode.http.php'; ?>" class="d-inline">
                                     <input type="hidden" name="promotion_id" value="<?= $promo->getId() ?>">
-                                    <button type="submit" id="btn-orange" class="font-weight-bold">
-                                        <i class="fas fa-check-circle mr-1"></i>Utilizar promoción
+
+                                    <button type="submit" class="btn btn-orange btn-lg font-weight-bold shadow-sm" aria-label="Generar código para utilizar esta promoción">
+                                        <i class="fas fa-check-circle mr-2" aria-hidden="true"></i>Utilizar promoción
                                     </button>
                                 </form>
                             <?php } ?>
                         </div>
+
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
     </main>
 
     <?php include "../components/footer.php" ?>
@@ -202,13 +206,13 @@ if (!$promo) {
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script>
-    //ARREGLAR BUG DE BREADCRUMB DINAMICO
+        //ARREGLAR BUG DE BREADCRUMB DINAMICO
 
-    const etiqueta = document.getElementById("Detalle-del-Local");
-    etiqueta.onclick = function(e) {
-    e.preventDefault(); // Evita que el "#" te suba arriba en la página
-    window.history.back();
-    };
+        const etiqueta = document.getElementById("Detalle-del-Local");
+        etiqueta.onclick = function(e) {
+            e.preventDefault(); // Evita que el "#" te suba arriba en la página
+            window.history.back();
+        };
     </script>
 </body>
 
