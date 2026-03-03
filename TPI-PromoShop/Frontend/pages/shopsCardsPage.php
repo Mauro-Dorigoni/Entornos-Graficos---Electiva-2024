@@ -75,6 +75,7 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
 
     <link rel="stylesheet" href="../assets/styles/shopsCardsPage.css">
 
+
 </head>
 
 <body>
@@ -87,9 +88,9 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
         <section class="container mb-5" aria-labelledby="filter-heading">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h1 id="filter-heading" class="h4 mb-4">Buscar Locales</h1>
+                    <h2 id="filter-heading" class="h4 mb-4" tabindex="0">Buscar Locales</h2>
 
-                    <form method="GET"  role="search">
+                    <form method="GET" role="search" aria-label="Formulario de filtros de locales">
                         <div class="form-row align-items-end">
 
                             <div class="col-md-5 col-sm-12 mb-3">
@@ -104,27 +105,39 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
                                         class="form-control"
                                         placeholder="Ej: Nike, Starbucks..."
                                         value="<?= $busquedaNombre ?>"
-                                        aria-label="Escribe el nombre del local que buscas">
+                                        title="Escribe el nombre del local que buscas">
                                 </div>
                             </div>
 
                             <div class="col-md-4 col-sm-12 mb-3">
-                                <label for="type-select" class="font-weight-bold">Tipo</label>
+                                <label for="type-select" class="font-weight-bold">Tipo de local</label>
                                 <select id="type-select" name="localType" class="form-control">
                                     <option value="">Todos los Tipos</option>
-                                    <!-- Lista todos los shopType -->
                                     <?php foreach ($shopTypes as $shopType): ?>
                                         <option value="<?= $shopType->getId(); ?>" <?= ($filtroTipo == $shopType->getId()) ? 'selected' : '' ?>>
                                             <?= htmlspecialchars($shopType->getType()); ?>
-
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
+
                             <div class="col-md-3 col-sm-12 mb-3">
-                                <button type="submit" class="btn btn-outline-orange btn-block font-weight-bold">
-                                    Aplicar Filtros
-                                </button>
+                                <div class="d-flex w-100">
+
+                                    <button type="submit" class="btn btn-outline-orange font-weight-bold flex-grow-1" aria-label="Aplicar filtros de búsqueda">
+                                        Aplicar Filtros
+                                    </button>
+
+                                    <?php if ($busquedaNombre != '' || $filtroTipo != ''): ?>
+                                        <a href="shopsCardsPage.php"
+                                            class="btn btn-secondary ml-2 px-3 d-flex align-items-center justify-content-center"
+                                            title="Limpiar búsqueda"
+                                            aria-label="Limpiar todos los filtros y mostrar el listado completo">
+                                            <i class="fas fa-times" aria-hidden="true"></i>
+                                        </a>
+                                    <?php endif; ?>
+
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -132,50 +145,52 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
             </div>
         </section>
 
-        <section class="container" aria-label="Resultados de búsqueda">
+        <section id="resultados" class="container" aria-labelledby="titulo-resultados">
+
+            <h2 id="titulo-resultados" class="sr-only" tabindex="-1">
+                Resultados de búsqueda, página <?= htmlspecialchars($paginaActual) ?> de <?= htmlspecialchars($totalPaginas) ?>.
+            </h2>
+
             <div class="row">
                 <?php if (!empty($shops)): ?>
                     <?php foreach ($shops as $shop): ?>
                         <article class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                            <div class="card shop-card">
-                                <!-- Cambiar con la imagen que sea Portada -->
+                            <div class="card shop-card h-100 position-relative shadow-sm">
 
                                 <?php
-
                                 if (!is_null($shop->getMainImage())) {
                                     $portada = $shop->getMainImage();
                                 } else {
-                                    //Si ninguna es portada, y el arreglo esta vacío se asigna foto default. 
                                     $portada = new Image();
                                     $portada->setUUID("placeholder.png");
                                 }
                                 ?>
-                                <!-- TODO: VER TEMA DE UBICACIÓN DE IMAGENES. -->
+
                                 <img class="card-img-top"
                                     src="<?= NEXTCLOUD_PUBLIC_BASE . urlencode($portada->getUUID()) ?>"
-                                    alt="Logo o fachada de <?= htmlspecialchars($shop->getName()); ?>">
-
+                                    alt="Fachada del local <?= htmlspecialchars($shop->getName()); ?>"
+                                    style="height: 200px; object-fit: cover;">
                                 <div class="card-body d-flex flex-column">
-                                    <h2 class="card-title h5 text-dark">
+                                    <h3 class="card-title h5 text-dark font-weight-bold mb-3">
                                         <?= htmlspecialchars($shop->getName()); ?>
-                                    </h2>
+                                    </h3>
 
                                     <p class="card-subtitle mb-2 text-muted">
-                                        <i class="fas fa-tag mr-1" aria-hidden="true"></i>
-                                        <span class="sr-only">Categoría:</span>
+                                        <i class="fas fa-tag mr-2" aria-hidden="true"></i>
+                                        <span class="sr-only">Categoría del local:</span>
                                         <?= htmlspecialchars($shop->getShopType()?->getType()); ?>
                                     </p>
 
-                                    <p class="card-text flex-grow-1">
-                                        <i class="fas fa-map-marker-alt mr-1" aria-hidden="true"></i>
-                                        <span class="sr-only">Ubicación:</span>
+                                    <p class="card-text flex-grow-1 text-muted">
+                                        <i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>
+                                        <span class="sr-only">Ubicación en el shopping:</span>
                                         <?= htmlspecialchars($shop->getLocation()); ?>
                                     </p>
 
-                                    <!-- REFIERE A LA VENTANA DE LOCAL.-->
                                     <a href="shopDetailPage.php?id=<?= $shop->getId(); ?>"
-                                        class="btn btn-block mt-3 font-weight-bold"
-                                        style="color:#CC6600 !important; border:2px solid #CC6600 !important; background:transparent !important;">
+                                        class="btn btn-block mt-3 font-weight-bold stretched-link"
+                                        style="color:#CC6600 !important; border:2px solid #CC6600 !important; background:transparent !important; transition: all 0.2s;"
+                                        aria-label="Ver detalles y promociones del local <?= htmlspecialchars($shop->getName()); ?>">
                                         Ver Detalles
                                     </a>
                                 </div>
@@ -184,40 +199,54 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="col-12 text-center py-5">
-                        <div class="alert alert-light" role="alert">
-                            <h3 class="h4 text-muted">No se encontraron locales</h3>
-                            <p>Intenta con otros términos de búsqueda o borra los filtros.</p>
+                        <div class="alert alert-light border shadow-sm" role="alert">
+                            <h2 class="h4 text-muted mb-3">No se encontraron locales</h2>
+                            <p class="mb-0">Intenta con otros términos de búsqueda o borra los filtros.</p>
                         </div>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <nav aria-label="Navegación de páginas">
-                <ul class="pagination justify-content-center">
+            <?php if ($totalPaginas > 1): ?>
+                <nav aria-label="Navegación de resultados de búsqueda" class="mt-5">
+                    <ul class="pagination justify-content-center mb-4">
 
-                    <li class="page-item <?= ($paginaActual <= 1) ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?<?= $hrefUrl ?>page=<?= htmlspecialchars($paginaActual - 1) ?>">Anterior</a>
-                    </li>
-
-                    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                        <li class="page-item <?= ($i == $paginaActual) ? 'active' : '' ?>">
-                            <a class="page-link" href="?<?= $hrefUrl ?>page=<?= $i ?>"><?= $i ?></a>
+                        <li class="page-item <?= ($paginaActual <= 1) ? 'disabled' : '' ?>">
+                            <a class="page-link"
+                                href="<?= ($paginaActual <= 1) ? '#' : '?' . $hrefUrl . 'page=' . ($paginaActual - 1) ?>"
+                                <?= ($paginaActual <= 1) ? 'tabindex="-1" aria-disabled="true"' : '' ?>
+                                aria-label="Ir a la página anterior">
+                                Anterior
+                            </a>
                         </li>
-                    <?php endfor; ?>
 
-                    <li class="page-item <?= ($paginaActual >= $totalPaginas) ? 'disabled' : '' ?>">
-                        <a class="page-link" href="?<?= $hrefUrl ?>page=<?= $paginaActual + 1 ?>">Siguiente</a>
-                    </li>
+                        <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                            <li class="page-item <?= ($i == $paginaActual) ? 'active' : '' ?>" <?= ($i == $paginaActual) ? 'aria-current="page"' : '' ?>>
+                                <a class="page-link"
+                                    href="?<?= $hrefUrl ?>page=<?= $i ?>"
+                                    aria-label="<?= ($i == $paginaActual) ? "Página actual, página $i" : "Ir a la página $i" ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
 
-                </ul>
-                <div class="align-content-center justify-content-center">
-                    <p>Resultado total de <?= htmlspecialchars($totalLocales) ?> elementos.</p>
-                    <p> Pagina Actual: <?= htmlspecialchars($paginaActual) ?> </p>
-               
-                    <p> </p>
-                </div>
+                        <li class="page-item <?= ($paginaActual >= $totalPaginas) ? 'disabled' : '' ?>">
+                            <a class="page-link"
+                                href="<?= ($paginaActual >= $totalPaginas) ? '#' : '?' . $hrefUrl . 'page=' . ($paginaActual + 1) ?>"
+                                <?= ($paginaActual >= $totalPaginas) ? 'tabindex="-1" aria-disabled="true"' : '' ?>
+                                aria-label="Ir a la página siguiente">
+                                Siguiente
+                            </a>
+                        </li>
 
-            </nav>
+                    </ul>
+
+                    <div class="text-center text-muted small" aria-live="polite">
+                        <p class="mb-1">Mostrando página <strong><?= htmlspecialchars($paginaActual) ?></strong> de <strong><?= htmlspecialchars($totalPaginas) ?></strong></p>
+                        <p class="mb-0">Se encontraron <strong><?= htmlspecialchars($totalLocales) ?></strong> locales en total.</p>
+                    </div>
+                </nav>
+            <?php endif; ?>
         </section>
 
     </main>
@@ -226,6 +255,23 @@ $totalPaginas = ceil($totalLocales / $amountPerPage);
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Verificamos si la URL termina en #resultados
+            const urlActual = window.location.href;
+            if (urlActual.includes("?page=")) {
+                // Buscamos la sección de resultados
+                const seccionResultados = document.getElementById("titulo-resultados");
+                if (seccionResultados) {
+                    seccionResultados.focus({
+                        preventScroll: true
+                    });
+                    
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
