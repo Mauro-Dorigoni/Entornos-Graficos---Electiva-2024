@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <style>
+        h1{
+            color: #1da1f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="display: flex;">
+        <div style="margin: 10px;" class="col-9">
+            <div style="background-color: grey; border-color: black;display: flex; justify-content: space-between; align-items: center; padding: 10px 15px;">
+                <h1>Mi cv</h1>
+                <div style="display: flex; align-items: flex-end; font-size: 11px;">
+                    <div class="icon-circle" style="width:32px; height:32px; border-radius:50%; background:#3b5998; display:flex; align-items:center; justify-content:center; color:white;margin: 5px;">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </div>
+                        <div class="icon-circle" style="width:32px; height:32px; border-radius:50%; background:#1da1f2; display:flex; align-items:center; justify-content:center; color:white;margin: 5px;">
+                            <i class="fa-brands fa-twitter"></i>
+                        </div>
+                        <div class="icon-circle" style="width:32px; height:32px; border-radius:50%; background:#0077b5; display:flex; align-items:center; justify-content:center; color:white;margin: 5px;">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </div>
+
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div style="flex-direction: column;">
+                    <div class="col-12" style="background-color: aqua;margin-top: 10px;">
+                        <p style="padding: 40px;">Juan nicolas perez</p>
+                    </div>
+                    <div class="col-12" style="background-color: grey; padding-bottom: 100px;padding-top:100px;">
+                        Datos de contacto
+                    </div>
+
+                </div>
+                <div style="margin-left: 50px; margin-top: 10px;">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg" alt="">
+                </div>
+            </div>
+            <div style="background-color: darkgray">
+                <p style="margin: 10px;">Contacto</p>
+                <div style="display: flex; padding: 5px;">
+                    <input type="text" placeholder="Nombre" name="Nombre" class="col-5" style="margin: 10px;">
+                    <input type="text" placeholder="Email" name="Email" class="col-6" style="margin: 10px;"> 
+                </div>
+                <div style="display: flex; padding: 5px;">
+                    <input type="text" placeholder="Comentario" name="Comentario" class="col-9" style="margin: 10px;">
+                    <button type="submit" class="col-2" style="margin: 10px;">Enviar</button>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-3" style="background-color: greenyellow;margin-top:10px;">
+            Espacio para banner color verde
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector("button[type='submit']").addEventListener("click", function() {
+        const nombre = document.querySelector("input[name=Nombre]");
+        const email = document.querySelector("input[name=Email]");
+        const comentario = document.querySelector("input[name=Comentario]");
+        
+        if(nombre.value.trim()==="" || email.value.trim()==="" || comentario.value.trim()===""){
+            alert("Error")
+        }
+    })
+</script>
+</html>
