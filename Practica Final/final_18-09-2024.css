@@ -1,0 +1,26 @@
+#enlaces {
+    padding: 20px;
+}
+
+.enlace-inicio {
+    margin: 10px;
+    color: blue; 
+}
+.enlace-inicio:hover {
+    color: green;
+}
+
+
+#formulario {
+    max-width: 70%;
+    margin: 0px auto;
+}
+
+form {
+    padding: 20px;
+    text-align: left;
+}
+
+.form-input {
+    margin: 10px;
+}

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practica Maquetado</title>
+    <link rel="stylesheet" type="text/css" href="./estilos.css" />
+    <link
+      rel="stylesheet"
+      href="./font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div id="logo-header">
+        <img
+          id="imagen-logo"
+          src="https://editorial.unc.edu.ar/wp-content/uploads/sites/33/2022/09/placeholder.png"
+          alt="PlaceHolder"
+          width="50"
+        />
+        <p id="nombre-app">Mi Aplicación</p>
+      </div>
+      <div id="user-menu">
+        <p id="user-name">User Avatar</p>
+        <i id="user-icon" class="fa fa-user-circle" aria-hidden="true"></i>
+      </div>
+    </header>
+
+    <div class="container">
+      <aside id="sidebar">
+        <h3>Menu:</h3>
+        <nav>
+          <ul>
+            <li>Fotos</li>
+            <li>Explorar</li>
+            <li>Compartido</li>
+            <li>Favoritos</li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main>
+        <h1 id="titulo-inicio">Mi Gestor de Imagenes</h1>
+
+        <div id="section-inicial">
+          <section>
+            <h2>Galería de Fotos</h2>
+            <div id="galeria-fotos">
+              <figure class="card">
+                <img
+                  src="https://editorial.unc.edu.ar/wp-content/uploads/sites/33/2022/09/placeholder.png"
+                  alt="PlaceHolder"
+                  width="100"
+                />
+                <!-- Deberia ser un H -->
+                <p>Figure</p>
+                <figcaption>Fecha Imagane: 12/12/12</figcaption>
+              </figure>
+              <figure class="card">
+                <img
+                  src="https://editorial.unc.edu.ar/wp-content/uploads/sites/33/2022/09/placeholder.png"
+                  alt="PlaceHolder"
+                  width="100"
+                />
+                <!-- Deberia ser un H -->
+                <p>Figure</p>
+                <figcaption>Fecha Imagane: 12/12/12</figcaption>
+              </figure>
+              <figure class="card">
+                <img
+                  src="https://editorial.unc.edu.ar/wp-content/uploads/sites/33/2022/09/placeholder.png"
+                  alt="PlaceHolder"
+                  width="100"
+                />
+                <!-- Deberia ser un H -->
+                <p>Figure</p>
+                <figcaption>Fecha Imagane: 12/12/12</figcaption>
+              </figure>
+              <figure class="card">
+                <img
+                  src="https://editorial.unc.edu.ar/wp-content/uploads/sites/33/2022/09/placeholder.png"
+                  alt="PlaceHolder"
+                  width="100"
+                />
+                <!-- Deberia ser un H -->
+                <p>Figure</p>
+                <figcaption>Fecha Imagane: 12/12/12</figcaption>
+              </figure>
+            </div>
+          </section>
+          <div id="nuevo-album">
+            <h2>Nuevo Album</h2>
+            <form action="post">
+              <div>
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" />
+              </div>
+              <div>
+                <label for="foto">Fotos:</label>
+                <input type="file" name="" id="foto" />
+              </div>
+              <div id="boton-submit">
+                <input type="submit" name="" id="boton" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <aside id="detail-panel">
+        <div>
+          <h3>Detalles</h3>
+          <figure>
+            <img
+              src="https://editorial.unc.edu.ar/wp-content/uploads/sites/33/2022/09/placeholder.png"
+              alt="PlaceHolder"
+              width="200"
+            />
+            <!-- Deberia ser un H -->
+            <p>Titulo:</p>
+            <p>Resolución:</p>
+            <p>Tamaño:</p>
+            <button>Compartir</button>
+          </figure>
+        </div>
+        <div>
+          <h3>Configuración de Privacidad</h3>
+          <form action="">
+          <div>
+            <label for="radio1">Ubicación</label>
+            <input type="checkbox" name="" id="radio1" />
+          </div>
+          <div>
+            <label for="radio2">Fecha - Hora</label>
+            <input type="checkbox" name="" id="radio2" />
+          </div>
+          <div>
+            <button type="submit">Aplicar</button>
+          </div>
+          </form>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>
+        <p>Todos los derechos reservados - Terminos y Servicios</p>
+      </div>
+      <div>
+        <a href="#">Albumes</a>
+        <a href="#">Favoritos</a>
+        <a href="#">Enlaces</a>
+      </div>
+    </footer>
+  </body>
+</html>

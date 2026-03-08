@@ -32,7 +32,7 @@ try {
 
 //LOGICA DE FILTRADO. SE HACE A NIVEL DE MEMORIA. POCO EFICIENTE. LAUTARO
 // Aplicar el filtro
-$promocionesFiltradas = array_filter(
+$promocionesFiltradasSinOrdenar = array_filter(
     $promotions,
     function (Promotion $promo) use ($f_shopType, $f_userCat, $search) {
         //  FILTRO: ShopType 
@@ -76,15 +76,15 @@ $promocionesFiltradas = array_filter(
 );
 
 // 3. Reordenar índices (Opcional pero recomendado para JSON o bucles simples)
-$promocionesFiltradas = array_values($promocionesFiltradas);
+$promocionesFiltradas = array_values($promocionesFiltradasSinOrdenar);
 
 $totalPromotions = count($promocionesFiltradas);
 
 // Cantidad por página
-$limit = 5;
+$limit = 3;
 $totalPaginas = ceil($totalPromotions / $limit);
 
-$grupos = array_chunk($promocionesFiltradas, $totalPaginas);
+$grupos = array_chunk($promocionesFiltradas, $limit);
 
 ?>
 
