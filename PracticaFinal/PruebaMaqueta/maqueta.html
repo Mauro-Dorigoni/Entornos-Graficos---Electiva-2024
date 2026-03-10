@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maqueta</title>
+    <style>
+        header{
+            background-color: rgb(243, 225, 137);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        section{
+            background-color: rgb(154, 236, 154);
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .card{
+            padding: 15px;
+            background-color: rgb(235, 159, 159);
+            margin: 10px;
+        }
+        section div:nth-child(4){
+            grid-row-start: 2;
+            grid-row-end: 4;
+        }
+        section div:nth-child(5){
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Layout</h1>
+    </header>
+    <section>
+        <div class="card">
+            <p>T1</p>
+        </div>
+        <div class="card">
+            <p>T2</p>
+        </div>
+        <div class="card">
+            <p>T3</p>
+        </div>
+        <div class="card">
+            <p>T4</p>
+        </div>
+        <div class="card">
+            <p>T5</p>
+        </div>
+        <div class="card">
+            <p>T6</p>
+        </div>
+        <div class="card">
+            <p>T7</p>
+        </div>
+        
+    </section>
+    <footer>
+
+    </footer>
+</body>
+</html>

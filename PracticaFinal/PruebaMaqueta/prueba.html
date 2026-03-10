@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header, footer{
+            background-color: rgb(184, 184, 247);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+        }
+        .contenedor{
+            display: flex;
+            flex-direction: column;
+        }
+        section{
+            background-color: rgb(224, 180, 149);
+            padding: 10px 0px;
+            margin: 10px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .columna{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card{
+            background-color: rgb(147, 206, 232);
+            padding: 20px;
+            margin: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Este es el Header</h1>
+    </header>
+    <div class="contenedor">
+        <section>
+            <div class="columna">
+                <div class="card">
+                    Tarjeta
+                </div>
+                <div class="card">
+                    Tarjeta
+                </div>
+            </div>
+            <div class="card">
+                Tarjeta
+            </div>
+        </section>
+        <section>
+            <div class="card">
+                Tarjeta
+            </div>
+        </section>
+    </div>
+    <footer>
+        <h2>Este es el Footer</h2>
+    </footer>
+</body>
+</html>

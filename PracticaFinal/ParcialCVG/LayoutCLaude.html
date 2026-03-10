@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MI CV</title>
+  <style>
+    body { margin: 10px; font-family: Arial, sans-serif; }
+
+    #contenedor { display: flex; gap: 10px; }
+    #main { flex: 1; }
+    #banner { width: 100px; background-color: lightgreen; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; }
+
+    /* Header */
+    #header { background-color: #ccc; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    #header span { font-weight: bold; }
+    #enlaces { display: flex; flex-direction: column; align-items: center; }
+    #enlaces small { font-size: 11px; }
+    #iconos { display: flex; gap: 5px; }
+    .icono { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; }
+    .fb { background-color: #3b5998; }
+    .tw { background-color: #1da1f2; }
+    .li { background-color: #0077b5; } 
+
+    /* Sección media */
+    #medio { display: flex; gap: 10px; margin-bottom: 10px; }
+    #izquierda { width: 300px; display: flex; flex-direction: column; gap: 10px; }
+    #nombre { border: 1px solid #999; padding: 10px; background: #f0f0f0; }
+    #contacto-datos { border: 1px solid #999; padding: 10px; background: #f5f0dc; flex: 1; min-height: 150px; }
+    #foto { flex: 1; background-color: #bbb; display: flex; align-items: center; justify-content: center; }
+    #foto svg { width: 150px; height: 180px; fill: #888; }
+
+    /* Formulario */
+    #formulario { border: 1px solid #999; padding: 10px; background: #ddd; }
+    #formulario p { margin: 0 0 8px 0; }
+    .fila { display: flex; gap: 10px; margin-bottom: 8px; }
+    .fila input[type="text"] { flex: 1; padding: 6px; border: 1px solid #999; }
+    .fila-comentario { display: flex; gap: 10px; }
+    .fila-comentario input[type="text"] { flex: 1; padding: 6px; border: 1px solid #999; }
+    button { padding: 6px 16px; }
+  </style>
+</head>
+<body>
+
+<div id="contenedor">
+  <div id="main">
+
+    <!-- Header -->
+    <div id="header">
+      <span>MI CV</span>
+      <div id="enlaces">
+        <small>Enlaces</small>
+        <div id="iconos">
+          <div class="icono fb">f</div>
+          <div class="icono tw">t</div>
+          <div class="icono li">in</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección media -->
+    <div id="medio">
+      <div id="izquierda">
+        <div id="nombre">Juan Nicolás Perez</div>
+        <div id="contacto-datos">Datos de contacto</div>
+      </div>
+      <div id="foto">
+        <!-- Silueta persona -->
+        <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="35" r="25"/>
+          <ellipse cx="50" cy="100" rx="40" ry="30"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <div id="formulario">
+      <p>Contacto</p>
+      <div class="fila">
+        <input type="text" placeholder="Nombre">
+        <input type="text" placeholder="Email">
+      </div>
+      <div class="fila-comentario">
+        <input type="text" placeholder="Comentario">
+        <button>Enviar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Banner -->
+  <div id="banner">Espacio para banner color verde</div>
+</div>
+
+</body>
+</html>
