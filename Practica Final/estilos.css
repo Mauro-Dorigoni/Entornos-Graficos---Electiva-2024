@@ -1,0 +1,113 @@
+/* * {
+    margin: 0px;
+    padding: 0px;
+} */
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0px;
+    
+}
+
+header {
+    background: gray;
+    border: solid red 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 19.4vw 55vw 24.4vw;
+    column-gap: 0.6vw;
+    grid-template-rows: auto;
+    grid-template-areas: "sidebar main  detail-panel";
+    border: solid black 1px;
+}
+/* HEADER - LOGO EMPRESA */
+#logo-header{
+    display: flex;
+
+}
+
+#nombre-app {
+    margin-left: 2vh;
+}
+
+/* HEADER - MENU USUARIO */
+
+#user-menu {
+    display: flex;
+    align-items: center;
+}
+
+#user-name {
+    margin-right: 2vh;
+}
+
+#user-icon {
+    font-size: 4vh;
+}
+
+/* SIDEBAR */
+#sidebar {
+    grid-area: sidebar;
+    padding: 2vh;
+        border: solid black 1px;
+}
+
+main {
+    padding: 2vh;
+    grid-area: main;
+        border: solid black 1px;
+}
+
+#detail-panel {
+    grid-area: detail-panel;
+    padding: 2vh;
+        border: solid black 1px;
+}
+
+#galeria-fotos {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+
+}
+
+
+figure {
+    padding: 2vh;
+    text-align: center;
+}
+
+.card {
+    border: solid 1px lightblue;
+    border-radius: 20px;
+}
+
+#section-inicial {
+    
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+}
+
+#nuevo-album {
+    display: block;
+    border: solid 1px black;
+
+}
+
+#boton-submit{
+    margin-top: 30px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+footer {
+    text-align: center;
+}

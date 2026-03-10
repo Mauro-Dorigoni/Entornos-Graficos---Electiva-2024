@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final 18-09-2024</title>
+    <link rel="stylesheet" href="./final_18-09-2024.css">
+    
+    <style>
+        .bienvenida{
+            text-align: center;
+        }
+    </style>
+</head>
+<div class="bienvenida">
+    <h1>
+        Hola Amigo! Bienvenido a este HTML
+    </h1>
+    <h2 style="color: red;"> Este es el ejercicio 2</h2>
+    <div id="enlaces">
+        <a class="enlace-inicio" href="#">Link 1</a>
+        <a class="enlace-inicio" href="#">Link 2</a>
+    </div>
+    <hr style="border-color: aqua; ">
+</div>
+    <div id="formulario">
+        <form action="./alta.http.php" method="post">
+            <div class="form-input">
+                <label for="nombre">Nombre:</label>
+                <input required type="text" name="nombre" id="nombre">
+            </div>
+            <div class="form-input">
+                <label for="email">Email:</label>
+                <input required type="email" name="email" id="email">
+            </div>
+            <div class="form-input">
+                <label for="producto">Producto: </label>
+                <input required type="text" name="producto" id="producto">
+            </div>
+            <div class="form-input">
+                <label for="mes">Mes del Año:</label>
+                <input required type="month" name="mes" id="mes">
+            </div>
+            <div class="form-input">
+                <label for="cantidad">Cantidad: </label>
+                <input required type="number" name="cantidad" id="cantidad">
+            </div>
+            <div class="form-input">
+                <label for="tyc">Terminos y Condiciones: </label>
+                <input required type="checkbox" name="tyc" id="tyc">
+            </div>
+            <div class="form-input">
+                <label for="pago"></label>
+                <select name="pago" id="pago">
+                    <option value="contado" selected>Contado</option>
+                    <option value="tarjeta">Tarjeta de Credito</option>
+                    <option value="cuenta_corriente">Cuenta Corriente</option>
+                </select>
+            </div>
+            <div class="form-input">
+                <button type="submit">Enviar Solicitud</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
